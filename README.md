@@ -1,2 +1,2 @@
 # Bombardment
-A game about orbital bombardment
+This is a game about orbital bombardment, with the player's goal being to eradicate a civilization off of the face of a planet. Each level will be hand crafted, with buildings and infrastructure placed all along the surface. The player will use various weapons to destroy this infrastructure from orbit, all while running against the clock. If the player should fail to be strategic in their weapon deployments, or be too slow, the creatures on the planet will succesfully destroy the player's ship. 
