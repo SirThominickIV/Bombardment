@@ -71,12 +71,17 @@ func doNukeDamage(targetPosition):
 	# Convert to tilemap position
 	var localTargetPosition = local_to_map(targetPosition)
 		
-	# Erase random nearby cells, replace with debris
+	# Erase random nearby cells, replace with debris/fire
 	for i in range(13):
 		var relativeCoords = localTargetPosition;
 		relativeCoords.x = localTargetPosition.x + random.randi_range(-3, 3)
 		relativeCoords.y = localTargetPosition.y + random.randi_range(-3, 3)
-		moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Debris, LayerDefs.Foreground)	
+		
+		# Do either fire or debris based on if var i is even or odd
+		if(i % 2 == 0):
+			moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Debris, LayerDefs.Foreground)	
+		else:
+			moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Fire, LayerDefs.Foreground)	
 	
 	# Set a number of cells to irradiated tiles
 	for i in range(13):
