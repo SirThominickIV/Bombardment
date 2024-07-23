@@ -8,7 +8,7 @@ Each level will have a .json settings file which will control various difficulty
 
 Player weapons:
 
-* Standard Ordinance - Destroys a couple buildings, always available, fairly quick to reload
+* Standard Artillery - Destroys a couple buildings, always available, fairly quick to reload
 * Rods from the Gods - Destroys many buildings, limited amount, no radiation
 * Nuclear warheads - Destroys many buildings, limited amount, spreads radiation (reduces habitability, esp if wind is high)
 * Psychological warfare pamphlets - Destroys collectivism
