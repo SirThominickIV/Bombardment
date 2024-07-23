@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkggkgcjno5po"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_khord"]
+[ext_resource type="Texture2D" uid="uid://dcgeirckdyacs" path="res://Art/Textures/Missiles/roc.png" id="2_460aq"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+can_sleep = false
+lock_rotation = true
+script = ExtResource("1_khord")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_460aq")
+flip_v = true

@@ -11,14 +11,16 @@ config_version=5
 [application]
 
 config/name="Bombardment"
-run/main_scene="res://Scenes/level01.tscn"
+run/main_scene="res://Scenes/Levels/level01.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-LayerDefs="*res://Scripts/LayerDefs.gd"
-TileDefs="*res://Scripts/TileDefs.gd"
+LayerDefs="*res://Scripts/Definitions/LayerDefs.gd"
+ProjectileDefs="*res://Scripts/Definitions/ProjectileDefs.gd"
+SceneDefs="*res://Scripts/Definitions/SceneDefs.gd"
+TileDefs="*res://Scripts/Definitions/TileDefs.gd"
 
 [input]
 
