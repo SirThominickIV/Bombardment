@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://mxlk1s6xmwru"]
+[gd_scene load_steps=18 format=3 uid="uid://mxlk1s6xmwru"]
 
 [ext_resource type="Texture2D" uid="uid://be5bbeebvbt24" path="res://Art/Textures/Explosion/Explosion.png" id="1_02ect"]
 [ext_resource type="Script" path="res://Scripts/NodeCull.gd" id="2_sms80"]
 [ext_resource type="AudioStream" uid="uid://bct2ivtddk1cb" path="res://Art/Audio/Nuclear Distant/322365__svarvarn__nuclear-distant.wav" id="3_snef8"]
+[ext_resource type="AudioStream" uid="uid://bjfqtghsktjok" path="res://Art/Audio/Muffled Distant Explosion/NenadSimic - Muffled Distant Explosion.wav" id="4_qdfhl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6vmf"]
 atlas = ExtResource("1_02ect")
@@ -107,4 +108,8 @@ metadata/TimeUntilCull = 100.0
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_snef8")
 volume_db = -14.492
+autoplay = true
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_qdfhl")
 autoplay = true
