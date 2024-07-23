@@ -28,21 +28,23 @@ Important buildings that the AI builds can potentially be softlocked this way. F
 # Potential tileset IDs
 Some potential tileset IDs and functions could include:
 
+
 0. Selector                         - Player selector icon
-1. Earth                            - Where foreground tiles can go
-2. Water                            - A tile nothing can be placed on
-3. Irradiated_Earth                 - A tile nothing can be placed on
-4. Debris                           - An aesthetic tile to be removed before re-building a tile
-5. Residential_Building             - Some amount are needed for the AI to be stable and fight back
-6. Electric_Infrastructure          - Same as above
-7. Farmland                         - Same as above
-8. Bomb_Shelter                     - Residential buildings, but somewhat resistant to attacks
-9. Missile_Silo                     - An offensive weapon the AI has to attack the player's ship
-10. Shield_Generator                - Provides some amount of defense to surrounding buildings
-11. Fire_Station                    - Puts out nearby fires
-12. Fire                            - Mostly aesthetic, can spread after a period of time
-13. Burnable_Nature                 - Trees, plants, shrubs, etc
-14. Rocks                           - Mostly aesthetic
+1. Animated Selector               - Same as above but animated
+2. Earth                            - Where foreground tiles can go
+3. Water                            - A tile nothing can be placed on
+4. Irradiated_Earth                 - A tile nothing can be placed on
+5. Debris                           - An aesthetic tile to be removed before re-building a tile
+6. Residential_Building             - Some amount are needed for the AI to be stable and fight back
+7. Electric_Infrastructure          - Same as above
+8. Farmland                         - Same as above
+9. Bomb_Shelter                     - Residential buildings, but somewhat resistant to attacks
+10. Missile_Silo                     - An offensive weapon the AI has to attack the player's ship
+11. Shield_Generator                - Provides some amount of defense to surrounding buildings
+12. Fire_Station                    - Puts out nearby fires
+13. Fire                            - Mostly aesthetic, can spread after a period of time
+14. Burnable_Nature                 - Trees, plants, shrubs, etc
+15. Rocks                           - Mostly aesthetic
 
 Splitting up these tilesets early even if they share the same/similar functions(for instance residential/electric/farmland) will make it easier to give them different effects in the future.
 
