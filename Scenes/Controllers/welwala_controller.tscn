@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://djxatsevlx8vk"]
+
+[ext_resource type="Script" path="res://Scripts/WelwalaController.gd" id="1_11mrv"]
+
+[node name="WelwalaController" type="Node"]
+script = ExtResource("1_11mrv")

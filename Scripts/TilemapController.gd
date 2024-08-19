@@ -4,22 +4,17 @@ var selectedTile = Vector2(0, 0)
 var random = RandomNumberGenerator.new()
 var selectedProjectile = ProjectileDefs.StandardArtillery
 
-# Using physics processing to keep deletion consistent
-func _physics_process(delta):
-	
+func _process(delta):
 	if(!Input.is_action_pressed("mb_right")):
 		HandleSelector()
 
-	# Process the destruction of tile(s) if needed
+# Using physics processing to keep deletion consistent
+func _physics_process(delta):
+	
+	# Spawn a random projectile (TODO change this to depend on UI weapon selection)
 	if(Input.is_action_just_pressed("mb_left")):	
-		spawnProjectile(random.randi_range(0,1))
-		#spawnProjectile(selectedProjectile)
-		
-	# Debug - Restore buildings on right click
-	if(Input.is_action_just_pressed("mb_right")):		
-		var usedCells = get_used_cells(LayerDefs.DestroyedTiles)
-		for cell in usedCells:
-			moveTileToLayer(LayerDefs.DestroyedTiles, LayerDefs.Foreground, cell, null, null)
+		#spawnProjectile(random.randi_range(0,1))
+		spawnProjectile(selectedProjectile)
 
 func HandleSelector():
 	# Unselect the previous frames selection

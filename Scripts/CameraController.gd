@@ -18,10 +18,7 @@ var isDragging : bool = false
 func _ready():
 	zoomTarget = zoom
 
-func _physics_process(delta):
-	
-	print(position)
-	
+func _physics_process(delta):	
 	GetMoveSpeedForZoomlevel()
 	Zoom()
 	SimplePan()
