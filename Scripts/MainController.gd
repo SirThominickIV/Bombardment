@@ -1,17 +1,28 @@
 extends Node2D
 
-var tilemap
+var tilemap: TileMap
+
 var welwalaController
+var playerController
+var weaponController
+var cameraController
 
 func _ready():
 	# TODO : Eventually the level that gets loaded should be
 	# handled through UI. For now this works.
-	tilemap = SceneDefs.level01.instantiate()
+	tilemap = SceneDefs.Levels[0].instantiate()
 	add_child(tilemap)
 	
 	# Set up controllers
 	welwalaController = SceneDefs.WelwalaController.instantiate()
-	add_child(welwalaController)
+	weaponController = SceneDefs.WeaponController.instantiate()
+	playerController = SceneDefs.PlayerController.instantiate()
+	playerController.weaponController = weaponController
+	cameraController = SceneDefs.CameraController.instantiate()
+	add_child(welwalaController)	
+	add_child(weaponController)
+	add_child(playerController)
+	add_child(cameraController)
 	
 	HandOutTileMap()
 	
@@ -24,4 +35,5 @@ func _ready():
 # need repeated every time a level is loaded. This function will handle that.
 func HandOutTileMap():
 	welwalaController.tilemap = tilemap
+	weaponController.tilemap = tilemap
 

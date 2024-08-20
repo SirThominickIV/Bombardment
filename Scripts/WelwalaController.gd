@@ -4,7 +4,7 @@ extends Node
 # gravity well of the inner planets' culture; a "planet-lover"
 
 var random = RandomNumberGenerator.new()
-var tilemap
+var tilemap: TileMap
 var buildPoints = 0
 const buildPointsNeeded = 5
 

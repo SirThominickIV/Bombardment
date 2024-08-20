@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://drqi2hy81bgie"]
+[gd_scene load_steps=2 format=3 uid="uid://drqi2hy81bgie"]
 
 [ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
-[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_dypgi"]
 
 [node name="MainController" type="Node2D"]
 script = ExtResource("1_0urec")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(575, 323)
-script = ExtResource("2_dypgi")

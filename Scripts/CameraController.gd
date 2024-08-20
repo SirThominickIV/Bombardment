@@ -18,11 +18,11 @@ var isDragging : bool = false
 func _ready():
 	zoomTarget = zoom
 
-func _physics_process(delta):	
+func _process(delta):	
 	GetMoveSpeedForZoomlevel()
 	Zoom()
 	SimplePan()
-	#ClickAndDrag()
+	ClickAndDrag()
 	CheckPositionLimits()
 
 func GetMoveSpeedForZoomlevel():
@@ -48,9 +48,7 @@ func Zoom():
 	# Zoooom
 	zoom = zoom.slerp(zoomTarget, ZoomSpeed)
 
-func SimplePan():
-
-	
+func SimplePan():	
 	if(Input.is_action_pressed("right")):
 		position.x += MoveSpeed * moveSpeedForZoomLevel
 	if(Input.is_action_pressed("left")):
