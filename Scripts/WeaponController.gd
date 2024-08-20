@@ -70,6 +70,24 @@ func doNukeDamage(targetPosition):
 	
 	# Set the selected one
 	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
+
+func doRodsFromTheGodsDamage(targetPosition):	
+	# Convert to tilemap position
+	var localTargetPosition = tilemap.local_to_map(targetPosition)
 		
+	# Erase random nearby cells, replace with debris/fire
+	for i in range(26):
+		var relativeCoords = localTargetPosition;
+		relativeCoords.x = localTargetPosition.x + random.randi_range(-3, 3)
+		relativeCoords.y = localTargetPosition.y + random.randi_range(-3, 3)
+		
+		# Do either fire or debris
+		if(i % 6 == 0):
+			tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Fire, LayerDefs.Foreground)	
+		else:
+			tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Debris, LayerDefs.Foreground)	
+
+	# Erase the selected one
+	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
 
 

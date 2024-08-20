@@ -3,7 +3,7 @@ extends Node
 var tilemap
 var weaponController
 
-var selectedProjectile = ProjectileDefs.Nuke
+var selectedProjectile = ProjectileDefs.RodsFromTheGods
 
 
 # Using physics processing to keep deletion consistent
