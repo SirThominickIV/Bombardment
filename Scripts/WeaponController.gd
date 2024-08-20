@@ -71,6 +71,7 @@ func doNukeDamage(targetPosition):
 	# Set the selected one
 	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
 
+
 func doRodsFromTheGodsDamage(targetPosition):	
 	# Convert to tilemap position
 	var localTargetPosition = tilemap.local_to_map(targetPosition)

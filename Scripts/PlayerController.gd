@@ -5,7 +5,6 @@ var weaponController
 
 var selectedProjectile = ProjectileDefs.RodsFromTheGods
 
-
 # Using physics processing to keep deletion consistent
 func _physics_process(delta):
 	
