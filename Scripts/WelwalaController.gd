@@ -6,7 +6,8 @@ extends Node
 var random = RandomNumberGenerator.new()
 var tilemap: TileMap
 var buildPoints = 0
-const buildPointsNeeded = 5
+
+const buildPointsNeeded = 2
 
 func _physics_process(delta):
 	buildPoints += delta
