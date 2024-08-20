@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://0w81nknffj36"]
+
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="1_xmyon"]
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2(575, 323)
+script = ExtResource("1_xmyon")

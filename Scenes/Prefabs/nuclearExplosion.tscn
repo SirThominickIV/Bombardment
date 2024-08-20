@@ -1,56 +1,56 @@
 [gd_scene load_steps=18 format=3 uid="uid://mxlk1s6xmwru"]
 
-[ext_resource type="Texture2D" uid="uid://be5bbeebvbt24" path="res://Art/Textures/Explosion/Explosion.png" id="1_02ect"]
-[ext_resource type="Script" path="res://Scripts/NodeCull.gd" id="2_sms80"]
-[ext_resource type="AudioStream" uid="uid://bct2ivtddk1cb" path="res://Art/Audio/Nuclear Distant/322365__svarvarn__nuclear-distant.wav" id="3_snef8"]
-[ext_resource type="AudioStream" uid="uid://bjfqtghsktjok" path="res://Art/Audio/Muffled Distant Explosion/NenadSimic - Muffled Distant Explosion.wav" id="4_qdfhl"]
+[ext_resource type="Texture2D" uid="uid://be5bbeebvbt24" path="res://Art/Textures/Explosion/Explosion.png" id="1_dc8j8"]
+[ext_resource type="Script" path="res://Scripts/NodeCull.gd" id="2_7xwu1"]
+[ext_resource type="AudioStream" uid="uid://bct2ivtddk1cb" path="res://Art/Audio/Nuclear Distant/322365__svarvarn__nuclear-distant.wav" id="3_nu5un"]
+[ext_resource type="AudioStream" uid="uid://bjfqtghsktjok" path="res://Art/Audio/Muffled Distant Explosion/NenadSimic - Muffled Distant Explosion.wav" id="4_g5urc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6vmf"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_awjlp"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_40186"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jpjgj"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7a0da"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_53mnk"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jjnb"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(576, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_clf3n"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(672, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ejcgb"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(768, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o3k2o"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(864, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sejlx"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(960, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yephr"]
-atlas = ExtResource("1_02ect")
+atlas = ExtResource("1_dc8j8")
 region = Rect2(1056, 0, 96, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lacxt"]
@@ -102,14 +102,14 @@ z_index = 10
 sprite_frames = SubResource("SpriteFrames_lacxt")
 autoplay = "default"
 speed_scale = 3.0
-script = ExtResource("2_sms80")
+script = ExtResource("2_7xwu1")
 metadata/TimeUntilCull = 100.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_snef8")
+stream = ExtResource("3_nu5un")
 volume_db = -14.492
 autoplay = true
 
 [node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_qdfhl")
+stream = ExtResource("4_g5urc")
 autoplay = true

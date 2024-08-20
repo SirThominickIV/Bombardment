@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://drqi2hy81bgie"]
+
+[ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
+
+[node name="MainController" type="Node2D"]
+script = ExtResource("1_0urec")
