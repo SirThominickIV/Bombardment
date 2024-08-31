@@ -22,7 +22,10 @@ func handleCollision():
 			explosion = SceneDefs.NuclearExplosion.instantiate()	
 		ProjectileDefs.RodsFromTheGods:
 			get_parent().doRodsFromTheGodsDamage(TargetCoord)
-			explosion = SceneDefs.NuclearExplosion.instantiate()	
+			explosion = SceneDefs.NuclearExplosion.instantiate()
+		ProjectileDefs.Incendiary:
+			get_parent().doIncendiaryDamage(TargetCoord)
+			explosion = SceneDefs.Explosion.instantiate()	
 		_:
 			get_parent().doStandardArtilleryDamage(TargetCoord)
 			explosion = SceneDefs.Explosion.instantiate()	

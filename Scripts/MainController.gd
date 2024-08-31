@@ -6,6 +6,7 @@ var welwalaController
 var playerController
 var weaponController
 var cameraController
+var fireController
 
 func _ready():
 	# TODO : Eventually the level that gets loaded should be
@@ -19,10 +20,12 @@ func _ready():
 	playerController = SceneDefs.PlayerController.instantiate()
 	playerController.weaponController = weaponController
 	cameraController = SceneDefs.CameraController.instantiate()
+	fireController = SceneDefs.FireController.instantiate()
 	add_child(welwalaController)	
 	add_child(weaponController)
 	add_child(playerController)
 	add_child(cameraController)
+	add_child(fireController)
 	
 	HandOutTileMap()
 	
@@ -36,4 +39,4 @@ func _ready():
 func HandOutTileMap():
 	welwalaController.tilemap = tilemap
 	weaponController.tilemap = tilemap
-
+	fireController.tilemap = tilemap

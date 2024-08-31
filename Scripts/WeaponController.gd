@@ -91,4 +91,17 @@ func doRodsFromTheGodsDamage(targetPosition):
 	# Erase the selected one
 	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
 
-
+func doIncendiaryDamage(targetPosition):	
+	# Convert to tilemap position
+	var localTargetPosition = tilemap.local_to_map(targetPosition)
+	
+	# Erase random nearby cells, replace with fire
+	for i in range(10):
+		var relativeCoords = localTargetPosition;
+		relativeCoords.x = localTargetPosition.x + random.randi_range(-3, 3)
+		relativeCoords.y = localTargetPosition.y + random.randi_range(-3, 3)
+		
+		tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Fire, LayerDefs.Foreground)	
+	
+	# Erase the selected one
+	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
