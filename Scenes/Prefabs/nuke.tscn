@@ -7,5 +7,7 @@
 script = ExtResource("1_ynxwi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+show_behind_parent = true
+z_index = 2
 texture = ExtResource("2_u4bji")
 flip_v = true
