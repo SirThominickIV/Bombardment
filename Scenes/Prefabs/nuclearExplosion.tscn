@@ -98,7 +98,8 @@ animations = [{
 }]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
-z_index = 10
+show_behind_parent = true
+z_index = 2
 sprite_frames = SubResource("SpriteFrames_lacxt")
 autoplay = "default"
 speed_scale = 3.0
