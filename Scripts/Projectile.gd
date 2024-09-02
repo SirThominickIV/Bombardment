@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name Projectile
 
 var TargetCoord = Vector2(0,0)
 var ProjectileType = 0
