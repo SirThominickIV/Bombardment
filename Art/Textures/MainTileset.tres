@@ -1,0 +1,103 @@
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://c8q0o84qc6r2o"]
+
+[ext_resource type="Texture2D" uid="uid://cyibsk6qr73dp" path="res://Art/Textures/ThomasAndKat/0_Selector.png" id="1_pdwwt"]
+[ext_resource type="Texture2D" uid="uid://bypugurdfr6of" path="res://Art/Textures/ThomasAndKat/2_Earth.png" id="2_1gnib"]
+[ext_resource type="Texture2D" uid="uid://dwaiu6ee47lod" path="res://Art/Textures/ThomasAndKat/13_Fire.png" id="2_yv7e4"]
+[ext_resource type="Texture2D" uid="uid://byouqjew0cmdt" path="res://Art/Textures/ThomasAndKat/6_Residential_Buildings.png" id="3_vu8yj"]
+[ext_resource type="Texture2D" uid="uid://iitrljg4lrfd" path="res://Art/Textures/ThomasAndKat/4_Irradiated_Earth.png" id="4_5pxjp"]
+[ext_resource type="Texture2D" uid="uid://dmer4xlab3d5q" path="res://Art/Textures/ThomasAndKat/5_Debris.png" id="4_40ycf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0niot"]
+texture = ExtResource("1_pdwwt")
+texture_region_size = Vector2i(32, 16)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n8axb"]
+texture = ExtResource("2_yv7e4")
+texture_region_size = Vector2i(32, 32)
+0:0/animation_speed = 10.0
+0:0/animation_mode = 1
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 9)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c0bpt"]
+texture = ExtResource("2_1gnib")
+texture_region_size = Vector2i(32, 16)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkqtr"]
+texture = ExtResource("4_5pxjp")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 7)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_torex"]
+texture = ExtResource("4_40ycf")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 7)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3rx15"]
+texture = ExtResource("3_vu8yj")
+texture_region_size = Vector2i(32, 128)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 57)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 57)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 57)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 57)
+4:0/0 = 0
+4:0/0/texture_origin = Vector2i(0, 57)
+5:0/0 = 0
+5:0/0/texture_origin = Vector2i(0, 57)
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 57)
+7:0/0 = 0
+7:0/0/texture_origin = Vector2i(0, 57)
+8:0/0 = 0
+8:0/0/texture_origin = Vector2i(0, 57)
+9:0/0 = 0
+9:0/0/texture_origin = Vector2i(0, 57)
+10:0/0 = 0
+10:0/0/texture_origin = Vector2i(0, 57)
+11:0/0 = 0
+11:0/0/texture_origin = Vector2i(0, 57)
+12:0/0 = 0
+12:0/0/texture_origin = Vector2i(0, 57)
+13:0/0 = 0
+13:0/0/texture_origin = Vector2i(0, 57)
+14:0/0 = 0
+14:0/0/texture_origin = Vector2i(0, 57)
+15:0/0 = 0
+15:0/0/texture_origin = Vector2i(0, 57)
+16:0/0 = 0
+16:0/0/texture_origin = Vector2i(0, 57)
+17:0/0 = 0
+17:0/0/texture_origin = Vector2i(0, 57)
+18:0/0 = 0
+18:0/0/texture_origin = Vector2i(0, 57)
+19:0/0 = 0
+19:0/0/texture_origin = Vector2i(0, 57)
+20:0/0 = 0
+20:0/0/texture_origin = Vector2i(0, 57)
+21:0/0 = 0
+21:0/0/texture_origin = Vector2i(0, 57)
+
+[resource]
+tile_shape = 1
+tile_size = Vector2i(32, 16)
+sources/0 = SubResource("TileSetAtlasSource_0niot")
+sources/2 = SubResource("TileSetAtlasSource_c0bpt")
+sources/6 = SubResource("TileSetAtlasSource_3rx15")
+sources/13 = SubResource("TileSetAtlasSource_n8axb")
+sources/5 = SubResource("TileSetAtlasSource_torex")
+sources/4 = SubResource("TileSetAtlasSource_lkqtr")

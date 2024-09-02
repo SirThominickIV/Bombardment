@@ -1,9 +1,10 @@
 extends Node
+class_name PlayerController
 
 var tilemap
 var weaponController
 
-var selectedProjectile = ProjectileDefs.Incendiary
+var selectedProjectile = ProjectileDefs.Nuke
 
 # Using physics processing to keep deletion consistent
 func _physics_process(delta):

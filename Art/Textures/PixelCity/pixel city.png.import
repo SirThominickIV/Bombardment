@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqkhywfo0mdis"
-path="res://.godot/imported/pixel city.png-cced6c0e120b63c19f9bb65ac7b87494.ctex"
+path="res://.godot/imported/pixel city.png-2b62d84c68ba51d3f62079f961e88880.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Textures/pixel city/pixel city.png"
-dest_files=["res://.godot/imported/pixel city.png-cced6c0e120b63c19f9bb65ac7b87494.ctex"]
+source_file="res://Art/Textures/PixelCity/pixel city.png"
+dest_files=["res://.godot/imported/pixel city.png-2b62d84c68ba51d3f62079f961e88880.ctex"]
 
 [params]
 

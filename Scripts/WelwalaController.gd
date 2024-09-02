@@ -1,10 +1,12 @@
 extends Node
+class_name WelwalaController
 
 # Welwala - Noun - (pejorative) a person obsessed with the 
 # gravity well of the inner planets' culture; a "planet-lover"
 
 var random = RandomNumberGenerator.new()
-var tilemap: TileMap
+var tilemap: ExtendedTilemap
+
 var buildPoints = 0
 const buildPointsNeeded = 2
 
@@ -17,7 +19,7 @@ func _physics_process(delta):
 
 func RebuildRandom():	
 	# Find out what is destroyed
-	var destroyedCells = tilemap.get_used_cells(LayerDefs.DestroyedTiles)
+	var destroyedCells = tilemap.DestroyedTiles.get_used_cells()
 	if (destroyedCells == null || destroyedCells.size() == 0):
 		return
 	
@@ -31,23 +33,23 @@ func RebuildRandom():
 	
 	# Repair something
 	var cellToRepair = repairableCells.pick_random()	
-	tilemap.moveTileToLayer(LayerDefs.DestroyedTiles, LayerDefs.Foreground, cellToRepair, null, null)
+	tilemap.moveTileToLayer(LayerDefs.DestroyedTiles, LayerDefs.Foreground, cellToRepair)
 
 
 func CanCellBeBuiltOn(cell):	
 	var result = true
 	
 	# Get all source IDs on foreground and irradiated layer
-	var neighborCoords = tilemap.get_surrounding_cells(cell)
+	var neighborCoords = tilemap.get_all_neighbors(cell)
 	neighborCoords.append(cell)	
 	var neighborSourceIds = []
 	for coord in neighborCoords:
-		neighborSourceIds.append(tilemap.get_cell_source_id(LayerDefs.Foreground, coord))
-		neighborSourceIds.append(tilemap.get_cell_source_id(LayerDefs.IrradiatedGround, coord))
+		neighborSourceIds.append(tilemap.Foreground.get_cell_source_id(coord))
+		neighborSourceIds.append(tilemap.IrradiatedGround.get_cell_source_id(cell))
 	
 	# Just get rid of this cell if it is adjacent to irradiated earth
 	if(neighborSourceIds.has(TileDefs.IrradiatedEarth)):
-		tilemap.erase_cell(LayerDefs.DestroyedTiles, cell)
+		tilemap.DestroyedTiles.erase_cell(cell)
 		result = false
 	
 	# Can't be built on if the cell has fire nearby
@@ -55,8 +57,8 @@ func CanCellBeBuiltOn(cell):
 		result = false
 	
 	# If the cell itself has debris, don't build, but at least clear it out
-	if(tilemap.get_cell_source_id(LayerDefs.Foreground, cell) == TileDefs.Debris):
-		tilemap.erase_cell(LayerDefs.Foreground, cell)
+	if(tilemap.Foreground.get_cell_source_id(cell) == TileDefs.Debris):
+		tilemap.Foreground.erase_cell(cell)
 		result = false
 	
 	return result

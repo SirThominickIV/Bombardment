@@ -1,4 +1,5 @@
 extends Camera2D
+class_name CameraController
 
 @export var ZoomSpeed = 1.0
 @export var ZoomOutLimit = Vector2(1, 1)

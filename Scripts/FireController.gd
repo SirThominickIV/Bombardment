@@ -1,6 +1,7 @@
 extends Node
+class_name FireController
 
-var tilemap: TileMap
+var tilemap: ExtendedTilemap
 
 var ticks = 0
 const ticksNeeded = 1
@@ -16,14 +17,14 @@ func _physics_process(delta):
 	ticks = 0
 	
 	# Pick a random fire if possible
-	var fires = tilemap.get_used_cells_by_id(LayerDefs.Foreground, TileDefs.Fire)
+	var fires = tilemap.Foreground.get_used_cells_by_id(TileDefs.Fire)
 	if (fires == null || fires.size() == 0):
 		return
 	
 	var fire = fires.pick_random()
 	
 	# Clear the tile
-	tilemap.erase_cell(LayerDefs.Foreground, fire)
+	tilemap.Foreground.erase_cell(fire)
 	
 	# Pick a random burnable neighbor if possible
 	var burnableNeighbors = GetBurnableNeighbors(fire)	
@@ -39,15 +40,15 @@ func _physics_process(delta):
 		return
 		
 	# Burn
-	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, toBurn, TileDefs.Fire, LayerDefs.Foreground)	
+	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, toBurn, TileDefs.Fire, LayerDefs.Foreground)	
 
 
-func GetBurnableNeighbors(fire):
-	var neighbors = tilemap.get_surrounding_cells(fire)
+func GetBurnableNeighbors(fire : Vector2):
+	var neighbors = tilemap.Foreground.get_surrounding_cells(fire)
 	var burnableNeighbors = []
 	
 	for neighbor in neighbors:
-		var id = tilemap.get_cell_source_id(LayerDefs.Foreground, neighbor)
+		var id = tilemap.Foreground.get_cell_source_id(neighbor)
 		if(TileDefs.BurnableTiles.has(id)):
 			burnableNeighbors.append(neighbor)
 	

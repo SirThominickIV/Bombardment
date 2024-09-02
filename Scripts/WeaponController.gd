@@ -1,6 +1,8 @@
 extends Node
+class_name  WeaponController
 
-var tilemap: TileMap
+var tilemap : ExtendedTilemap
+var selectorController
 var random = RandomNumberGenerator.new()
 
 func spawnProjectile(projectileType):
@@ -20,88 +22,61 @@ func spawnProjectile(projectileType):
 	add_child(projectile)
 	
 	# Do position tracking stuff
-	var spawnLocation = tilemap.selectedTile
-	spawnLocation.y = tilemap.selectedTile.y - 50
-	projectile.position = tilemap.map_to_local(spawnLocation)
-	projectile.TargetCoord = tilemap.map_to_local(tilemap.selectedTile)
+	var spawnLocation = selectorController.selectedTile
+	spawnLocation.y = selectorController.selectedTile.y - 50
+	projectile.position = tilemap.Selection.map_to_local(spawnLocation)
+	projectile.TargetCoord = tilemap.Selection.map_to_local(selectorController.selectedTile)
 	projectile.ProjectileType = projectileType
 
 func doStandardArtilleryDamage(targetPosition):	
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.local_to_map(targetPosition)
+	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 	
 	# Erase two random nearby cells
-	var relativeCoords = localTargetPosition;
-	relativeCoords.x = localTargetPosition.x + random.randi_range(-1, 1)
-	relativeCoords.y = localTargetPosition.y + random.randi_range(-1, 1)
-	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Debris, LayerDefs.Foreground)	
-	relativeCoords.x = localTargetPosition.x + random.randi_range(-1, 1)
-	relativeCoords.y = localTargetPosition.y + random.randi_range(-1, 1)
-	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Debris, LayerDefs.Foreground)	
+	var targets = tilemap.get_all_neighbors(localTargetPosition)
+	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[random.randi_range(0, 7)], TileDefs.Debris, LayerDefs.Foreground)
+	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[random.randi_range(0, 7)], TileDefs.Debris, LayerDefs.Foreground)
 	
 	# Erase the selected one
-	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
+	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
 
 func doNukeDamage(targetPosition):	
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.local_to_map(targetPosition)
-		
-	# Erase random nearby cells, replace with debris/fire
-	for i in range(13):
-		var relativeCoords = localTargetPosition;
-		relativeCoords.x = localTargetPosition.x + random.randi_range(-3, 3)
-		relativeCoords.y = localTargetPosition.y + random.randi_range(-3, 3)
-		
-		# Do either fire or debris based on if var i is even or odd
-		if(i % 2 == 0):
-			tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Debris, LayerDefs.Foreground)	
-		else:
-			tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Fire, LayerDefs.Foreground)	
+	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 	
-	# Set a number of cells to irradiated tiles
-	for i in range(13):
-		var relativeCoords = localTargetPosition;
-		relativeCoords.x = localTargetPosition.x + random.randi_range(-2, 2)
-		relativeCoords.y = localTargetPosition.y + random.randi_range(-2, 2)
-		tilemap.erase_cell(LayerDefs.Foreground, relativeCoords)
-		
-		if(tilemap.get_cell_source_id(LayerDefs.Ground, relativeCoords) == TileDefs.Earth):
-			tilemap.set_cell(LayerDefs.IrradiatedGround, relativeCoords, TileDefs.IrradiatedEarth, Vector2(0,0))
+	var targets = tilemap.get_all_neighbors(localTargetPosition)
+	
+	for i in range(7):
+		if(random.randi_range(0,1) == 0):
+			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Debris, LayerDefs.Foreground)	
+		else:
+			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Fire, LayerDefs.Foreground)	
 	
 	# Set the selected one
-	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
+	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
 
 
 func doRodsFromTheGodsDamage(targetPosition):	
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.local_to_map(targetPosition)
+	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 		
-	# Erase random nearby cells, replace with debris/fire
-	for i in range(26):
-		var relativeCoords = localTargetPosition;
-		relativeCoords.x = localTargetPosition.x + random.randi_range(-3, 3)
-		relativeCoords.y = localTargetPosition.y + random.randi_range(-3, 3)
-		
-		# Do either fire or debris
-		if(i % 6 == 0):
-			tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Fire, LayerDefs.Foreground)	
+	var targets = tilemap.get_all_neighbors(localTargetPosition)
+	for i in range(7):
+		if(random.randi_range(0,1) == 0):
+			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Debris, LayerDefs.Foreground)	
 		else:
-			tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Debris, LayerDefs.Foreground)	
-
+			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Fire, LayerDefs.Foreground)	
+	
 	# Erase the selected one
-	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
+	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
 
 func doIncendiaryDamage(targetPosition):	
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.local_to_map(targetPosition)
+	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 	
-	# Erase random nearby cells, replace with fire
-	for i in range(10):
-		var relativeCoords = localTargetPosition;
-		relativeCoords.x = localTargetPosition.x + random.randi_range(-3, 3)
-		relativeCoords.y = localTargetPosition.y + random.randi_range(-3, 3)
-		
-		tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, relativeCoords, TileDefs.Fire, LayerDefs.Foreground)	
+	var targets = tilemap.get_all_neighbors(localTargetPosition)
+	for i in range(7):
+		tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Fire, LayerDefs.Foreground)	
 	
 	# Erase the selected one
-	tilemap.moveTileToLayer(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
+	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Fire, LayerDefs.Foreground)	

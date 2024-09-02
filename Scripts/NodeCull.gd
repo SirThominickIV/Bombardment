@@ -1,4 +1,5 @@
 extends Node
+class_name NodeCull
 
 var TimeUntilCull = 1000.0
 
