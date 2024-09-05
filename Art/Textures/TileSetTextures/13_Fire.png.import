@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3pqxhigg7eqa"
-path="res://.godot/imported/2_Earth.png-b1c557029fa0f6ab1f8076a525ccd176.ctex"
+uid="uid://dwaiu6ee47lod"
+path="res://.godot/imported/13_Fire.png-9301dc1fee0dcfbd8a0231193b633445.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Textures/MergedTileSets/2_Earth.png"
-dest_files=["res://.godot/imported/2_Earth.png-b1c557029fa0f6ab1f8076a525ccd176.ctex"]
+source_file="res://Art/Textures/TileSetTextures/13_Fire.png"
+dest_files=["res://.godot/imported/13_Fire.png-9301dc1fee0dcfbd8a0231193b633445.ctex"]
 
 [params]
 

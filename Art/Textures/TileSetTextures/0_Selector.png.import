@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kqo25687owbb"
-path="res://.godot/imported/14_Burnable_Nature.png-070c8e7f15c86777aac4f890229954f1.ctex"
+uid="uid://cyibsk6qr73dp"
+path="res://.godot/imported/0_Selector.png-17d1cfb653c4517fedef07d0f57db594.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Textures/MergedTileSets/14_Burnable_Nature.png"
-dest_files=["res://.godot/imported/14_Burnable_Nature.png-070c8e7f15c86777aac4f890229954f1.ctex"]
+source_file="res://Art/Textures/TileSetTextures/0_Selector.png"
+dest_files=["res://.godot/imported/0_Selector.png-17d1cfb653c4517fedef07d0f57db594.ctex"]
 
 [params]
 

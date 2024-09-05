@@ -22,6 +22,10 @@ ProjectileDefs="*res://Scripts/Definitions/ProjectileDefs.gd"
 SceneDefs="*res://Scripts/Definitions/SceneDefs.gd"
 TileDefs="*res://Scripts/Definitions/TileDefs.gd"
 
+[display]
+
+window/size/mode=2
+
 [editor]
 
 movie_writer/movie_file="/home/thomas/Downloads/BombardmentOutput.avi"

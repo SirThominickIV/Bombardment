@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bomw1e3oqvhxw"
-path="res://.godot/imported/15_Rocks.png-925879596b88b83c30cdf469e0063a77.ctex"
+uid="uid://dmer4xlab3d5q"
+path="res://.godot/imported/5_Debris.png-eaea15455e92e4a315e7c6fe2cc97a6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Textures/MergedTileSets/15_Rocks.png"
-dest_files=["res://.godot/imported/15_Rocks.png-925879596b88b83c30cdf469e0063a77.ctex"]
+source_file="res://Art/Textures/TileSetTextures/5_Debris.png"
+dest_files=["res://.godot/imported/5_Debris.png-eaea15455e92e4a315e7c6fe2cc97a6c.ctex"]
 
 [params]
 

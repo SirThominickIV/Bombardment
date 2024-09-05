@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iitrljg4lrfd"
-path="res://.godot/imported/4_Irradiated_Earth.png-d14de521a4cfbdfa98d75e70291aa172.ctex"
+uid="uid://bypugurdfr6of"
+path="res://.godot/imported/2_Earth.png-b615d2d9e552ef8c328f6680162bdd2d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Textures/ThomasAndKat/4_Irradiated_Earth.png"
-dest_files=["res://.godot/imported/4_Irradiated_Earth.png-d14de521a4cfbdfa98d75e70291aa172.ctex"]
+source_file="res://Art/Textures/TileSetTextures/2_Earth.png"
+dest_files=["res://.godot/imported/2_Earth.png-b615d2d9e552ef8c328f6680162bdd2d.ctex"]
 
 [params]
 

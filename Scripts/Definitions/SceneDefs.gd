@@ -22,5 +22,7 @@ const CameraController = preload("res://Scenes/Controllers/cameraController.tscn
 const FireController = preload("res://Scenes/Controllers/fireController.tscn")
 const SelectorController = preload("res://Scenes/Controllers/selectorController.tscn")
 
+const mainUI = preload("res://Scenes/mainUI.tscn")
+
 # Levels
 const Levels = [preload("res://Scenes/Levels/level01.tscn")]

@@ -9,6 +9,7 @@ var weaponController
 var cameraController
 var fireController
 var selectorController
+var mainUI
 
 var tilemap : ExtendedTilemap = ExtendedTilemap.new()
 
@@ -44,6 +45,9 @@ func _ready():
 	
 	HandOutTileMapLayers()
 	HandOutControllers()
+	
+	mainUI = SceneDefs.mainUI.instantiate()
+	add_child(mainUI)
 	
 	# Turn off the mouse cursor when inside the window
 	# Eventually this will need to be turned back on when hovering over
