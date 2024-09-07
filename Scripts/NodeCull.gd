@@ -1,10 +1,10 @@
 extends Node
 class_name NodeCull
 
-var TimeUntilCull = 1000.0
+@export var TicksUntilCull = 200.0
 
-func _process(delta):
-	TimeUntilCull = TimeUntilCull - delta
-	
-	if(TimeUntilCull < 0):
+func _physics_process(_delta):
+	print(TicksUntilCull)
+	TicksUntilCull -= 1
+	if(TicksUntilCull < 0):
 		queue_free()
