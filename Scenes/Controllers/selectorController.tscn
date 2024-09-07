@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://sfuue4d38v5p"]
-
-[ext_resource type="Script" path="res://Scripts/SelectorController.gd" id="1_ks5b3"]
-
-[node name="SelectorController" type="Node"]
-script = ExtResource("1_ks5b3")

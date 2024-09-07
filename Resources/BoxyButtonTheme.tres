@@ -1,0 +1,43 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dtmdu442rr8nn"]
+
+[ext_resource type="StyleBox" uid="uid://bb6atwoer02aq" path="res://Resources/DarkModeStyleBox.tres" id="1_qh1cg"]
+[ext_resource type="StyleBox" uid="uid://cpgh4cdad6ouq" path="res://Resources/DarkModeStyleBoxHover.tres" id="2_xfp8n"]
+[ext_resource type="StyleBox" uid="uid://b40pphkcgw2n7" path="res://Resources/DarkModeStyleBoxPressed.tres" id="3_3fvjg"]
+[ext_resource type="FontFile" uid="uid://drqdvol3hbnrm" path="res://Art/FFFFORWA.TTF" id="4_l3iud"]
+
+[resource]
+default_base_scale = 0.1
+default_font = ExtResource("4_l3iud")
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 10
+Button/fonts/font = ExtResource("4_l3iud")
+Button/styles/disabled = ExtResource("1_qh1cg")
+Button/styles/focus = ExtResource("1_qh1cg")
+Button/styles/hover = ExtResource("2_xfp8n")
+Button/styles/normal = ExtResource("1_qh1cg")
+Button/styles/pressed = ExtResource("3_3fvjg")
+TooltipLabel/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+TooltipLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+TooltipLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
+TooltipLabel/constants/outline_size = 0
+TooltipLabel/constants/shadow_offset_x = 1
+TooltipLabel/constants/shadow_offset_y = 1
+TooltipLabel/font_sizes/font_size = 16
+TooltipLabel/fonts/font = ExtResource("4_l3iud")
+TooltipPanel/styles/panel = null
