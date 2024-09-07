@@ -13,8 +13,6 @@ func HandleSelector():
 	# Unselect the previous frames selection
 	tilemap.Selection.erase_cell(selectedTile)
 	
-	print(selectedTile)
-	
 	# Grab the selected tile again
 	var mousePos : Vector2 = tilemap.Selection.get_global_mouse_position()
 	selectedTile = tilemap.Selection.local_to_map(mousePos)

@@ -18,8 +18,6 @@ func moveTileToLayer(fromLayer: String, toLayer: String, coords: Vector2) -> voi
 	if(_fromLayer == null || _toLayer == null || coords == null):
 		return
 	
-	var test = _fromLayer.get_used_cells()
-	
 	# Find out what it is
 	var sourceId = _fromLayer.get_cell_source_id(coords)		
 	var atlasCoords = _fromLayer.get_cell_atlas_coords(coords)

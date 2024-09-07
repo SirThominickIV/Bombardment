@@ -1,6 +1,348 @@
-[gd_scene load_steps=2 format=3 uid="uid://drqi2hy81bgie"]
+[gd_scene load_steps=26 format=3 uid="uid://drqi2hy81bgie"]
 
 [ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_qjatv"]
+[ext_resource type="StyleBox" uid="uid://bb6atwoer02aq" path="res://Resources/DarkModeStyleBox.tres" id="3_ocd35"]
+[ext_resource type="Theme" uid="uid://dtmdu442rr8nn" path="res://Resources/BoxyButtonTheme.tres" id="3_q6c2x"]
+[ext_resource type="Theme" uid="uid://bucq77s3vegfj" path="res://Resources/ToolTipButtonTheme.tres" id="6_lprfn"]
+[ext_resource type="Script" path="res://Scripts/FireController.gd" id="7_cqqfm"]
+[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="8_b4r31"]
+[ext_resource type="FontFile" uid="uid://drqdvol3hbnrm" path="res://Art/FFFFORWA.TTF" id="9_5d4a4"]
+[ext_resource type="Script" path="res://Scripts/SelectorController.gd" id="9_5dhxu"]
+[ext_resource type="Script" path="res://Scripts/UICcontroller.gd" id="10_3emxv"]
+[ext_resource type="Script" path="res://Scripts/WeaponController.gd" id="10_w6dm4"]
+[ext_resource type="AudioStream" uid="uid://cdqv7dlq6t3v3" path="res://Art/Audio/NightflameMenu/397604__nightflame__menu-fx-01.wav" id="11_5d8fc"]
+[ext_resource type="Script" path="res://Scripts/WelwalaController.gd" id="11_ccjtb"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_67pqs"]
+device = -1
+ctrl_pressed = true
+keycode = 49
+unicode = 49
+
+[sub_resource type="InputEventKey" id="InputEventKey_w7ncm"]
+device = -1
+shift_pressed = true
+keycode = 49
+unicode = 33
+
+[sub_resource type="InputEventKey" id="InputEventKey_4e7m7"]
+device = -1
+alt_pressed = true
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_lljuf"]
+events = [SubResource("InputEventKey_67pqs"), SubResource("InputEventKey_w7ncm"), SubResource("InputEventKey_4e7m7")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_f1wq7"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_yvgt2"]
+events = [SubResource("InputEventKey_f1wq7")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_no86x"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_ulsk2"]
+events = [SubResource("InputEventKey_no86x")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_7mpia"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_xq7fa"]
+events = [SubResource("InputEventKey_7mpia")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_nn7gy"]
+device = -1
+keycode = 52
+unicode = 52
+
+[sub_resource type="Shortcut" id="Shortcut_1x848"]
+events = [SubResource("InputEventKey_nn7gy")]
 
 [node name="MainController" type="Node2D"]
 script = ExtResource("1_0urec")
+
+[node name="CameraController" type="Camera2D" parent="."]
+script = ExtResource("2_qjatv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CameraController"]
+
+[node name="ToggleWeaponsPanel" type="Button" parent="CameraController/CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.0104167
+anchor_top = 0.91358
+anchor_right = 0.25
+anchor_bottom = 0.975309
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+shortcut = SubResource("Shortcut_lljuf")
+text = "WEAPONS"
+metadata/_edit_use_anchors_ = true
+
+[node name="Weapons" type="Panel" parent="CameraController/CanvasLayer"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.00694444
+anchor_top = 0.561728
+anchor_right = 0.248264
+anchor_bottom = 0.981481
+offset_left = 2.00001
+offset_top = -3.99976
+offset_right = 3.99988
+offset_bottom = -3.99969
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="ToggleWeaponsPanel" type="Button" parent="CameraController/CanvasLayer/Weapons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.147059
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+text = "WEAPONS"
+metadata/_edit_use_anchors_ = true
+
+[node name="StandardArtillery" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+layout_mode = 0
+anchor_left = 0.0357143
+anchor_top = 0.183824
+anchor_right = 0.960714
+anchor_bottom = 0.294118
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="StandardArtilleryButton" type="Button" parent="CameraController/CanvasLayer/Weapons/StandardArtillery"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.891892
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+shortcut = SubResource("Shortcut_yvgt2")
+text = "890mm HE"
+metadata/_edit_use_anchors_ = true
+
+[node name="StandardArtilleryInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/StandardArtillery"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.888031
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "890mm High Explosive
+This weapon type is a very basic one, dealing damage
+to only a few tiles."
+mouse_filter = 1
+theme = ExtResource("6_lprfn")
+theme_override_font_sizes/font_size = 10
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Incendiary" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+layout_mode = 0
+anchor_left = 0.0357143
+anchor_top = 0.330883
+anchor_right = 0.960714
+anchor_bottom = 0.441177
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="IncendiaryButton" type="Button" parent="CameraController/CanvasLayer/Weapons/Incendiary"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.891892
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+shortcut = SubResource("Shortcut_ulsk2")
+text = "120mm HEI"
+metadata/_edit_use_anchors_ = true
+
+[node name="IncendiaryInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/Incendiary"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88417
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "120mm High Explosive Incendiary
+This weapon type primarily spreads fires."
+mouse_filter = 0
+theme = ExtResource("6_lprfn")
+theme_override_font_sizes/font_size = 10
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RodsFromTheGods" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+layout_mode = 0
+anchor_left = 0.0321429
+anchor_top = 0.477942
+anchor_right = 0.960714
+anchor_bottom = 0.588236
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="RodsFromTheGodsButton" type="Button" parent="CameraController/CanvasLayer/Weapons/RodsFromTheGods"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00384615
+anchor_right = 0.896154
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+shortcut = SubResource("Shortcut_xq7fa")
+text = "300mm x 6kmm HEAP"
+metadata/_edit_use_anchors_ = true
+
+[node name="RodsFromTheGodsInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/RodsFromTheGods"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.857499
+anchor_top = 0.477951
+anchor_right = 0.969037
+anchor_bottom = 0.854912
+offset_left = 8.05037
+offset_top = -14.3385
+offset_right = 8.05038
+offset_bottom = 4.35264
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "300mm x 6kmm High Explosive Armor Piercing
+This weapon type is coloquial known as the Rods From The Gods.
+It is a tungsten rod that maintains most of it's velocity and energy after
+decending from orbit due to it's low drag. On impact that energy is
+converted into a violent explosion, dealing massive damage."
+mouse_filter = 0
+theme = ExtResource("6_lprfn")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+theme_override_font_sizes/font_size = 10
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Nuke" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+modulate = Color(0.470076, 0.470076, 0.470076, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0285714
+anchor_top = 0.625
+anchor_right = 0.960714
+anchor_bottom = 0.735294
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="NukeButton" type="Button" parent="CameraController/CanvasLayer/Weapons/Nuke"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00384615
+anchor_right = 0.896154
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+shortcut = SubResource("Shortcut_1x848")
+text = "1kt NEP"
+metadata/_edit_use_anchors_ = true
+
+[node name="NukeInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/Nuke"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.892308
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "1kt Nuclear Explosive Package
+This weapon type deals large amounts of damage, and leaves behind
+radioactive material."
+mouse_filter = 0
+theme = ExtResource("6_lprfn")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+theme_override_font_sizes/font_size = 10
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="FireController" type="Node" parent="."]
+script = ExtResource("7_cqqfm")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("8_b4r31")
+
+[node name="SelectorController" type="Node" parent="."]
+script = ExtResource("9_5dhxu")
+
+[node name="UIController" type="Node" parent="." node_paths=PackedStringArray("weaponPanel", "standardArtillery", "incendiary", "rodsFromTheGods", "nuke", "basicButtonSound")]
+script = ExtResource("10_3emxv")
+weaponPanel = NodePath("../CameraController/CanvasLayer/Weapons")
+standardArtillery = NodePath("../CameraController/CanvasLayer/Weapons/StandardArtillery")
+incendiary = NodePath("../CameraController/CanvasLayer/Weapons/Incendiary")
+rodsFromTheGods = NodePath("../CameraController/CanvasLayer/Weapons/RodsFromTheGods")
+nuke = NodePath("../CameraController/CanvasLayer/Weapons/Nuke")
+basicButtonSound = NodePath("AudioStreamPlayer2D")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="UIController"]
+stream = ExtResource("11_5d8fc")
+
+[node name="WeaponController" type="Node" parent="."]
+script = ExtResource("10_w6dm4")
+
+[node name="WelwalaController" type="Node" parent="."]
+script = ExtResource("11_ccjtb")
+
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/ToggleWeaponsPanel" to="UIController" method="toggleWeaponsPanel"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/ToggleWeaponsPanel" to="UIController" method="toggleWeaponsPanel"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="setWeaponStandardArtillery"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryInfo" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryButton" to="UIController" method="setWeaponIncendiary"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryInfo" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="setWeaponRodsFromTheGods"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsInfo" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Nuke/NukeButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Nuke/NukeButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/Nuke/NukeButton" to="UIController" method="setWeaponNuke"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Nuke/NukeInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Nuke/NukeInfo" to="UIController" method="UI_Exited"]

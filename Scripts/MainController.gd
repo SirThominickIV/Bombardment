@@ -3,12 +3,7 @@ class_name MainController
 
 var level
 
-var welwalaController
-var playerController
-var weaponController
-var cameraController
-var fireController
-var selectorController
+var controllers : Dictionary
 
 var tilemap : ExtendedTilemap = ExtendedTilemap.new()
 
@@ -27,36 +22,27 @@ func _ready():
 	tilemap.Foreground = level.get_node("/root/MainController/Level/" + LayerDefs.Foreground)
 	tilemap.Selection = level.get_node("/root/MainController/Level/" + LayerDefs.Selection)
 	
-	# Set up controllers
-	welwalaController = SceneDefs.WelwalaController.instantiate()
-	weaponController = SceneDefs.WeaponController.instantiate()
-	playerController = SceneDefs.PlayerController.instantiate()
-	playerController.weaponController = weaponController
-	cameraController = SceneDefs.CameraController.instantiate()
-	fireController = SceneDefs.FireController.instantiate()
-	selectorController = SceneDefs.SelectorController.instantiate()
-	add_child(welwalaController)	
-	add_child(weaponController)
-	add_child(playerController)
-	add_child(cameraController)
-	add_child(fireController)
-	add_child(selectorController)
+	# Gather the controllers
+	controllers[ControllerDefs.CameraController] = get_node("CameraController")
+	controllers[ControllerDefs.FireController] = get_node("FireController")
+	controllers[ControllerDefs.PlayerController] = get_node("PlayerController")
+	controllers[ControllerDefs.SelectorController] = get_node("SelectorController")
+	controllers[ControllerDefs.UIController] = get_node("UIController")
+	controllers[ControllerDefs.WeaponController] = get_node("WeaponController")
+	controllers[ControllerDefs.WelwalaController] = get_node("WelwalaController")
 	
 	HandOutTileMapLayers()
 	HandOutControllers()
-	
-	# Turn off the mouse cursor when inside the window
-	# Eventually this will need to be turned back on when hovering over
-	# UI panels/elements, but this is better for now
-	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
  
 # A variety of controllers will need the tilemap layers, and that behaviour will 
 # need repeated every time a level is loaded. This function will handle that.
 func HandOutTileMapLayers() -> void:
-	welwalaController.tilemap = tilemap
-	weaponController.tilemap = tilemap
-	fireController.tilemap = tilemap
-	selectorController.tilemap = tilemap
+	controllers[ControllerDefs.WelwalaController].tilemap = tilemap
+	controllers[ControllerDefs.WeaponController].tilemap = tilemap
+	controllers[ControllerDefs.FireController].tilemap = tilemap
+	controllers[ControllerDefs.SelectorController].tilemap = tilemap
 
 func HandOutControllers() -> void:
-	weaponController.selectorController = selectorController
+	controllers[ControllerDefs.WeaponController].selectorController = controllers[ControllerDefs.SelectorController]
+	controllers[ControllerDefs.PlayerController].weaponController = controllers[ControllerDefs.WeaponController]
+	controllers[ControllerDefs.UIController].playerController = controllers[ControllerDefs.PlayerController]
