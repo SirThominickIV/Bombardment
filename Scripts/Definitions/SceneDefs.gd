@@ -14,5 +14,8 @@ const Nuke = preload("res://Scenes/Prefabs/nuke.tscn")
 const Explosion = preload("res://Scenes/Prefabs/explosion.tscn")
 const NuclearExplosion = preload("res://Scenes/Prefabs/nuclearExplosion.tscn")
 
+# Menus
+const LostGame = "res://Scenes/lostGame.tscn"
+
 # Levels
 const Levels = [preload("res://Scenes/Levels/level01.tscn")]

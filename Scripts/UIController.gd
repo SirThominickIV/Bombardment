@@ -1,4 +1,5 @@
 extends Node
+class_name UIController
 
 @export var weaponPanel: Control
 @export var standardArtillery: Control
@@ -7,6 +8,8 @@ extends Node
 @export var nuke: Control
 
 @export var basicButtonSound: AudioStreamPlayer2D
+
+@export var HealthLabel: Label
 
 const selected = Color("ffffff")
 const deselected = Color("787878")
@@ -35,6 +38,14 @@ func _process(_delta):
 	if(Input.is_action_just_pressed("4")):	
 		playerController.selectedProjectile = ProjectileDefs.Nuke
 		basicButtonSound.play()
+		
+	if(Input.is_action_just_pressed("9")):
+		setHealthDisplay(1)
+
+func setHealthDisplay(numHealth: int) -> void:
+	HealthLabel.text = ""
+	for i in range(0, numHealth):
+		HealthLabel.text += "◼"
 
 func UI_Entered() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)

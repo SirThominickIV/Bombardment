@@ -46,3 +46,4 @@ func HandOutControllers() -> void:
 	controllers[ControllerDefs.WeaponController].selectorController = controllers[ControllerDefs.SelectorController]
 	controllers[ControllerDefs.PlayerController].weaponController = controllers[ControllerDefs.WeaponController]
 	controllers[ControllerDefs.UIController].playerController = controllers[ControllerDefs.PlayerController]
+	controllers[ControllerDefs.PlayerController].uiController = controllers[ControllerDefs.UIController]

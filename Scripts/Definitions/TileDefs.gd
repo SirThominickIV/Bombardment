@@ -14,7 +14,7 @@ const ResidentialBuilding = 6
 const ElectricInfrastructure = 7
 const Farmland = 8
 const BombShelter = 9
-const MissileSilo = 10
+const LaunchTower = 10
 const ShieldGenerator = 11
 const FireStation = 12
 const Fire = 13
@@ -25,9 +25,9 @@ const BurnableTiles = [ResidentialBuilding, ElectricInfrastructure,
 Farmland, ShieldGenerator, Nature]
 
 const MovableTiles = [ResidentialBuilding, ElectricInfrastructure, 
-Farmland, BombShelter, MissileSilo, ShieldGenerator, FireStation,
+Farmland, BombShelter, LaunchTower, ShieldGenerator, FireStation,
 Nature]
 
 const DestructibleTiles = [ResidentialBuilding, ElectricInfrastructure, 
-Farmland, BombShelter, MissileSilo, ShieldGenerator, FireStation,
+Farmland, BombShelter, LaunchTower, ShieldGenerator, FireStation,
 Nature, Rocks]
