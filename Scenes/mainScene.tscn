@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://drqi2hy81bgie"]
+[gd_scene load_steps=28 format=3 uid="uid://drqi2hy81bgie"]
 
 [ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_qjatv"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="8_b4r31"]
 [ext_resource type="FontFile" uid="uid://drqdvol3hbnrm" path="res://Art/FFFFORWA.TTF" id="9_5d4a4"]
 [ext_resource type="Script" path="res://Scripts/SelectorController.gd" id="9_5dhxu"]
+[ext_resource type="AudioStream" uid="uid://cbuh48cymamaw" path="res://Art/Audio/HullDamageSounds/HullDamage.wav" id="9_e60qk"]
 [ext_resource type="Script" path="res://Scripts/UIController.gd" id="10_3emxv"]
 [ext_resource type="Script" path="res://Scripts/WeaponController.gd" id="10_w6dm4"]
 [ext_resource type="AudioStream" uid="uid://cdqv7dlq6t3v3" path="res://Art/Audio/NightflameMenu/397604__nightflame__menu-fx-01.wav" id="11_5d8fc"]
@@ -75,6 +76,7 @@ script = ExtResource("1_0urec")
 
 [node name="CameraController" type="Camera2D" parent="."]
 script = ExtResource("2_qjatv")
+SHAKE_DECAY_RATE = 60.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CameraController"]
 
@@ -348,8 +350,12 @@ metadata/_edit_use_anchors_ = true
 [node name="FireController" type="Node" parent="."]
 script = ExtResource("7_cqqfm")
 
-[node name="PlayerController" type="Node" parent="."]
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("hullDamageSound")]
 script = ExtResource("8_b4r31")
+hullDamageSound = NodePath("HullDamageSound")
+
+[node name="HullDamageSound" type="AudioStreamPlayer2D" parent="PlayerController"]
+stream = ExtResource("9_e60qk")
 
 [node name="SelectorController" type="Node" parent="."]
 script = ExtResource("9_5dhxu")
