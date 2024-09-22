@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://drqi2hy81bgie"]
+[gd_scene load_steps=32 format=3 uid="uid://drqi2hy81bgie"]
 
 [ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_qjatv"]
@@ -9,10 +9,12 @@
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="8_b4r31"]
 [ext_resource type="FontFile" uid="uid://drqdvol3hbnrm" path="res://Art/FFFFORWA.TTF" id="9_5d4a4"]
 [ext_resource type="Script" path="res://Scripts/SelectorController.gd" id="9_5dhxu"]
-[ext_resource type="Script" path="res://Scripts/UICcontroller.gd" id="10_3emxv"]
+[ext_resource type="AudioStream" uid="uid://cbuh48cymamaw" path="res://Art/Audio/HullDamageSounds/HullDamage.wav" id="9_e60qk"]
+[ext_resource type="Script" path="res://Scripts/UIController.gd" id="10_3emxv"]
 [ext_resource type="Script" path="res://Scripts/WeaponController.gd" id="10_w6dm4"]
 [ext_resource type="AudioStream" uid="uid://cdqv7dlq6t3v3" path="res://Art/Audio/NightflameMenu/397604__nightflame__menu-fx-01.wav" id="11_5d8fc"]
 [ext_resource type="Script" path="res://Scripts/WelwalaController.gd" id="11_ccjtb"]
+[ext_resource type="Texture2D" uid="uid://dcoh3do27ln8w" path="res://Art/Textures/Planets/Terran.png" id="15_s8ixu"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_67pqs"]
 device = -1
@@ -67,20 +69,106 @@ unicode = 52
 [sub_resource type="Shortcut" id="Shortcut_1x848"]
 events = [SubResource("InputEventKey_nn7gy")]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5w1m"]
+draw_center = false
+
+[sub_resource type="Animation" id="Animation_1cck1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraController:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.01, 0.01)]
+}
+
+[sub_resource type="Animation" id="Animation_5syrl"]
+resource_name = "zoom"
+length = 5.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnimationPlayer/Planet:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(5, 5),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelHolder:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(5, 5),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CameraController:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(5, 5),
+"update": 0,
+"values": [Vector2(0.01, 0.01), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wf0th"]
+_data = {
+"RESET": SubResource("Animation_1cck1"),
+"zoom": SubResource("Animation_5syrl")
+}
+
 [node name="MainController" type="Node2D"]
 script = ExtResource("1_0urec")
 
+[node name="LevelHolder" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+
 [node name="CameraController" type="Camera2D" parent="."]
+position = Vector2(200, 200)
+zoom = Vector2(0.01, 0.01)
 script = ExtResource("2_qjatv")
+SHAKE_DECAY_RATE = 60.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CameraController"]
 
-[node name="ToggleWeaponsPanel" type="Button" parent="CameraController/CanvasLayer"]
+[node name="ActiveGameUiItems" type="Panel" parent="CameraController/CanvasLayer"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ToggleWeaponsPanel" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems"]
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0104167
 anchor_top = 0.91358
 anchor_right = 0.25
 anchor_bottom = 0.975309
+offset_left = -2.00004
+offset_top = 0.000183105
+offset_right = -2.00003
+offset_bottom = 0.000183105
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_q6c2x")
@@ -89,8 +177,8 @@ shortcut = SubResource("Shortcut_lljuf")
 text = "WEAPONS"
 metadata/_edit_use_anchors_ = true
 
-[node name="Weapons" type="Panel" parent="CameraController/CanvasLayer"]
-visible = false
+[node name="Weapons" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems"]
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00694444
 anchor_top = 0.561728
@@ -104,7 +192,7 @@ grow_vertical = 0
 theme_override_styles/panel = ExtResource("3_ocd35")
 metadata/_edit_use_anchors_ = true
 
-[node name="ToggleWeaponsPanel" type="Button" parent="CameraController/CanvasLayer/Weapons"]
+[node name="ToggleWeaponsPanel" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -116,7 +204,7 @@ theme_override_fonts/font = ExtResource("9_5d4a4")
 text = "WEAPONS"
 metadata/_edit_use_anchors_ = true
 
-[node name="StandardArtillery" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+[node name="StandardArtillery" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons"]
 layout_mode = 0
 anchor_left = 0.0357143
 anchor_top = 0.183824
@@ -125,7 +213,7 @@ anchor_bottom = 0.294118
 theme_override_styles/panel = ExtResource("3_ocd35")
 metadata/_edit_use_anchors_ = true
 
-[node name="StandardArtilleryButton" type="Button" parent="CameraController/CanvasLayer/Weapons/StandardArtillery"]
+[node name="StandardArtilleryButton" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.891892
@@ -138,7 +226,7 @@ shortcut = SubResource("Shortcut_yvgt2")
 text = "890mm HE"
 metadata/_edit_use_anchors_ = true
 
-[node name="StandardArtilleryInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/StandardArtillery"]
+[node name="StandardArtilleryInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.888031
@@ -157,7 +245,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Incendiary" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+[node name="Incendiary" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons"]
 layout_mode = 0
 anchor_left = 0.0357143
 anchor_top = 0.330883
@@ -166,7 +254,7 @@ anchor_bottom = 0.441177
 theme_override_styles/panel = ExtResource("3_ocd35")
 metadata/_edit_use_anchors_ = true
 
-[node name="IncendiaryButton" type="Button" parent="CameraController/CanvasLayer/Weapons/Incendiary"]
+[node name="IncendiaryButton" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.891892
@@ -179,7 +267,7 @@ shortcut = SubResource("Shortcut_ulsk2")
 text = "120mm HEI"
 metadata/_edit_use_anchors_ = true
 
-[node name="IncendiaryInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/Incendiary"]
+[node name="IncendiaryInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.88417
@@ -197,7 +285,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="RodsFromTheGods" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+[node name="RodsFromTheGods" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons"]
 layout_mode = 0
 anchor_left = 0.0321429
 anchor_top = 0.477942
@@ -206,7 +294,7 @@ anchor_bottom = 0.588236
 theme_override_styles/panel = ExtResource("3_ocd35")
 metadata/_edit_use_anchors_ = true
 
-[node name="RodsFromTheGodsButton" type="Button" parent="CameraController/CanvasLayer/Weapons/RodsFromTheGods"]
+[node name="RodsFromTheGodsButton" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00384615
@@ -220,7 +308,7 @@ shortcut = SubResource("Shortcut_xq7fa")
 text = "300mm x 6kmm HEAP"
 metadata/_edit_use_anchors_ = true
 
-[node name="RodsFromTheGodsInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/RodsFromTheGods"]
+[node name="RodsFromTheGodsInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.857499
@@ -246,7 +334,7 @@ text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Nuke" type="Panel" parent="CameraController/CanvasLayer/Weapons"]
+[node name="Nuke" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons"]
 modulate = Color(0.470076, 0.470076, 0.470076, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -257,7 +345,7 @@ anchor_bottom = 0.735294
 theme_override_styles/panel = ExtResource("3_ocd35")
 metadata/_edit_use_anchors_ = true
 
-[node name="NukeButton" type="Button" parent="CameraController/CanvasLayer/Weapons/Nuke"]
+[node name="NukeButton" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00384615
@@ -271,7 +359,7 @@ shortcut = SubResource("Shortcut_1x848")
 text = "1kt NEP"
 metadata/_edit_use_anchors_ = true
 
-[node name="NukeInfo" type="Label" parent="CameraController/CanvasLayer/Weapons/Nuke"]
+[node name="NukeInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.892308
@@ -291,25 +379,152 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="Heathbar" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 486.0
+offset_bottom = 74.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_s5w1m")
+
+[node name="BarHousing" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.515625
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthbarText" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00420168
+anchor_top = -0.151515
+anchor_right = 1.0
+anchor_bottom = 1.0303
+theme_override_fonts/font = ExtResource("9_5d4a4")
+theme_override_font_sizes/font_size = 28
+text = "◼◼◼◼◼◼◼◼◼◼◼◼◼◼◼◼◼◼◼◼"
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelHousing" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar"]
+layout_mode = 0
+anchor_top = 0.484375
+anchor_right = 0.207983
+anchor_bottom = 1.0
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing"]
+layout_mode = 0
+anchor_top = 0.181818
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_fonts/font = ExtResource("9_5d4a4")
+text = "HULL"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="FinishedGameUiItems" type="Panel" parent="CameraController/CanvasLayer"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="CameraController/CanvasLayer/FinishedGameUiItems"]
+layout_mode = 0
+anchor_left = 0.0868056
+anchor_top = 0.185185
+anchor_right = 0.347222
+anchor_bottom = 0.802469
+theme_override_styles/panel = ExtResource("3_ocd35")
+metadata/_edit_use_anchors_ = true
+
+[node name="OutputHeader" type="Label" parent="CameraController/CanvasLayer/FinishedGameUiItems/Panel"]
+layout_mode = 0
+anchor_left = 0.0833333
+anchor_top = 0.0625
+anchor_right = 0.916667
+anchor_bottom = 0.1875
+theme_override_fonts/font = ExtResource("9_5d4a4")
+metadata/_edit_use_anchors_ = true
+
+[node name="OutputBody" type="RichTextLabel" parent="CameraController/CanvasLayer/FinishedGameUiItems/Panel"]
+layout_mode = 0
+anchor_left = 0.0833333
+anchor_top = 0.2
+anchor_right = 0.916667
+anchor_bottom = 0.7625
+theme_override_fonts/normal_font = ExtResource("9_5d4a4")
+theme_override_fonts/mono_font = ExtResource("9_5d4a4")
+theme_override_fonts/italics_font = ExtResource("9_5d4a4")
+theme_override_fonts/bold_italics_font = ExtResource("9_5d4a4")
+theme_override_fonts/bold_font = ExtResource("9_5d4a4")
+metadata/_edit_use_anchors_ = true
+
+[node name="Replay" type="Button" parent="CameraController/CanvasLayer/FinishedGameUiItems/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0833333
+anchor_top = 0.8125
+anchor_right = 0.456667
+anchor_bottom = 0.9375
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+shortcut = SubResource("Shortcut_lljuf")
+text = "REPLAY"
+metadata/_edit_use_anchors_ = true
+
+[node name="LevelSelect" type="Button" parent="CameraController/CanvasLayer/FinishedGameUiItems/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.54
+anchor_top = 0.8125
+anchor_right = 0.913333
+anchor_bottom = 0.9375
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_q6c2x")
+theme_override_fonts/font = ExtResource("9_5d4a4")
+shortcut = SubResource("Shortcut_lljuf")
+text = "LEVEL SELECT"
+metadata/_edit_use_anchors_ = true
+
 [node name="FireController" type="Node" parent="."]
 script = ExtResource("7_cqqfm")
 
-[node name="PlayerController" type="Node" parent="."]
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("hullDamageSound")]
 script = ExtResource("8_b4r31")
+hullDamageSound = NodePath("HullDamageSound")
+
+[node name="HullDamageSound" type="AudioStreamPlayer2D" parent="PlayerController"]
+stream = ExtResource("9_e60qk")
 
 [node name="SelectorController" type="Node" parent="."]
 script = ExtResource("9_5dhxu")
 
-[node name="UIController" type="Node" parent="." node_paths=PackedStringArray("weaponPanel", "standardArtillery", "incendiary", "rodsFromTheGods", "nuke", "basicButtonSound")]
+[node name="UIController" type="Node" parent="." node_paths=PackedStringArray("weaponPanel", "standardArtillery", "incendiary", "rodsFromTheGods", "nuke", "basicButtonSound", "HealthLabel", "ZoomAnimationPlayer", "activeGameUiItems", "finishedGameUiItems", "finishedGameOutputHeader", "finishedGameOutputBody")]
 script = ExtResource("10_3emxv")
-weaponPanel = NodePath("../CameraController/CanvasLayer/Weapons")
-standardArtillery = NodePath("../CameraController/CanvasLayer/Weapons/StandardArtillery")
-incendiary = NodePath("../CameraController/CanvasLayer/Weapons/Incendiary")
-rodsFromTheGods = NodePath("../CameraController/CanvasLayer/Weapons/RodsFromTheGods")
-nuke = NodePath("../CameraController/CanvasLayer/Weapons/Nuke")
-basicButtonSound = NodePath("AudioStreamPlayer2D")
+weaponPanel = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons")
+standardArtillery = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery")
+incendiary = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary")
+rodsFromTheGods = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods")
+nuke = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke")
+basicButtonSound = NodePath("BasicButtonSound")
+HealthLabel = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing/HealthbarText")
+ZoomAnimationPlayer = NodePath("../ZoomAnimationPlayer")
+activeGameUiItems = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems")
+finishedGameUiItems = NodePath("../CameraController/CanvasLayer/FinishedGameUiItems")
+finishedGameOutputHeader = NodePath("../CameraController/CanvasLayer/FinishedGameUiItems/Panel/OutputHeader")
+finishedGameOutputBody = NodePath("../CameraController/CanvasLayer/FinishedGameUiItems/Panel/OutputBody")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="UIController"]
+[node name="BasicButtonSound" type="AudioStreamPlayer2D" parent="UIController"]
 stream = ExtResource("11_5d8fc")
 
 [node name="WeaponController" type="Node" parent="."]
@@ -318,31 +533,47 @@ script = ExtResource("10_w6dm4")
 [node name="WelwalaController" type="Node" parent="."]
 script = ExtResource("11_ccjtb")
 
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/ToggleWeaponsPanel" to="UIController" method="toggleWeaponsPanel"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons" to="UIController" method="UI_Exited"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/ToggleWeaponsPanel" to="UIController" method="toggleWeaponsPanel"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="setWeaponStandardArtillery"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryInfo" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/StandardArtillery/StandardArtilleryInfo" to="UIController" method="UI_Exited"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryButton" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryButton" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryButton" to="UIController" method="setWeaponIncendiary"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryInfo" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Incendiary/IncendiaryInfo" to="UIController" method="UI_Exited"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="setWeaponRodsFromTheGods"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsInfo" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/RodsFromTheGods/RodsFromTheGodsInfo" to="UIController" method="UI_Exited"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Nuke/NukeButton" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Nuke/NukeButton" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/Weapons/Nuke/NukeButton" to="UIController" method="setWeaponNuke"]
-[connection signal="mouse_entered" from="CameraController/CanvasLayer/Weapons/Nuke/NukeInfo" to="UIController" method="UI_Entered"]
-[connection signal="mouse_exited" from="CameraController/CanvasLayer/Weapons/Nuke/NukeInfo" to="UIController" method="UI_Exited"]
+[node name="ZoomAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wf0th")
+}
+
+[node name="Planet" type="Sprite2D" parent="ZoomAnimationPlayer"]
+z_index = 11
+position = Vector2(200, 200)
+scale = Vector2(200, 200)
+texture = ExtResource("15_s8ixu")
+
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="toggleWeaponsPanel"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/ToggleWeaponsPanel" to="UIController" method="toggleWeaponsPanel"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery/StandardArtilleryButton" to="UIController" method="setWeaponStandardArtillery"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery/StandardArtilleryInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery/StandardArtilleryInfo" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary/IncendiaryButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary/IncendiaryButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary/IncendiaryButton" to="UIController" method="setWeaponIncendiary"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary/IncendiaryInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary/IncendiaryInfo" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods/RodsFromTheGodsButton" to="UIController" method="setWeaponRodsFromTheGods"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods/RodsFromTheGodsInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods/RodsFromTheGodsInfo" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke/NukeButton" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke/NukeButton" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke/NukeButton" to="UIController" method="setWeaponNuke"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke/NukeInfo" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke/NukeInfo" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing" to="UIController" method="UI_Exited"]
+[connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Entered"]
+[connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/FinishedGameUiItems/Panel/Replay" to="." method="StartGame" binds= [-1]]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://8rlakay4ty5k"]
+
+[ext_resource type="StyleBox" uid="uid://bb6atwoer02aq" path="res://Resources/DarkModeStyleBox.tres" id="1_6da2n"]
+[ext_resource type="FontFile" uid="uid://drqdvol3hbnrm" path="res://Art/FFFFORWA.TTF" id="2_cpa3f"]
+[ext_resource type="Texture2D" uid="uid://c1q6haxwlf085" path="res://Art/Textures/ThomasTextures/Stars.png" id="3_0l6u5"]
+
+[node name="LostGame" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+z_index = 10
+anchors_preset = -1
+anchor_left = 0.325521
+anchor_top = 0.347222
+anchor_right = 0.672743
+anchor_bottom = 0.655864
+offset_top = 1.52588e-05
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("1_6da2n")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 0.75
+theme_override_fonts/font = ExtResource("2_cpa3f")
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+z_index = -1
+anchors_preset = -1
+anchor_left = -0.0173611
+anchor_top = -0.462963
+anchor_right = 1.02431
+anchor_bottom = 1.38889
+offset_bottom = 6.10352e-05
+texture = ExtResource("3_0l6u5")
+metadata/_edit_use_anchors_ = true

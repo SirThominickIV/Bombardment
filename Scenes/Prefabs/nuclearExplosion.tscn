@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://mxlk1s6xmwru"]
 
-[ext_resource type="SpriteFrames" uid="uid://dlm0bh6l283aa" path="res://Resources/ExplosionSpriteFrames.tres" id="1_pqdof"]
+[ext_resource type="SpriteFrames" uid="uid://dlm0bh6l283aa" path="res://Art/Textures/Explosion/ExplosionSpriteFrames.tres" id="1_pqdof"]
 [ext_resource type="Script" path="res://Scripts/NodeCull.gd" id="2_7xwu1"]
 [ext_resource type="AudioStream" uid="uid://bct2ivtddk1cb" path="res://Art/Audio/Nuclear Distant/322365__svarvarn__nuclear-distant.wav" id="3_nu5un"]
 [ext_resource type="AudioStream" uid="uid://bjfqtghsktjok" path="res://Art/Audio/Muffled Distant Explosion/NenadSimic - Muffled Distant Explosion.wav" id="4_g5urc"]

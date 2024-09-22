@@ -5,13 +5,13 @@ A significant amount of the game logic can be passed off to the tilemap, its lay
 
 There will be the following layers in the main tilemap:
 
-0. Destroyed tiles          - Place beneath everything so as to not be visible
-1. To build tiles           - Also beneath everything for the same reason
-2. Water                    - Aesthetic, should never be updated
-3. Ground                   - Aesthetic, should never be updated, also marks the places in which things can be built.
-4. Irradiated ground        - Marks and displays cells that can never again be built upon
-5. Foreground               - Where all buildings, trees, rocks, etc are placed
-6. Selection                - Where the player selector icon will be presented
+0. Destroyed tiles		  - Place beneath everything so as to not be visible
+1. To build tiles		   - Also beneath everything for the same reason
+2. Water					- Aesthetic, should never be updated
+3. Ground				   - Aesthetic, should never be updated, also marks the places in which things can be built.
+4. Irradiated ground		- Marks and displays cells that can never again be built upon
+5. Foreground			   - Where all buildings, trees, rocks, etc are placed
+6. Selection				- Where the player selector icon will be presented
 
 At the start, the "Destroyed tiles" and "Irradiated ground" layers will be empty. As the game progresses and cells are destroyed, buildings will be deleted off of the foreground layer and added to the destroyed tiles layer. As nukes are dropped, irradiated ground will be placed.
 
@@ -29,22 +29,22 @@ Important buildings that the AI builds can potentially be softlocked this way. F
 Some potential tileset IDs and functions could include:
 
 
-0. Selector                         - Player selector icon
-1. Animated Selector               - Same as above but animated
-2. Earth                            - Where foreground tiles can go
-3. Water                            - A tile nothing can be placed on
-4. Irradiated_Earth                 - A tile nothing can be placed on
-5. Debris                           - An aesthetic tile to be removed before re-building a tile
-6. Residential_Building             - Some amount are needed for the AI to be stable and fight back
-7. Electric_Infrastructure          - Same as above
-8. Farmland                         - Same as above
-9. Bomb_Shelter                     - Residential buildings, but somewhat resistant to attacks
-10. Missile_Silo                     - An offensive weapon the AI has to attack the player's ship
-11. Shield_Generator                - Provides some amount of defense to surrounding buildings
-12. Fire_Station                    - Puts out nearby fires
-13. Fire                            - Mostly aesthetic, can spread after a period of time
-14. Burnable_Nature                 - Trees, plants, shrubs, etc
-15. Rocks                           - Mostly aesthetic
+0. Selector						 - Player selector icon
+1. Animated Selector			   - Same as above but animated
+2. Earth							- Where foreground tiles can go
+3. Water							- A tile nothing can be placed on
+4. Irradiated_Earth				 - A tile nothing can be placed on
+5. Debris						   - An aesthetic tile to be removed before re-building a tile
+6. Residential_Building			 - Some amount are needed for the AI to be stable and fight back
+7. Electric_Infrastructure		  - Same as above
+8. Farmland						 - Same as above
+9. Bomb_Shelter					 - Residential buildings, but somewhat resistant to attacks
+10. Missile_Silo					 - An offensive weapon the AI has to attack the player's ship
+11. Shield_Generator				- Provides some amount of defense to surrounding buildings
+12. Fire_Station					- Puts out nearby fires
+13. Fire							- Mostly aesthetic, can spread after a period of time
+14. Burnable_Nature				 - Trees, plants, shrubs, etc
+15. Rocks						   - Mostly aesthetic
 
 Splitting up these tilesets early even if they share the same/similar functions(for instance residential/electric/farmland) will make it easier to give them different effects in the future.
 

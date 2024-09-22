@@ -8,7 +8,11 @@ const ticksNeeded = 1
 
 var random = RandomNumberGenerator.new()
 
+@onready var mainController: MainController = get_node('/root/MainController') as MainController
+
 func _physics_process(delta):
+	if(!mainController.IsGameActive):
+		return
 	
 	# Track fire points
 	if(ticks < ticksNeeded):
@@ -42,6 +46,8 @@ func _physics_process(delta):
 	# Burn
 	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, toBurn, TileDefs.Fire, LayerDefs.Foreground)	
 
+func reset() -> void:
+	ticks = 0
 
 func GetBurnableNeighbors(fire : Vector2):
 	var neighbors = tilemap.Foreground.get_surrounding_cells(fire)

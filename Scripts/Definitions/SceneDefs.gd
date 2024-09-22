@@ -13,6 +13,7 @@ const StandardArtillery = preload("res://Scenes/Prefabs/standardArtillery.tscn")
 const Nuke = preload("res://Scenes/Prefabs/nuke.tscn")
 const Explosion = preload("res://Scenes/Prefabs/explosion.tscn")
 const NuclearExplosion = preload("res://Scenes/Prefabs/nuclearExplosion.tscn")
+const Rocket = preload("res://Scenes/Prefabs/rocket.tscn")
 
 # Levels
 const Levels = [preload("res://Scenes/Levels/level01.tscn")]

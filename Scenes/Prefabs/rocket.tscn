@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://qak3b8fem55w"]
+
+[ext_resource type="Script" path="res://Scripts/RocketHandler.gd" id="1_6tack"]
+[ext_resource type="SpriteFrames" uid="uid://crl8etnm2xgf6" path="res://Art/Textures/ThomasTextures/RocketSpriteFrames.tres" id="2_bjmlx"]
+
+[node name="Rocket" type="RigidBody2D" node_paths=PackedStringArray("animatedSpriteSheet")]
+z_index = 10
+gravity_scale = 0.0
+script = ExtResource("1_6tack")
+animatedSpriteSheet = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(434, 312)
+sprite_frames = ExtResource("2_bjmlx")
+speed_scale = 100.0
