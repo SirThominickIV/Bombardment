@@ -13,7 +13,9 @@ var _playerHealth: int = 20
 @export var hullDamageSound: AudioStreamPlayer2D
 
 func _process(delta):
-	
+	if(Input.is_action_just_pressed("k")):
+		print("Player Ended the game")
+		setPlayerHealth(-200)
 	if(Input.is_action_just_pressed("mb_left") && !isMouseOverUI):	
 		weaponController.spawnProjectile(selectedProjectile)
 
@@ -23,7 +25,8 @@ func setPlayerHealth(delta: int) -> void:
 	if(_playerHealth > 20):
 		_playerHealth = 20
 	if(_playerHealth <= 0):
-		get_tree().change_scene_to_file(SceneDefs.LostGame)
+		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
+		get_parent().EndGame(false)
 	
 	# If health is being removed, do camera shake and player damage noises
 	if(delta < 0):

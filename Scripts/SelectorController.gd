@@ -5,7 +5,12 @@ var selectedTile = Vector2(0, 0)
 
 var tilemap : ExtendedTilemap = ExtendedTilemap.new()
 
+@onready var mainController: MainController = get_parent() as MainController
+
 func _process(delta):
+	if(!mainController.IsGameActive):
+		return
+	
 	if(!Input.is_action_pressed("mb_right")):
 		HandleSelector()
 

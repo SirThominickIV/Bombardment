@@ -1,20 +1,23 @@
 extends Node
 class_name UIController
 
+var playerController
 @export var weaponPanel: Control
 @export var standardArtillery: Control
 @export var incendiary: Control
 @export var rodsFromTheGods: Control
 @export var nuke: Control
-
 @export var basicButtonSound: AudioStreamPlayer2D
-
 @export var HealthLabel: Label
+@export var ZoomAnimationPlayer: AnimationPlayer
+@export var activeGameUiItems: Panel
+@export var finishedGameUiItems: Panel
+@export var finishedGameOutputHeader: Label
+@export var finishedGameOutputBody: RichTextLabel
 
+var zoomIn = false
 const selected = Color("ffffff")
 const deselected = Color("787878")
-
-var playerController
 
 func _ready():
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
@@ -41,6 +44,28 @@ func _process(_delta):
 		
 	if(Input.is_action_just_pressed("9")):
 		setHealthDisplay(1)
+
+func zoom() -> void:
+	zoomIn = !zoomIn
+	if(zoomIn):
+		ZoomAnimationPlayer.play('zoom')
+		await get_tree().create_timer(5.0).timeout
+		activeGameUiItems.visible = true
+	else:
+		activeGameUiItems.visible = false
+		await get_tree().create_timer(1.0).timeout
+		ZoomAnimationPlayer.play_backwards('zoom')
+
+func showFinishedGame(gameWon: bool, outputBody: String) -> void:
+	if(gameWon):
+		finishedGameOutputHeader.text = 'VICTORY'
+	else:
+		finishedGameOutputHeader.text = 'DEFEAT'
+	finishedGameOutputBody.text = outputBody
+	finishedGameUiItems.visible = true
+	
+func hideFinishedGame() -> void:
+	finishedGameUiItems.visible = false
 
 func setHealthDisplay(numHealth: int) -> void:
 	HealthLabel.text = ""

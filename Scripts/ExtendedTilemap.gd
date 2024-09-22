@@ -2,8 +2,6 @@ extends Resource
 class_name ExtendedTilemap
 
 var DestroyedTiles : TileMapLayer = TileMapLayer.new()
-var ToBuildTiles : TileMapLayer = TileMapLayer.new()
-var Water : TileMapLayer = TileMapLayer.new()
 var Ground : TileMapLayer = TileMapLayer.new()
 var IrradiatedGround : TileMapLayer = TileMapLayer.new()
 var Foreground : TileMapLayer = TileMapLayer.new()
@@ -55,11 +53,7 @@ func destroyTile(coords: Vector2) -> void:
 func getLayerFromString(layer: String) -> TileMapLayer:
 	match layer:
 		LayerDefs.DestroyedTiles:
-			return DestroyedTiles	
-		LayerDefs.ToBuildTiles:
-			return ToBuildTiles	
-		LayerDefs.Water:
-			return Water
+			return DestroyedTiles
 		LayerDefs.Ground:
 			return Ground
 		LayerDefs.IrradiatedGround:

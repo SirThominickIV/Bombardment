@@ -1,6 +1,8 @@
 extends Camera2D
 class_name CameraController
 
+@onready var mainController: MainController = get_node('/root/MainController') as MainController
+
 #### Normal camera movement ####
 @export var ZoomSpeed = 1.0
 @export var ZoomOutLimit = Vector2(1, 1)
@@ -36,8 +38,9 @@ var isDragging : bool = false
 var noise_i: float = 0.0
 var shake_strength: float = 0.0
 
-func shake() -> void:
-	shake_strength = NOISE_SHAKE_STRENGTH
+#### Planet level zoomIn/out ####
+const zoomTargetForActiveGame = Vector2(1, 1)
+const zoomTargetForInactiveGame = Vector2(0.01, 0.01)
 
 func _ready():
 	zoomTarget = zoom
@@ -49,12 +52,15 @@ func _ready():
 	# Period affects how quickly the noise changes values
 	noise.frequency = 2.0
 
-func _process(delta):	
+func _process(delta):
+	if(!mainController.IsGameActive):
+		return
+		
 	_GetMoveSpeedForZoomlevel()
-	_Zoom()
+	_PlayerInputZoom()
 	_SimplePan()
 	_ClickAndDrag()
-	_CheckPositionLimits()
+	#_CheckPositionLimits()
 
 func _physics_process(delta):
 	# Camera shake
@@ -66,6 +72,27 @@ func _physics_process(delta):
 	
 	# Shake by adjusting camera.offset so we can move the camera around the level via it's position
 	offset = _get_noise_offset(delta)
+	
+	# Zoooom
+	if(mainController.IsGameActive):
+		zoom = zoom.slerp(zoomTarget, ZoomSpeed) # Responsive, quick zoom for player
+	else:
+		zoom = zoom.slerp(zoomTarget, delta) # Gradual zoom for animation
+	print(zoom)
+
+func SwitchToGameStartPosition():
+	await get_tree().create_timer(1.0).timeout
+	print("SwitchToGameStartPosition")
+	zoomTarget = zoomTargetForActiveGame
+
+func SwitchToGameEndPosition():
+	await get_tree().create_timer(1.0).timeout
+	print("SwitchToGameEndPosition")
+	zoomTarget = zoomTargetForInactiveGame
+
+
+func shake() -> void:
+	shake_strength = NOISE_SHAKE_STRENGTH
 
 func _GetMoveSpeedForZoomlevel():
 	# Take the zoom level, and put it through this equation. 
@@ -74,7 +101,7 @@ func _GetMoveSpeedForZoomlevel():
 	# needs edited in the future.
 	moveSpeedForZoomLevel = (1/zoom.x - 0.2) + 1
 
-func _Zoom():
+func _PlayerInputZoom():
 	# Find the target zoom
 	if(Input.is_action_just_pressed("ms_scroll_up")):
 		zoomTarget *= 1.1
@@ -82,13 +109,10 @@ func _Zoom():
 		zoomTarget *= 0.9
 		
 	# Limit zooming
-	if(zoomTarget > ZoomInLimit):
-		zoomTarget = ZoomInLimit
-	if(zoomTarget < ZoomOutLimit):
-		zoomTarget = ZoomOutLimit
-		
-	# Zoooom
-	zoom = zoom.slerp(zoomTarget, ZoomSpeed)
+	#if(zoomTarget > ZoomInLimit):
+		#zoomTarget = ZoomInLimit
+	#if(zoomTarget < ZoomOutLimit):
+		#zoomTarget = ZoomOutLimit
 
 func _SimplePan():	
 	if(Input.is_action_pressed("right")):

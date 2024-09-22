@@ -5,10 +5,14 @@ var tilemap : ExtendedTilemap
 var selectorController
 var random = RandomNumberGenerator.new()
 
-func spawnProjectile(projectileType):
+@onready var mainController: MainController = get_node('/root/MainController') as MainController
+
+func spawnProjectile(projectileType):	
+	if(!mainController.IsGameActive):
+		return
 	
 	# Spawn the projectile of the correct type
-	var projectile = Object	
+	var projectile = Object
 	match projectileType:
 		ProjectileDefs.StandardArtillery:
 			projectile = SceneDefs.StandardArtillery.instantiate()	
