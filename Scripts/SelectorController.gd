@@ -7,7 +7,7 @@ var tilemap : ExtendedTilemap = ExtendedTilemap.new()
 
 @onready var mainController: MainController = get_parent() as MainController
 
-func _process(delta):
+func _process(_delta):
 	if(!mainController.IsGameActive):
 		return
 	

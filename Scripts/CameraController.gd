@@ -52,7 +52,7 @@ func _ready():
 	# Period affects how quickly the noise changes values
 	noise.frequency = 2.0
 
-func _process(delta):
+func _process(_delta):
 	if(!mainController.IsGameActive):
 		return
 		
@@ -78,18 +78,14 @@ func _physics_process(delta):
 		zoom = zoom.slerp(zoomTarget, ZoomSpeed) # Responsive, quick zoom for player
 	else:
 		zoom = zoom.slerp(zoomTarget, delta) # Gradual zoom for animation
-	print(zoom)
 
 func SwitchToGameStartPosition():
 	await get_tree().create_timer(1.0).timeout
-	print("SwitchToGameStartPosition")
 	zoomTarget = zoomTargetForActiveGame
 
 func SwitchToGameEndPosition():
 	await get_tree().create_timer(1.0).timeout
-	print("SwitchToGameEndPosition")
 	zoomTarget = zoomTargetForInactiveGame
-
 
 func shake() -> void:
 	shake_strength = NOISE_SHAKE_STRENGTH

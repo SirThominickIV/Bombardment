@@ -12,12 +12,19 @@ var _playerHealth: int = 20
 
 @export var hullDamageSound: AudioStreamPlayer2D
 
-func _process(delta):
+@onready var mainController: MainController = get_node('/root/MainController') as MainController
+
+func _process(_delta):
+	if(!mainController.IsGameActive):
+		return
+	
 	if(Input.is_action_just_pressed("k")):
-		print("Player Ended the game")
 		setPlayerHealth(-200)
-	if(Input.is_action_just_pressed("mb_left") && !isMouseOverUI):	
+	if(Input.is_action_pressed("mb_left") && !isMouseOverUI):	
 		weaponController.spawnProjectile(selectedProjectile)
+
+func reset() -> void:
+	_playerHealth = 20
 
 func setPlayerHealth(delta: int) -> void:
 	# Apply delta and check limits

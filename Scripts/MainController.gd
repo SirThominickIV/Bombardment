@@ -84,3 +84,4 @@ func GetController(controller) -> Node:
 func _resetControllers() -> void:
 	controllers[ControllerDefs.WelwalaController].reset()
 	controllers[ControllerDefs.FireController].reset()
+	controllers[ControllerDefs.PlayerController].reset()

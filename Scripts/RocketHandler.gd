@@ -13,12 +13,12 @@ var towerCoords: Vector2i
 var tilemap: ExtendedTilemap
 var random = RandomNumberGenerator.new()
 
-const minDamage = 20
-const maxDamage = 21
+const minDamage = 1
+const maxDamage = 3
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if(!mainController.IsGameActive):
 		return
 	
