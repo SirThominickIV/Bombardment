@@ -4,7 +4,7 @@ class_name Projectile
 var TargetCoord = Vector2(0,0)
 var ProjectileType = 0
 
-func _process(delta):
+func _process(_delta):
 	if(position.y > TargetCoord.y):
 		handleCollision()
 		queue_free()

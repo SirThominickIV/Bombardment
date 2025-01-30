@@ -45,6 +45,9 @@ func _process(_delta):
 	if(Input.is_action_just_pressed("9")):
 		setHealthDisplay(1)
 
+func reset() -> void:
+	setHealthDisplay(20)
+
 func zoom() -> void:
 	zoomIn = !zoomIn
 	if(zoomIn):

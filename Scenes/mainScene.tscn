@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://drqi2hy81bgie"]
+[gd_scene load_steps=37 format=3 uid="uid://drqi2hy81bgie"]
 
 [ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_qjatv"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://cdqv7dlq6t3v3" path="res://Art/Audio/NightflameMenu/397604__nightflame__menu-fx-01.wav" id="11_5d8fc"]
 [ext_resource type="Script" path="res://Scripts/WelwalaController.gd" id="11_ccjtb"]
 [ext_resource type="Texture2D" uid="uid://dcoh3do27ln8w" path="res://Art/Textures/Planets/Terran.png" id="15_s8ixu"]
+[ext_resource type="Texture2D" uid="uid://c1q6haxwlf085" path="res://Art/Textures/ThomasTextures/Stars.png" id="16_wy818"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_67pqs"]
 device = -1
@@ -71,6 +72,22 @@ events = [SubResource("InputEventKey_nn7gy")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5w1m"]
 draw_center = false
+
+[sub_resource type="InputEventKey" id="InputEventKey_pk1tj"]
+device = -1
+keycode = 82
+unicode = 114
+
+[sub_resource type="Shortcut" id="Shortcut_6u281"]
+events = [SubResource("InputEventKey_pk1tj")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_dr0e1"]
+device = -1
+keycode = 76
+unicode = 108
+
+[sub_resource type="Shortcut" id="Shortcut_g3uak"]
+events = [SubResource("InputEventKey_dr0e1")]
 
 [sub_resource type="Animation" id="Animation_1cck1"]
 length = 0.001
@@ -178,6 +195,7 @@ text = "WEAPONS"
 metadata/_edit_use_anchors_ = true
 
 [node name="Weapons" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00694444
@@ -380,6 +398,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Heathbar" type="Panel" parent="CameraController/CanvasLayer/ActiveGameUiItems"]
+layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 486.0
@@ -477,7 +496,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_q6c2x")
 theme_override_fonts/font = ExtResource("9_5d4a4")
-shortcut = SubResource("Shortcut_lljuf")
+shortcut = SubResource("Shortcut_6u281")
 text = "REPLAY"
 metadata/_edit_use_anchors_ = true
 
@@ -492,7 +511,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_q6c2x")
 theme_override_fonts/font = ExtResource("9_5d4a4")
-shortcut = SubResource("Shortcut_lljuf")
+shortcut = SubResource("Shortcut_g3uak")
 text = "LEVEL SELECT"
 metadata/_edit_use_anchors_ = true
 
@@ -544,6 +563,9 @@ position = Vector2(200, 200)
 scale = Vector2(200, 200)
 texture = ExtResource("15_s8ixu")
 
+[node name="Stars" type="Sprite2D" parent="ZoomAnimationPlayer/Planet"]
+texture = ExtResource("16_wy818")
+
 [connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]
 [connection signal="pressed" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="toggleWeaponsPanel"]
@@ -576,4 +598,3 @@ texture = ExtResource("15_s8ixu")
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing" to="UIController" method="UI_Exited"]
 [connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Entered"]
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/FinishedGameUiItems/Panel/Replay" to="." method="StartGame" binds= [-1]]
