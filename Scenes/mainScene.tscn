@@ -563,7 +563,7 @@ position = Vector2(200, 200)
 scale = Vector2(200, 200)
 texture = ExtResource("15_s8ixu")
 
-[node name="Sprite2D" type="Sprite2D" parent="ZoomAnimationPlayer/Planet"]
+[node name="Stars" type="Sprite2D" parent="ZoomAnimationPlayer/Planet"]
 texture = ExtResource("16_wy818")
 
 [connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
@@ -598,4 +598,3 @@ texture = ExtResource("16_wy818")
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing" to="UIController" method="UI_Exited"]
 [connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Entered"]
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Exited"]
-[connection signal="pressed" from="CameraController/CanvasLayer/FinishedGameUiItems/Panel/Replay" to="." method="StartGame" binds= [-1]]
