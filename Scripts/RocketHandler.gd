@@ -13,9 +13,6 @@ var towerCoords: Vector2i
 var tilemap: ExtendedTilemap
 var random = RandomNumberGenerator.new()
 
-const minDamage = 1
-const maxDamage = 3
-
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
 
 func _physics_process(_delta):
@@ -51,7 +48,8 @@ func launch() -> void:
 func Detonate() -> void:
 	# Do damage if the rocket surpased doDamageAtTick
 	if(ticks > doDamageAtTick):
-		get_tree().root.get_node("MainController").GetController(ControllerDefs.PlayerController).setPlayerHealth(-random.randi_range(minDamage,maxDamage))
+		get_tree().root.get_node("MainController").GetController(ControllerDefs.PlayerController) \
+			.setPlayerHealth(-random.randi_range(HealthDefs.WelwalaRocketMinDamage,HealthDefs.WelwalaRocketMaxDamage))
 	
 	# Tell the parent that the launch tower is free
 	get_parent().RemoveRocket(towerCoords)
