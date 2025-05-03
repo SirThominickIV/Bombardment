@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://1hfg7r0w7fn"]
 
 [ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_ynxwi"]
-[ext_resource type="Texture2D" uid="uid://ujt2vyjty4ah" path="res://Art/Textures/Missiles/side_winder.png" id="2_u4bji"]
+[ext_resource type="Texture2D" uid="uid://dcasprg27intx" path="res://Art/Textures/Missiles/nuke.png" id="2_uwvi5"]
 
 [node name="RigidBody2D" type="RigidBody2D"]
 script = ExtResource("1_ynxwi")
@@ -9,5 +9,5 @@ script = ExtResource("1_ynxwi")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 show_behind_parent = true
 z_index = 2
-texture = ExtResource("2_u4bji")
+texture = ExtResource("2_uwvi5")
 flip_v = true
