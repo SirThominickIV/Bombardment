@@ -8,7 +8,7 @@ var playerController
 @export var rodsFromTheGods: Control
 @export var nuke: Control
 @export var basicButtonSound: AudioStreamPlayer2D
-@export var HealthLabel: Label
+@export var HealthBar: ColorRect
 @export var ZoomAnimationPlayer: AnimationPlayer
 @export var activeGameUiItems: Panel
 @export var finishedGameUiItems: Panel
@@ -71,9 +71,11 @@ func hideFinishedGame() -> void:
 	finishedGameUiItems.visible = false
 
 func setHealthDisplay(numHealth: int) -> void:
-	HealthLabel.text = ""
-	for i in range(0, numHealth):
-		HealthLabel.text += "◼"
+	if(numHealth < 0):
+		numHealth = 0
+	if(numHealth > HealthDefs.PlayerHealth):
+		numHealth = HealthDefs.PlayerHealth
+	HealthBar.scale.x = numHealth/HealthDefs.PlayerHealth
 
 func UI_Entered() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
