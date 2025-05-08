@@ -20,7 +20,7 @@ func _ready():
 	controllers[ControllerDefs.SelectorController] = get_node("SelectorController")
 	controllers[ControllerDefs.UIController] = get_node("UIController")
 	controllers[ControllerDefs.WeaponController] = get_node("WeaponController")
-	controllers[ControllerDefs.WelwalaController] = get_node("WelwalaController")
+	controllers[ControllerDefs.EnemyController] = get_node("EnemyController")
 	
 	_handOutTileMapLayers()
 	_handOutControllers()
@@ -65,7 +65,7 @@ func EndGame(gameWon: bool) -> void:
 # A variety of controllers will need the tilemap layers, and that behaviour will 
 # need repeated every time a level is loaded. This function will handle that.
 func _handOutTileMapLayers() -> void:
-	controllers[ControllerDefs.WelwalaController].tilemap = tilemap
+	controllers[ControllerDefs.EnemyController].tilemap = tilemap
 	controllers[ControllerDefs.WeaponController].tilemap = tilemap
 	controllers[ControllerDefs.FireController].tilemap = tilemap
 	controllers[ControllerDefs.SelectorController].tilemap = tilemap
@@ -82,6 +82,6 @@ func GetController(controller) -> Node:
 	return controllers[controller]
 
 func _resetControllers() -> void:
-	controllers[ControllerDefs.WelwalaController].reset()
+	controllers[ControllerDefs.EnemyController].reset()
 	controllers[ControllerDefs.FireController].reset()
 	controllers[ControllerDefs.PlayerController].reset()
