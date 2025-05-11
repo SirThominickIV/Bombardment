@@ -234,10 +234,13 @@ metadata/_edit_use_anchors_ = true
 [node name="StandardArtilleryButton" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.891892
+anchor_right = 0.718147
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+tooltip_text = "890mm High Explosive
+This weapon type is a very basic one, dealing damage
+to only a few tiles."
 theme = ExtResource("3_q6c2x")
 theme_override_fonts/font = ExtResource("9_5d4a4")
 shortcut = SubResource("Shortcut_yvgt2")
@@ -247,14 +250,11 @@ metadata/_edit_use_anchors_ = true
 [node name="StandardArtilleryInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.888031
+anchor_left = 0.710425
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "890mm High Explosive
-This weapon type is a very basic one, dealing damage
-to only a few tiles."
 mouse_filter = 1
 theme = ExtResource("6_lprfn")
 theme_override_font_sizes/font_size = 10
@@ -275,10 +275,12 @@ metadata/_edit_use_anchors_ = true
 [node name="IncendiaryButton" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.891892
+anchor_right = 0.718147
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+tooltip_text = "120mm High Explosive Incendiary
+This weapon type primarily spreads fires."
 theme = ExtResource("3_q6c2x")
 theme_override_fonts/font = ExtResource("9_5d4a4")
 shortcut = SubResource("Shortcut_ulsk2")
@@ -288,13 +290,11 @@ metadata/_edit_use_anchors_ = true
 [node name="IncendiaryInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.88417
+anchor_left = 0.710425
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "120mm High Explosive Incendiary
-This weapon type primarily spreads fires."
 mouse_filter = 0
 theme = ExtResource("6_lprfn")
 theme_override_font_sizes/font_size = 10
@@ -316,10 +316,15 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00384615
-anchor_right = 0.896154
+anchor_right = 0.719231
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+tooltip_text = "300mm x 6kmm High Explosive Armor Piercing
+This weapon type is coloquial known as the Rods From The Gods.
+It is a tungsten rod that maintains most of it's velocity and energy after
+decending from orbit due to it's low drag. On impact that energy is
+converted into a violent explosion, dealing massive damage."
 theme = ExtResource("3_q6c2x")
 theme_override_fonts/font = ExtResource("9_5d4a4")
 shortcut = SubResource("Shortcut_xq7fa")
@@ -329,21 +334,14 @@ metadata/_edit_use_anchors_ = true
 [node name="RodsFromTheGodsInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.857499
-anchor_top = 0.477951
-anchor_right = 0.969037
-anchor_bottom = 0.854912
-offset_left = 8.05037
-offset_top = -14.3385
-offset_right = 8.05038
-offset_bottom = 4.35264
+anchor_left = 0.712
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.119934
+offset_right = 9.15527e-05
+offset_bottom = 3.05176e-05
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "300mm x 6kmm High Explosive Armor Piercing
-This weapon type is coloquial known as the Rods From The Gods.
-It is a tungsten rod that maintains most of it's velocity and energy after
-decending from orbit due to it's low drag. On impact that energy is
-converted into a violent explosion, dealing massive damage."
 mouse_filter = 0
 theme = ExtResource("6_lprfn")
 theme_override_fonts/font = ExtResource("9_5d4a4")
@@ -366,11 +364,14 @@ metadata/_edit_use_anchors_ = true
 [node name="NukeButton" type="Button" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.00384615
-anchor_right = 0.896154
+anchor_left = 0.00383142
+anchor_right = 0.720307
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+tooltip_text = "1kt Nuclear Explosive Package
+This weapon type deals large amounts of damage, and leaves behind
+radioactive material."
 theme = ExtResource("3_q6c2x")
 theme_override_fonts/font = ExtResource("9_5d4a4")
 shortcut = SubResource("Shortcut_1x848")
@@ -380,14 +381,14 @@ metadata/_edit_use_anchors_ = true
 [node name="NukeInfo" type="Label" parent="CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.892308
+anchor_left = 0.712644
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "1kt Nuclear Explosive Package
 This weapon type deals large amounts of damage, and leaves behind
-radioactive material."
+radioactive material, which renders an effected tile permanently unusable."
 mouse_filter = 0
 theme = ExtResource("6_lprfn")
 theme_override_fonts/font = ExtResource("9_5d4a4")
@@ -459,6 +460,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="FinishedGameUiItems" type="Panel" parent="CameraController/CanvasLayer"]
+visible = false
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -541,13 +543,17 @@ stream = ExtResource("9_e60qk")
 [node name="SelectorController" type="Node" parent="."]
 script = ExtResource("9_5dhxu")
 
-[node name="UIController" type="Node" parent="." node_paths=PackedStringArray("weaponPanel", "standardArtillery", "incendiary", "rodsFromTheGods", "nuke", "basicButtonSound", "HealthBar", "ZoomAnimationPlayer", "activeGameUiItems", "finishedGameUiItems", "finishedGameOutputHeader", "finishedGameOutputBody")]
+[node name="UIController" type="Node" parent="." node_paths=PackedStringArray("weaponPanel", "standardArtillery", "standardArtilleryLabel", "incendiary", "incendiaryLabel", "rodsFromTheGods", "rodsFromTheGodsLabel", "nuke", "nukeLabel", "basicButtonSound", "HealthBar", "ZoomAnimationPlayer", "activeGameUiItems", "finishedGameUiItems", "finishedGameOutputHeader", "finishedGameOutputBody")]
 script = ExtResource("10_3emxv")
 weaponPanel = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons")
 standardArtillery = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery")
+standardArtilleryLabel = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/StandardArtillery/StandardArtilleryInfo")
 incendiary = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary")
+incendiaryLabel = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Incendiary/IncendiaryInfo")
 rodsFromTheGods = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods")
+rodsFromTheGodsLabel = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/RodsFromTheGods/RodsFromTheGodsInfo")
 nuke = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke")
+nukeLabel = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Weapons/Nuke/NukeInfo")
 basicButtonSound = NodePath("BasicButtonSound")
 HealthBar = NodePath("../CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing/ColorRect")
 ZoomAnimationPlayer = NodePath("../ZoomAnimationPlayer")

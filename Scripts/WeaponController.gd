@@ -4,27 +4,74 @@ class_name  WeaponController
 var tilemap: TilemapController
 var selectorController: SelectorController
 var enemyController: EnemyController
+var uiController: UIController
 var random = RandomNumberGenerator.new()
+
+var cooldown: float
+
+var standardArtilleryCount: int
+var incendiaryCount: int
+var rodsFromTheGodsCount: int
+var nukeCount: int
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
 
-func spawnProjectile(projectileType):	
-	if(!mainController.IsGameActive):
+func spawnProjectile(projectileType):
+	
+	# Guard against inactive game & cooldown
+	if(!mainController.IsGameActive || cooldown > 0):
 		return
 	
 	# Spawn the projectile of the correct type
 	var projectile = Object
 	match projectileType:
 		ProjectileDefs.StandardArtillery:
-			projectile = SceneDefs.StandardArtillery.instantiate()	
+			
+			# Guard against none available
+			if(standardArtilleryCount <= 0):
+				return
+			
+			standardArtilleryCount -= 1
+			uiController.set_artillery_label(str(standardArtilleryCount))
+			projectile = SceneDefs.StandardArtillery.instantiate()
+			
+		ProjectileDefs.Incendiary:
+			
+			# Guard against none available
+			if(incendiaryCount <= 0):
+				return
+			
+			incendiaryCount -= 1
+			uiController.set_incendiary_label(str(incendiaryCount))
+			projectile = SceneDefs.StandardArtillery.instantiate()
+			
+		ProjectileDefs.RodsFromTheGods:
+			
+			# Guard against none available
+			if(rodsFromTheGodsCount <= 0):
+				return
+			
+			rodsFromTheGodsCount -= 1
+			uiController.set_rodsfromthegods_label(str(rodsFromTheGodsCount))
+			projectile = SceneDefs.StandardArtillery.instantiate()
+			
 		ProjectileDefs.Nuke:
-			projectile = SceneDefs.Nuke.instantiate()	
+			
+			# Guard against none available
+			if(nukeCount <= 0):
+				return
+			
+			nukeCount -= 1
+			uiController.set_nuke_label(str(nukeCount))
+			projectile = SceneDefs.Nuke.instantiate()
 		_:
-			projectile = SceneDefs.StandardArtillery.instantiate()	
+			push_error("Cannot instantiate unknown projectile type")
 	
 	# Keep it as a child so the projectile can
 	# report when to do damage
 	add_child(projectile)
+	
+	cooldown = ProjectileDefs.WeaponCooldown
 	
 	# Do position tracking stuff
 	var spawnLocation = selectorController.selectedTile
@@ -32,6 +79,26 @@ func spawnProjectile(projectileType):
 	projectile.position = tilemap.Selection.map_to_local(spawnLocation)
 	projectile.TargetCoord = tilemap.Selection.map_to_local(selectorController.selectedTile)
 	projectile.ProjectileType = projectileType
+
+func _process(_delta):
+	if(cooldown > 0):
+		cooldown -= _delta
+
+func reset() -> void:
+	
+	cooldown = 0
+	
+	# Reset weapon counts
+	standardArtilleryCount = ProjectileDefs.StandardArtilleryLimit
+	incendiaryCount = ProjectileDefs.IncendiaryLimit
+	rodsFromTheGodsCount = ProjectileDefs.RodsFromTheGodsLimit
+	nukeCount = ProjectileDefs.NukeLimit
+	
+	# Reset UI for counts
+	uiController.set_artillery_label(str(standardArtilleryCount))
+	uiController.set_incendiary_label(str(incendiaryCount))
+	uiController.set_rodsfromthegods_label(str(rodsFromTheGodsCount))
+	uiController.set_nuke_label(str(nukeCount))
 
 func doStandardArtilleryDamage(targetPosition):	
 	# Convert to tilemap position
