@@ -1,7 +1,7 @@
 extends Node
 class_name FireController
 
-var tilemap: ExtendedTilemap
+var tilemap: TilemapController
 
 var ticks = 0
 const ticksNeeded = 1
@@ -44,8 +44,8 @@ func _physics_process(delta):
 		return
 		
 	# Burn
-	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, toBurn, TileDefs.Fire, LayerDefs.Foreground)	
-
+	tilemap.burnTile((toBurn))
+	
 func reset() -> void:
 	ticks = 0
 

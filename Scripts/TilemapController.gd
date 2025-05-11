@@ -1,5 +1,5 @@
-extends Resource
-class_name ExtendedTilemap
+extends Node
+class_name TilemapController
 
 var DestroyedTiles : TileMapLayer = TileMapLayer.new()
 var Ground : TileMapLayer = TileMapLayer.new()
@@ -7,18 +7,20 @@ var IrradiatedGround : TileMapLayer = TileMapLayer.new()
 var Foreground : TileMapLayer = TileMapLayer.new()
 var Selection : TileMapLayer = TileMapLayer.new()
 
+var enemyController: EnemyController
+
 func moveTileToLayer(fromLayer: String, toLayer: String, coords: Vector2) -> void:
 	
-	var _fromLayer = getLayerFromString(fromLayer)
-	var _toLayer = getLayerFromString(toLayer)
+	var tmlFromLayer = getLayerFromString(fromLayer)
+	var tmlToLayer = getLayerFromString(toLayer)
 	
 	# Guard against nulls
-	if(_fromLayer == null || _toLayer == null || coords == null):
+	if(tmlFromLayer == null || tmlToLayer == null || coords == null):
 		return
 	
 	# Find out what it is
-	var sourceId = _fromLayer.get_cell_source_id(coords)		
-	var atlasCoords = _fromLayer.get_cell_atlas_coords(coords)
+	var sourceId = tmlFromLayer.get_cell_source_id(coords)		
+	var atlasCoords = tmlFromLayer.get_cell_atlas_coords(coords)
 	
 	# Guard against tiles that can't be destroyed
 	if(!TileDefs.DestructibleTiles.has(sourceId)):
@@ -30,12 +32,12 @@ func moveTileToLayer(fromLayer: String, toLayer: String, coords: Vector2) -> voi
 	
 	# Set new layer if it can be moved
 	if(TileDefs.MovableTiles.has(sourceId)):
-		_toLayer.set_cell(coords, sourceId, atlasCoords)
+		tmlToLayer.set_cell(coords, sourceId, atlasCoords)
 	
 	# Erase old layer
-	_fromLayer.erase_cell(coords)
+	tmlFromLayer.erase_cell(coords)
 
-func moveTileToLayerWithLeaveBehind(fromLayer: String, toLayer: String, coords: Vector2, tileToLeaveBehind: int, layerToleaveBehind: String) -> void:
+func _moveTileToLayerWithLeaveBehind(fromLayer: String, toLayer: String, coords: Vector2, tileToLeaveBehind: int, layerToleaveBehind: String) -> void:
 	
 	moveTileToLayer(fromLayer, toLayer, coords)
 	
@@ -45,11 +47,17 @@ func moveTileToLayerWithLeaveBehind(fromLayer: String, toLayer: String, coords: 
 		_layerToLeaveBehind.set_cell(coords, tileToLeaveBehind, Vector2(0,0))
 
 func burnTile(coords: Vector2) -> void:
-	moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords, TileDefs.Fire, LayerDefs.Foreground)
+	enemyController.KillCivilian(coords)
+	_moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords, TileDefs.Fire, LayerDefs.Foreground)
 
 func destroyTile(coords: Vector2) -> void:
-	moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords, TileDefs.Debris, LayerDefs.Foreground)
-	
+	enemyController.KillCivilian(coords)
+	_moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords, TileDefs.Debris, LayerDefs.Foreground)
+
+func nukeTile(coords: Vector2) -> void:
+	enemyController.KillCivilian(coords)
+	_moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords,  TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
+
 func getLayerFromString(layer: String) -> TileMapLayer:
 	match layer:
 		LayerDefs.DestroyedTiles:

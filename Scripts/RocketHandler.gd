@@ -10,10 +10,10 @@ const doDamageAtTick = 600
 
 var isLaunched = false
 var towerCoords: Vector2i
-var tilemap: ExtendedTilemap
 var random = RandomNumberGenerator.new()
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
+@onready var tilemap: TilemapController # Assigned from parent EnemyController when instantiated
 
 func _physics_process(_delta):
 	if(!mainController.IsGameActive):

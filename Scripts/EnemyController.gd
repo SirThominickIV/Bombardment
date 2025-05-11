@@ -2,7 +2,7 @@ extends Node
 class_name EnemyController
 
 var random = RandomNumberGenerator.new()
-var tilemap: ExtendedTilemap
+var tilemap: TilemapController
 
 # Defense
 var civilians: Array[Vector2i] = [] # Source of truth for enemy "health"
@@ -43,11 +43,14 @@ func reset() -> void:
 	civilians = tilemap.Foreground.get_used_cells_by_id(TileDefs.ResidentialBuilding)
 
 func KillCivilian(coords: Vector2i) -> void:
-	civilians.pop_at(civilians.find(coords))
+	
+	var indexToPop = civilians.find(coords)
+	if(indexToPop >= 0):
+		civilians.pop_at(indexToPop)
 	
 	if(civilians.is_empty()):
 		get_parent().EndGame(true)
-	
+
 func SpawnRocket() -> void:
 	var rocket = SceneDefs.Rocket.instantiate()
 	var coords = availableLaunchTowers.pick_random()
@@ -79,7 +82,7 @@ func DoLaunchTowerLogic() -> void:
 			if(availableLaunchTowers.has(tile)):
 				availableLaunchTowers.pop_at(availableLaunchTowers.find(tile))
 			continue
-			
+		
 		# Add tile to availableLaunchTowers
 		if(!availableLaunchTowers.has(tile)):
 			availableLaunchTowers.append(tile)
