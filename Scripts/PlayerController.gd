@@ -8,8 +8,7 @@ var cameraController: CameraController
 
 var selectedProjectile = ProjectileDefs.StandardArtillery
 var isMouseOverUI: bool = false
-@warning_ignore("narrowing_conversion")
-var _playerHealth: int = HealthDefs.PlayerHealth
+var _playerHealth: int = PlayerStatsDefs.PlayerHealth
 
 @export var hullDamageSound: AudioStreamPlayer2D
 
@@ -25,15 +24,13 @@ func _process(_delta):
 		weaponController.spawnProjectile(selectedProjectile)
 
 func reset() -> void:
-	@warning_ignore("narrowing_conversion")
-	_playerHealth = HealthDefs.PlayerHealth
+	_playerHealth = PlayerStatsDefs.PlayerHealth
 
 func setPlayerHealth(delta: int) -> void:
 	# Apply delta and check limits
 	_playerHealth = _playerHealth + delta
-	if(_playerHealth > HealthDefs.PlayerHealth):
-		@warning_ignore("narrowing_conversion")
-		_playerHealth = HealthDefs.PlayerHealth
+	if(_playerHealth > PlayerStatsDefs.PlayerHealth):
+		_playerHealth = PlayerStatsDefs.PlayerHealth
 	if(_playerHealth <= 0):
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 		get_parent().EndGame(false)

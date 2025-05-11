@@ -22,7 +22,8 @@ ProjectileDefs="*res://Scripts/Definitions/ProjectileDefs.gd"
 SceneDefs="*res://Scripts/Definitions/SceneDefs.gd"
 TileDefs="*res://Scripts/Definitions/TileDefs.gd"
 ControllerDefs="*res://Scripts/Definitions/ControllerDefs.gd"
-HealthDefs="*res://Scripts/Definitions/HealthDefs.gd"
+PlayerStatsDefs="*res://Scripts/Definitions/PlayerStatsDefs.gd"
+EnemyStatsDefs="*res://Scripts/Definitions/EnemyStatsDefs.gd"
 
 [editor]
 

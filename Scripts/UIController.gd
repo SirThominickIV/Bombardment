@@ -73,9 +73,9 @@ func hideFinishedGame() -> void:
 func setHealthDisplay(numHealth: int) -> void:
 	if(numHealth < 0):
 		numHealth = 0
-	if(numHealth > HealthDefs.PlayerHealth):
-		numHealth = HealthDefs.PlayerHealth
-	HealthBar.scale.x = numHealth/HealthDefs.PlayerHealth
+	if(numHealth > PlayerStatsDefs.PlayerHealth):
+		numHealth = PlayerStatsDefs.PlayerHealth
+	HealthBar.scale.x = numHealth/(PlayerStatsDefs.PlayerHealth * 1.0)
 
 func UI_Entered() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
