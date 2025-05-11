@@ -10,10 +10,10 @@ const doDamageAtTick = 600
 
 var isLaunched = false
 var towerCoords: Vector2i
-var tilemap: ExtendedTilemap
 var random = RandomNumberGenerator.new()
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
+@onready var tilemap: TilemapController # Assigned from parent EnemyController when instantiated
 
 func _physics_process(_delta):
 	if(!mainController.IsGameActive):
@@ -49,7 +49,7 @@ func Detonate() -> void:
 	# Do damage if the rocket surpased doDamageAtTick
 	if(ticks > doDamageAtTick):
 		get_tree().root.get_node("MainController").GetController(ControllerDefs.PlayerController) \
-			.setPlayerHealth(-random.randi_range(HealthDefs.WelwalaRocketMinDamage,HealthDefs.WelwalaRocketMaxDamage))
+			.setPlayerHealth(-random.randi_range(HealthDefs.EnemyRocketMinDamage,HealthDefs.EnemyRocketMaxDamage))
 	
 	# Tell the parent that the launch tower is free
 	get_parent().RemoveRocket(towerCoords)

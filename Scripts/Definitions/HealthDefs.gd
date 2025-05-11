@@ -2,5 +2,5 @@ extends Node
 
 
 const PlayerHealth = 20.0
-const WelwalaRocketMinDamage = 1.0
-const WelwalaRocketMaxDamage = 3.0
+const EnemyRocketMinDamage = 1.0
+const EnemyRocketMaxDamage = 3.0

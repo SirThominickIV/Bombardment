@@ -6,4 +6,5 @@ const PlayerController = 3
 const SelectorController = 4
 const UIController = 5
 const WeaponController = 6
-const WelwalaController = 7
+const EnemyController = 7
+const TileMapController = 8

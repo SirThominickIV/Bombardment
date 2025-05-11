@@ -3,7 +3,7 @@ class_name SelectorController
 
 var selectedTile = Vector2(0, 0)
 
-var tilemap : ExtendedTilemap = ExtendedTilemap.new()
+var tilemap: TilemapController
 
 @onready var mainController: MainController = get_parent() as MainController
 

@@ -1,12 +1,13 @@
 extends Node
-class_name WelwalaController
-
-# Welwala - Noun - (pejorative) a person obsessed with the 
-# gravity well of the inner planets' culture; a "planet-lover"
+class_name EnemyController
 
 var random = RandomNumberGenerator.new()
-var tilemap: ExtendedTilemap
+var tilemap: TilemapController
 
+# Defense
+var civilians: Array[Vector2i] = [] # Source of truth for enemy "health"
+
+# Offense
 var launchTowers : Array[Vector2i] = []
 var availableLaunchTowers: Array[Vector2i] = []
 var rockets: Array[Vector2i] = []
@@ -38,12 +39,23 @@ func reset() -> void:
 	buildPoints = 0
 	launchTowers.clear()
 	availableLaunchTowers.clear()
+	
+	civilians = tilemap.Foreground.get_used_cells_by_id(TileDefs.ResidentialBuilding)
+
+func KillCivilian(coords: Vector2i) -> void:
+	
+	var indexToPop = civilians.find(coords)
+	if(indexToPop >= 0):
+		civilians.pop_at(indexToPop)
+	
+	if(civilians.is_empty()):
+		get_parent().EndGame(true)
 
 func SpawnRocket() -> void:
 	var rocket = SceneDefs.Rocket.instantiate()
 	var coords = availableLaunchTowers.pick_random()
 	
-	# Welwala rocket tracking
+	# Enemy rocket tracking
 	rockets.append(coords)
 	availableLaunchTowers.pop_at(availableLaunchTowers.find(coords))
 	add_child(rocket)
@@ -70,7 +82,7 @@ func DoLaunchTowerLogic() -> void:
 			if(availableLaunchTowers.has(tile)):
 				availableLaunchTowers.pop_at(availableLaunchTowers.find(tile))
 			continue
-			
+		
 		# Add tile to availableLaunchTowers
 		if(!availableLaunchTowers.has(tile)):
 			availableLaunchTowers.append(tile)

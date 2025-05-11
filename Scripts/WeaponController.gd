@@ -1,8 +1,9 @@
 extends Node
 class_name  WeaponController
 
-var tilemap : ExtendedTilemap
-var selectorController
+var tilemap: TilemapController
+var selectorController: SelectorController
+var enemyController: EnemyController
 var random = RandomNumberGenerator.new()
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
@@ -38,11 +39,9 @@ func doStandardArtilleryDamage(targetPosition):
 	
 	# Erase two random nearby cells
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
-	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[random.randi_range(0, 7)], TileDefs.Debris, LayerDefs.Foreground)
-	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[random.randi_range(0, 7)], TileDefs.Debris, LayerDefs.Foreground)
-	
-	# Erase the selected one
-	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
+	tilemap.destroyTile(targets[random.randi_range(0, 7)])
+	tilemap.destroyTile(targets[random.randi_range(0, 7)])
+	tilemap.destroyTile(localTargetPosition)
 
 func doNukeDamage(targetPosition):	
 	# Convert to tilemap position
@@ -52,13 +51,12 @@ func doNukeDamage(targetPosition):
 	
 	for i in range(7):
 		if(random.randi_range(0,1) == 0):
-			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Debris, LayerDefs.Foreground)	
+			tilemap.destroyTile(targets[i])
 		else:
-			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Fire, LayerDefs.Foreground)	
-	
-	# Set the selected one
-	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
+			tilemap.burnTile(targets[i])
 
+	# Erase the selected one
+	tilemap.nukeTile(localTargetPosition)
 
 func doRodsFromTheGodsDamage(targetPosition):	
 	# Convert to tilemap position
@@ -67,20 +65,20 @@ func doRodsFromTheGodsDamage(targetPosition):
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
 	for i in range(7):
 		if(random.randi_range(0,1) == 0):
-			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Debris, LayerDefs.Foreground)	
+			tilemap.destroyTile(targets[i])
 		else:
-			tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Fire, LayerDefs.Foreground)	
+			tilemap.burnTile(targets[i])
 	
 	# Erase the selected one
-	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Debris, LayerDefs.Foreground)	
-
+	tilemap.nukeTile(localTargetPosition)
+	
 func doIncendiaryDamage(targetPosition):	
 	# Convert to tilemap position
 	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 	
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
 	for i in range(7):
-		tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, targets[i], TileDefs.Fire, LayerDefs.Foreground)	
+		tilemap.burnTile(targets[i])
 	
 	# Erase the selected one
-	tilemap.moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, localTargetPosition, TileDefs.Fire, LayerDefs.Foreground)	
+	tilemap.burnTile(localTargetPosition)
