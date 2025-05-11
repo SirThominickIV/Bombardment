@@ -48,7 +48,7 @@ func launch() -> void:
 func Detonate() -> void:
 	# Do damage if the rocket surpased doDamageAtTick
 	if(ticks > doDamageAtTick):
-		get_tree().root.get_node("MainController").GetController(ControllerDefs.PlayerController) \
+		get_tree().root.get_node("MainController").GetController(ControllerDefs.Controllers.PlayerController) \
 			.setPlayerHealth(-random.randi_range(EnemyStatsDefs.EnemyRocketMinDamage,EnemyStatsDefs.EnemyRocketMaxDamage))
 	
 	# Tell the parent that the launch tower is free

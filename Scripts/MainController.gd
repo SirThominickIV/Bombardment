@@ -12,14 +12,14 @@ var currentLevel: int = 0
 func _ready():
 
 	# Gather the controllers
-	controllers[ControllerDefs.CameraController] = get_node("CameraController")
-	controllers[ControllerDefs.FireController] = get_node("FireController")
-	controllers[ControllerDefs.PlayerController] = get_node("PlayerController")
-	controllers[ControllerDefs.SelectorController] = get_node("SelectorController")
-	controllers[ControllerDefs.UIController] = get_node("UIController")
-	controllers[ControllerDefs.WeaponController] = get_node("WeaponController")
-	controllers[ControllerDefs.EnemyController] = get_node("EnemyController")
-	controllers[ControllerDefs.TileMapController] = get_node("TilemapController")
+	controllers[ControllerDefs.Controllers.CameraController] = get_node("CameraController")
+	controllers[ControllerDefs.Controllers.FireController] = get_node("FireController")
+	controllers[ControllerDefs.Controllers.PlayerController] = get_node("PlayerController")
+	controllers[ControllerDefs.Controllers.SelectorController] = get_node("SelectorController")
+	controllers[ControllerDefs.Controllers.UIController] = get_node("UIController")
+	controllers[ControllerDefs.Controllers.WeaponController] = get_node("WeaponController")
+	controllers[ControllerDefs.Controllers.EnemyController] = get_node("EnemyController")
+	controllers[ControllerDefs.Controllers.TileMapController] = get_node("TilemapController")
 	
 	_handOutControllers()
 	
@@ -30,21 +30,21 @@ func StartGame(levelIndex: int) -> void:
 		levelIndex = currentLevel
 	
 	
-	controllers[ControllerDefs.UIController].hideFinishedGame()
+	controllers[ControllerDefs.Controllers.UIController].hideFinishedGame()
 	await get_tree().create_timer(0.5).timeout
 	level = SceneDefs.Levels[levelIndex].instantiate()
 	add_child(level)
 	
 	# Combine tile map layers
-	var tilemap = controllers[ControllerDefs.TileMapController]
+	var tilemap = controllers[ControllerDefs.Controllers.TileMapController]
 	tilemap.DestroyedTiles = level.get_node("/root/MainController/Level/" + LayerDefs.DestroyedTiles)
 	tilemap.Ground = level.get_node("/root/MainController/Level/" + LayerDefs.Ground)
 	tilemap.IrradiatedGround = level.get_node("/root/MainController/Level/" + LayerDefs.IrradiatedGround)
 	tilemap.Foreground = level.get_node("/root/MainController/Level/" + LayerDefs.Foreground)
 	tilemap.Selection = level.get_node("/root/MainController/Level/" + LayerDefs.Selection)
 	
-	controllers[ControllerDefs.UIController].zoom()
-	controllers[ControllerDefs.CameraController].SwitchToGameStartPosition()
+	controllers[ControllerDefs.Controllers.UIController].zoom()
+	controllers[ControllerDefs.Controllers.CameraController].SwitchToGameStartPosition()
 	await get_tree().create_timer(5.0).timeout
 	IsGameActive = true
 	
@@ -58,44 +58,46 @@ func EndGame(gameWon: bool) -> void:
 	IsGameActive = false
 	
 	# Animation
-	controllers[ControllerDefs.UIController].zoom()
-	controllers[ControllerDefs.CameraController].SwitchToGameEndPosition()
+	controllers[ControllerDefs.Controllers.UIController].zoom()
+	controllers[ControllerDefs.Controllers.CameraController].SwitchToGameEndPosition()
 	await get_tree().create_timer(5.0).timeout
 	level.queue_free()
 	await get_tree().create_timer(1.0).timeout
 	
 	# UI handling
-	controllers[ControllerDefs.UIController].showFinishedGame(gameWon, "placeholder")
+	controllers[ControllerDefs.Controllers.UIController].showFinishedGame(gameWon, "placeholder")
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 
 func _handOutControllers() -> void:
 	
 	# Sending out the TilemapController
-	var tilemap = controllers[ControllerDefs.TileMapController]
-	controllers[ControllerDefs.EnemyController].tilemap = tilemap
-	controllers[ControllerDefs.FireController].tilemap = tilemap
-	controllers[ControllerDefs.SelectorController].tilemap = tilemap
+	var tilemap = controllers[ControllerDefs.Controllers.TileMapController]
+	controllers[ControllerDefs.Controllers.EnemyController].tilemap = tilemap
+	controllers[ControllerDefs.Controllers.FireController].tilemap = tilemap
+	controllers[ControllerDefs.Controllers.SelectorController].tilemap = tilemap
 	
 	# WeaponController reqs
-	controllers[ControllerDefs.WeaponController].tilemap = tilemap
-	controllers[ControllerDefs.WeaponController].selectorController = controllers[ControllerDefs.SelectorController]
-	controllers[ControllerDefs.WeaponController].enemyController = controllers[ControllerDefs.EnemyController]
+	controllers[ControllerDefs.Controllers.WeaponController].tilemap = tilemap
+	controllers[ControllerDefs.Controllers.WeaponController].selectorController = controllers[ControllerDefs.Controllers.SelectorController]
+	controllers[ControllerDefs.Controllers.WeaponController].enemyController = controllers[ControllerDefs.Controllers.EnemyController]
+	controllers[ControllerDefs.Controllers.WeaponController].uiController = controllers[ControllerDefs.Controllers.UIController]
 	
 	# UIController reqs
-	controllers[ControllerDefs.UIController].playerController = controllers[ControllerDefs.PlayerController]
+	controllers[ControllerDefs.Controllers.UIController].playerController = controllers[ControllerDefs.Controllers.PlayerController]
 	
 	# PlayerController reqs
-	controllers[ControllerDefs.PlayerController].weaponController = controllers[ControllerDefs.WeaponController]
-	controllers[ControllerDefs.PlayerController].uiController = controllers[ControllerDefs.UIController]
-	controllers[ControllerDefs.PlayerController].cameraController = controllers[ControllerDefs.CameraController]
+	controllers[ControllerDefs.Controllers.PlayerController].weaponController = controllers[ControllerDefs.Controllers.WeaponController]
+	controllers[ControllerDefs.Controllers.PlayerController].uiController = controllers[ControllerDefs.Controllers.UIController]
+	controllers[ControllerDefs.Controllers.PlayerController].cameraController = controllers[ControllerDefs.Controllers.CameraController]
 	
 	# TilemapController reqs
-	controllers[ControllerDefs.TileMapController].enemyController = controllers[ControllerDefs.EnemyController]
+	controllers[ControllerDefs.Controllers.TileMapController].enemyController = controllers[ControllerDefs.Controllers.EnemyController]
 
 func GetController(controller) -> Node:
 	return controllers[controller]
 
 func _resetControllers() -> void:
-	controllers[ControllerDefs.FireController].reset()
-	controllers[ControllerDefs.PlayerController].reset()
-	controllers[ControllerDefs.EnemyController].reset()
+	controllers[ControllerDefs.Controllers.FireController].reset()
+	controllers[ControllerDefs.Controllers.PlayerController].reset()
+	controllers[ControllerDefs.Controllers.EnemyController].reset()
+	controllers[ControllerDefs.Controllers.WeaponController].reset()

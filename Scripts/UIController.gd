@@ -2,15 +2,25 @@ extends Node
 class_name UIController
 
 var playerController
+
+# Weapons
 @export var weaponPanel: Control
 @export var standardArtillery: Control
+@export var standardArtilleryLabel: Label
 @export var incendiary: Control
+@export var incendiaryLabel: Label
 @export var rodsFromTheGods: Control
+@export var rodsFromTheGodsLabel: Label
 @export var nuke: Control
+@export var nukeLabel: Label
+
+# Other
 @export var basicButtonSound: AudioStreamPlayer2D
 @export var HealthBar: ColorRect
 @export var ZoomAnimationPlayer: AnimationPlayer
 @export var activeGameUiItems: Panel
+
+# Game end
 @export var finishedGameUiItems: Panel
 @export var finishedGameOutputHeader: Label
 @export var finishedGameOutputBody: RichTextLabel
@@ -76,6 +86,18 @@ func setHealthDisplay(numHealth: int) -> void:
 	if(numHealth > PlayerStatsDefs.PlayerHealth):
 		numHealth = PlayerStatsDefs.PlayerHealth
 	HealthBar.scale.x = numHealth/(PlayerStatsDefs.PlayerHealth * 1.0)
+
+func set_artillery_label(s: String) -> void:
+	standardArtilleryLabel.text = s
+
+func set_incendiary_label(s: String) -> void:
+	incendiaryLabel.text = s
+
+func set_rodsfromthegods_label(s: String) -> void:
+	rodsFromTheGodsLabel.text = s
+
+func set_nuke_label(s: String) -> void:
+	nukeLabel.text = s
 
 func UI_Entered() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)

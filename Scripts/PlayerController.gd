@@ -20,7 +20,7 @@ func _process(_delta):
 	
 	if(Input.is_action_just_pressed("k")):
 		setPlayerHealth(-200)
-	if(Input.is_action_pressed("mb_left") && !isMouseOverUI):	
+	if(Input.is_action_pressed("mb_left") && !isMouseOverUI):
 		weaponController.spawnProjectile(selectedProjectile)
 
 func reset() -> void:
