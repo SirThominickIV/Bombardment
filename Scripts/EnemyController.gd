@@ -29,9 +29,9 @@ func _physics_process(delta):
 		buildPoints = 0
 		SpawnRocket()
 	
-	if(buildPoints > buildPointsNeeded):
-		buildPoints = 0
-		RebuildRandom()
+	#if(buildPoints > buildPointsNeeded):
+		#buildPoints = 0
+		#RebuildRandom()
 
 func reset() -> void:
 	for child in get_children():
@@ -108,7 +108,7 @@ func RebuildRandom() -> void:
 	
 	# Repair something
 	var cellToRepair = repairableCells.pick_random()	
-	tilemap.moveTileToLayer(LayerDefs.DestroyedTiles, LayerDefs.Foreground, cellToRepair)
+	tilemap.move_to_layer(LayerDefs.DestroyedTiles, LayerDefs.Foreground, cellToRepair)
 
 func CanCellBeBuiltOn(cell) -> bool:	
 	var result = true
