@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://drqi2hy81bgie"]
+[gd_scene load_steps=39 format=3 uid="uid://drqi2hy81bgie"]
 
 [ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_qjatv"]
@@ -6,6 +6,7 @@
 [ext_resource type="Theme" uid="uid://dtmdu442rr8nn" path="res://Resources/BoxyButtonTheme.tres" id="3_q6c2x"]
 [ext_resource type="Theme" uid="uid://bucq77s3vegfj" path="res://Resources/ToolTipButtonTheme.tres" id="6_lprfn"]
 [ext_resource type="Script" path="res://Scripts/FireController.gd" id="7_cqqfm"]
+[ext_resource type="Texture2D" uid="uid://d3nib4kqmrxnl" path="res://Art/Textures/Planets/Blankplanet.png" id="7_ys4h1"]
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="8_b4r31"]
 [ext_resource type="FontFile" uid="uid://drqdvol3hbnrm" path="res://Art/FFFFORWA.TTF" id="9_5d4a4"]
 [ext_resource type="Script" path="res://Scripts/SelectorController.gd" id="9_5dhxu"]
@@ -530,6 +531,13 @@ shortcut = SubResource("Shortcut_g3uak")
 text = "LEVEL SELECT"
 metadata/_edit_use_anchors_ = true
 
+[node name="Water" type="Sprite2D" parent="."]
+modulate = Color(0.141176, 0.32549, 0.870588, 1)
+z_index = -1
+position = Vector2(200, 200)
+scale = Vector2(200, 200)
+texture = ExtResource("7_ys4h1")
+
 [node name="FireController" type="Node" parent="."]
 script = ExtResource("7_cqqfm")
 
@@ -579,14 +587,16 @@ libraries = {
 "": SubResource("AnimationLibrary_wf0th")
 }
 
+[node name="Stars" type="Sprite2D" parent="ZoomAnimationPlayer"]
+position = Vector2(200, 200)
+scale = Vector2(200, 200)
+texture = ExtResource("16_wy818")
+
 [node name="Planet" type="Sprite2D" parent="ZoomAnimationPlayer"]
 z_index = 11
 position = Vector2(200, 200)
 scale = Vector2(200, 200)
 texture = ExtResource("15_s8ixu")
-
-[node name="Stars" type="Sprite2D" parent="ZoomAnimationPlayer/Planet"]
-texture = ExtResource("16_wy818")
 
 [connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="UI_Entered"]
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/ToggleWeaponsPanel" to="UIController" method="UI_Exited"]

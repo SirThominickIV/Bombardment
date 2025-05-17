@@ -9,10 +9,10 @@ var Selection : TileMapLayer = TileMapLayer.new()
 
 var enemyController: EnemyController
 
-func moveTileToLayer(fromLayer: String, toLayer: String, coords: Vector2) -> void:
+func move_to_layer(fromLayer: String, toLayer: String, coords: Vector2) -> void:
 	
-	var tmlFromLayer = getLayerFromString(fromLayer)
-	var tmlToLayer = getLayerFromString(toLayer)
+	var tmlFromLayer = _get_layer_from_string(fromLayer)
+	var tmlToLayer = _get_layer_from_string(toLayer)
 	
 	# Guard against nulls
 	if(tmlFromLayer == null || tmlToLayer == null || coords == null):
@@ -30,6 +30,8 @@ func moveTileToLayer(fromLayer: String, toLayer: String, coords: Vector2) -> voi
 	if(IrradiatedGround.get_cell_source_id(coords) == TileDefs.IrradiatedEarth):
 		return
 	
+
+	
 	# Set new layer if it can be moved
 	if(TileDefs.MovableTiles.has(sourceId)):
 		tmlToLayer.set_cell(coords, sourceId, atlasCoords)
@@ -37,28 +39,37 @@ func moveTileToLayer(fromLayer: String, toLayer: String, coords: Vector2) -> voi
 	# Erase old layer
 	tmlFromLayer.erase_cell(coords)
 
-func _moveTileToLayerWithLeaveBehind(fromLayer: String, toLayer: String, coords: Vector2, tileToLeaveBehind: int, layerToleaveBehind: String) -> void:
+func _move_with_leave_behind(fromLayer: String, toLayer: String, \
+coords: Vector2, tileToLeaveBehind: int, layerToleaveBehind: String) -> void:
 	
-	moveTileToLayer(fromLayer, toLayer, coords)
+	move_to_layer(fromLayer, toLayer, coords)
+	
+	# Guard against movement on water/void
+	var ground = Ground.get_cell_source_id(coords)
+	if(ground != TileDefs.Earth):
+		return
 	
 	# Leave behind a tile on move if applicable
-	var _layerToLeaveBehind = getLayerFromString(layerToleaveBehind)
+	var _layerToLeaveBehind = _get_layer_from_string(layerToleaveBehind)
 	if(tileToLeaveBehind != null && _layerToLeaveBehind != null):
 		_layerToLeaveBehind.set_cell(coords, tileToLeaveBehind, Vector2(0,0))
 
 func burnTile(coords: Vector2) -> void:
 	enemyController.KillCivilian(coords)
-	_moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords, TileDefs.Fire, LayerDefs.Foreground)
+	_move_with_leave_behind(LayerDefs.Foreground, \
+	LayerDefs.DestroyedTiles, coords, TileDefs.Fire, LayerDefs.Foreground)
 
 func destroyTile(coords: Vector2) -> void:
 	enemyController.KillCivilian(coords)
-	_moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords, TileDefs.Debris, LayerDefs.Foreground)
+	_move_with_leave_behind(LayerDefs.Foreground, \
+	LayerDefs.DestroyedTiles, coords, TileDefs.Debris, LayerDefs.Foreground)
 
 func nukeTile(coords: Vector2) -> void:
 	enemyController.KillCivilian(coords)
-	_moveTileToLayerWithLeaveBehind(LayerDefs.Foreground, LayerDefs.DestroyedTiles, coords,  TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
+	_move_with_leave_behind(LayerDefs.Foreground, \
+	LayerDefs.DestroyedTiles, coords,  TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
 
-func getLayerFromString(layer: String) -> TileMapLayer:
+func _get_layer_from_string(layer: String) -> TileMapLayer:
 	match layer:
 		LayerDefs.DestroyedTiles:
 			return DestroyedTiles
