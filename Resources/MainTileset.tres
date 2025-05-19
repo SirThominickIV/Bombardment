@@ -1,9 +1,11 @@
-[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://c8q0o84qc6r2o"]
+[gd_resource type="TileSet" load_steps=21 format=3 uid="uid://c8q0o84qc6r2o"]
 
 [ext_resource type="Texture2D" uid="uid://cyibsk6qr73dp" path="res://Art/Textures/TileSetTextures/0_Selector.png" id="1_lwp72"]
 [ext_resource type="Texture2D" uid="uid://bocqcc1b6xodg" path="res://Art/Textures/TileSetTextures/10_Launch_Tower.png" id="2_nvtor"]
 [ext_resource type="Texture2D" uid="uid://dwaiu6ee47lod" path="res://Art/Textures/TileSetTextures/13_Fire.png" id="3_pdsgg"]
+[ext_resource type="Texture2D" uid="uid://bu8re2n8yr658" path="res://Art/Textures/TileSetTextures/12_FireStation.png" id="3_tqo5k"]
 [ext_resource type="Texture2D" uid="uid://bypugurdfr6of" path="res://Art/Textures/TileSetTextures/2_Earth.png" id="4_pb421"]
+[ext_resource type="Texture2D" uid="uid://cahkijck0gdif" path="res://Art/Textures/TileSetTextures/14_Nature.png" id="5_14jqp"]
 [ext_resource type="Texture2D" uid="uid://iitrljg4lrfd" path="res://Art/Textures/TileSetTextures/4_Irradiated_Earth.png" id="5_ltoib"]
 [ext_resource type="Texture2D" uid="uid://fota41kex3xh" path="res://Art/Textures/TileSetTextures/3_Water.png" id="5_semyi"]
 [ext_resource type="Texture2D" uid="uid://dmer4xlab3d5q" path="res://Art/Textures/TileSetTextures/5_Debris.png" id="6_rb21i"]
@@ -20,6 +22,18 @@ texture_region_size = Vector2i(32, 92)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 38)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ay0wh"]
+texture = ExtResource("3_tqo5k")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 8)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 8)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 8)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 8)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n8axb"]
 texture = ExtResource("3_pdsgg")
 texture_region_size = Vector2i(32, 32)
@@ -31,6 +45,42 @@ texture_region_size = Vector2i(32, 32)
 0:0/animation_frame_3/duration = 1.0
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 9)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lo8mw"]
+texture = ExtResource("5_14jqp")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 8)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 8)
+1:1/0 = 0
+1:1/0/texture_origin = Vector2i(0, 8)
+2:1/0 = 0
+2:1/0/texture_origin = Vector2i(0, 8)
+3:1/0 = 0
+3:1/0/texture_origin = Vector2i(0, 8)
+7:1/0 = 0
+7:1/0/texture_origin = Vector2i(0, 8)
+7:0/0 = 0
+7:0/0/texture_origin = Vector2i(0, 8)
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 8)
+5:0/0 = 0
+5:0/0/texture_origin = Vector2i(0, 8)
+4:0/0 = 0
+4:0/0/texture_origin = Vector2i(0, 8)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 8)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 8)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 8)
+4:1/0 = 0
+4:1/0/texture_origin = Vector2i(0, 8)
+5:1/0 = 0
+5:1/0/texture_origin = Vector2i(0, 8)
+6:1/0 = 0
+6:1/0/texture_origin = Vector2i(0, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c0bpt"]
 texture = ExtResource("4_pb421")
@@ -119,3 +169,5 @@ sources/5 = SubResource("TileSetAtlasSource_torex")
 sources/4 = SubResource("TileSetAtlasSource_lkqtr")
 sources/10 = SubResource("TileSetAtlasSource_rwln7")
 sources/3 = SubResource("TileSetAtlasSource_uleiu")
+sources/12 = SubResource("TileSetAtlasSource_ay0wh")
+sources/14 = SubResource("TileSetAtlasSource_lo8mw")
