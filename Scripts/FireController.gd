@@ -16,8 +16,8 @@ func _physics_process(delta):
 	
 	# Track fire points
 	if(ticks < ticksNeeded):
-		ticks += delta	
-		return		
+		ticks += delta
+		return
 	ticks = 0
 	
 	# Pick a random fire if possible
@@ -27,29 +27,47 @@ func _physics_process(delta):
 	
 	var fire = fires.pick_random()
 	
-	# Clear the tile
-	tilemap.Foreground.erase_cell(fire)
-	
 	# Pick a random burnable neighbor if possible
-	var burnableNeighbors = GetBurnableNeighbors(fire)	
+	var burnableNeighbors = get_burnable_neighbors(fire)
 	if (burnableNeighbors == null || burnableNeighbors.size() == 0):
+		# Clear the tile & stop
+		tilemap.Foreground.erase_cell(fire)
 		return
+	
 	var toBurn = burnableNeighbors.pick_random()
 	
 	# Determine if the fire should spread
 	var shouldSpread = true
-	shouldSpread = random.randf_range(0, 1) > 0.5
+	shouldSpread = random.randf_range(0, 1) <= get_burn_chances(toBurn)
 	
 	if(!shouldSpread):
+		# Clear the tile & stop
+		tilemap.Foreground.erase_cell(fire)
 		return
-		
+	
 	# Burn
 	tilemap.burnTile((toBurn))
-	
+
 func reset() -> void:
 	ticks = 0
 
-func GetBurnableNeighbors(fire : Vector2):
+func get_burn_chances(fire: Vector2) -> float:
+	var fireStations = tilemap.Foreground.get_used_cells_by_id(TileDefs.FireStation)
+	var chance = 1.0
+	
+	# Firestation within 1 tile = no fire possible
+	#                    2 tile = 0.5 reduced chance
+	#                    3 tile = 0.33 reduced chance
+	#                    ...
+	for station in fireStations:
+		chance -= 1/fire.distance_to(station)
+		if (chance <= 0):
+			return 0
+	
+	return chance
+
+
+func get_burnable_neighbors(fire : Vector2):
 	var neighbors = tilemap.Foreground.get_surrounding_cells(fire)
 	var burnableNeighbors = []
 	
