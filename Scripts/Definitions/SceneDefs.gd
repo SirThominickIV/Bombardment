@@ -11,6 +11,7 @@ extends Node
 # Prefabs
 const StandardArtillery = preload("res://Scenes/Prefabs/standardArtillery.tscn")
 const Nuke = preload("res://Scenes/Prefabs/nuke.tscn")
+const RodsFromTheGods = preload("res://Scenes/Prefabs/rodsFromTheGods.tscn")
 const Explosion = preload("res://Scenes/Prefabs/explosion.tscn")
 const NuclearExplosion = preload("res://Scenes/Prefabs/nuclearExplosion.tscn")
 const Rocket = preload("res://Scenes/Prefabs/rocket.tscn")
