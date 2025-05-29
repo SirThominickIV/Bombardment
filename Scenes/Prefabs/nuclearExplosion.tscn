@@ -8,6 +8,7 @@
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 show_behind_parent = true
 z_index = 2
+scale = Vector2(2, 2)
 sprite_frames = ExtResource("1_pqdof")
 autoplay = "default"
 speed_scale = 3.0

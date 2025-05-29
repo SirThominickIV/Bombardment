@@ -1,0 +1,81 @@
+[gd_resource type="SpriteFrames" load_steps=12 format=3 uid="uid://dquqkr7j6c7ok"]
+
+[ext_resource type="Texture2D" uid="uid://dcasprg27intx" path="res://Art/Textures/Missiles/nuke.png" id="1_qky7a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4ljb"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xufqb"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g5pu"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rd2hw"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_angcf"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7on5"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whji8"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntit8"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ra8o"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwl5f"]
+atlas = ExtResource("1_qky7a")
+region = Rect2(0, 0, 48, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4ljb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xufqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0g5pu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rd2hw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_angcf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7on5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whji8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntit8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ra8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwl5f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

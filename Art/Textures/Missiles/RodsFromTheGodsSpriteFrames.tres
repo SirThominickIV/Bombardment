@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://bx1ir450o0rdu"]
+
+[ext_resource type="Texture2D" uid="uid://v3qnnj3nlsvv" path="res://Art/Textures/Missiles/RodsFromTheGods.png" id="1_c46c7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0nt8"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(0, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2bj8"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(16, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylcc6"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(32, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jjqj"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(48, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvhuv"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(64, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04pog"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(80, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxvm8"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(96, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qj0ag"]
+atlas = ExtResource("1_c46c7")
+region = Rect2(112, 0, 16, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0nt8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2bj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ylcc6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jjqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvhuv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04pog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxvm8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qj0ag")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

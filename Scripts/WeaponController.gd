@@ -53,7 +53,7 @@ func spawnProjectile(projectileType):
 			
 			rodsFromTheGodsCount -= 1
 			uiController.set_rodsfromthegods_label(str(rodsFromTheGodsCount))
-			projectile = SceneDefs.StandardArtillery.instantiate()
+			projectile = SceneDefs.RodsFromTheGods.instantiate()
 			
 		ProjectileDefs.Nuke:
 			
@@ -75,7 +75,7 @@ func spawnProjectile(projectileType):
 	
 	# Do position tracking stuff
 	var spawnLocation = selectorController.selectedTile
-	spawnLocation.y = selectorController.selectedTile.y - 50
+	spawnLocation.y = selectorController.selectedTile.y - 100
 	projectile.position = tilemap.Selection.map_to_local(spawnLocation)
 	projectile.TargetCoord = tilemap.Selection.map_to_local(selectorController.selectedTile)
 	projectile.ProjectileType = projectileType
@@ -114,9 +114,8 @@ func doNukeDamage(targetPosition):
 	# Convert to tilemap position
 	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 	
-	var targets = tilemap.get_all_neighbors(localTargetPosition)
-	
-	for i in range(7):
+	var targets = tilemap.get_neighbors_by_radius(localTargetPosition, 4)
+	for i in range(len(targets)):
 		if(random.randi_range(0,1) == 0):
 			tilemap.destroyTile(targets[i])
 		else:
@@ -129,8 +128,8 @@ func doRodsFromTheGodsDamage(targetPosition):
 	# Convert to tilemap position
 	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 		
-	var targets = tilemap.get_all_neighbors(localTargetPosition)
-	for i in range(7):
+	var targets = tilemap.get_neighbors_by_radius(localTargetPosition, 4)
+	for i in range(len(targets)):
 		if(random.randi_range(0,1) == 0):
 			tilemap.destroyTile(targets[i])
 		else:
@@ -144,7 +143,7 @@ func doIncendiaryDamage(targetPosition):
 	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
 	
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
-	for i in range(7):
+	for i in range(len(targets)):
 		tilemap.burnTile(targets[i])
 	
 	# Erase the selected one

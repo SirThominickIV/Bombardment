@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxv4hxogmbf1m"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_3mgix"]
+[ext_resource type="SpriteFrames" uid="uid://bx1ir450o0rdu" path="res://Art/Textures/Missiles/RodsFromTheGodsSpriteFrames.tres" id="2_q0535"]
+[ext_resource type="Script" path="res://Scripts/NodeFade.gd" id="3_pon0r"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+gravity_scale = 4.0
+can_sleep = false
+lock_rotation = true
+script = ExtResource("1_3mgix")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_q0535")
+autoplay = "default"
+frame_progress = 0.305175
+speed_scale = 15.0
+script = ExtResource("3_pon0r")
+FadeIn = true
