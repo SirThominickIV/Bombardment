@@ -6,102 +6,103 @@ var tilemap: TilemapController
 
 # Defense
 var civilians: Array[Vector2i] = [] # Source of truth for enemy "health"
+var civilian_count_at_start: int = 0
 
 # Offense
-var launchTowers : Array[Vector2i] = []
-var availableLaunchTowers: Array[Vector2i] = []
+var launch_towers : Array[Vector2i] = []
+var available_launch_towers: Array[Vector2i] = []
 var rockets: Array[Vector2i] = []
 
-var buildPoints = 0
-const buildPointsNeeded = 2
+var build_points = 0
+const build_points_needed = 2
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
 
 func _physics_process(delta):
-	if(!mainController.IsGameActive):
+	if(!mainController.is_game_active):
 		return
 	
-	buildPoints += delta
+	build_points += delta
 	
-	DoLaunchTowerLogic()
+	do_launch_tower_logic()
 	
-	if(len(availableLaunchTowers) > 0 && buildPoints > buildPointsNeeded):
-		buildPoints = 0
-		SpawnRocket()
+	if(len(available_launch_towers) > 0 && build_points > build_points_needed):
+		build_points = 0
+		spawn_rocket()
 	
-	#if(buildPoints > buildPointsNeeded):
-		#buildPoints = 0
-		#RebuildRandom()
+	#if(build_points > build_points_needed):
+		#build_points = 0
+		#rebuild_random()
 
 func reset() -> void:
 	for child in get_children():
 		child.queue_free()
-	buildPoints = 0
-	launchTowers.clear()
-	availableLaunchTowers.clear()
+	build_points = 0
+	launch_towers.clear()
+	available_launch_towers.clear()
 	
 	civilians = tilemap.Foreground.get_used_cells_by_id(TileDefs.ResidentialBuilding)
+	civilian_count_at_start = len(civilians)
 
-func KillCivilian(coords: Vector2i) -> void:
-	
-	var indexToPop = civilians.find(coords)
-	if(indexToPop >= 0):
-		civilians.pop_at(indexToPop)
+func kill_civilian(coords: Vector2i) -> void:
+	var index_to_pop = civilians.find(coords)
+	if(index_to_pop >= 0):
+		civilians.pop_at(index_to_pop)
 	
 	if(civilians.is_empty()):
-		get_parent().EndGame(true)
+		get_parent().end_game(true)
 
-func SpawnRocket() -> void:
+func spawn_rocket() -> void:
 	var rocket = SceneDefs.Rocket.instantiate()
-	var coords = availableLaunchTowers.pick_random()
+	var coords = available_launch_towers.pick_random()
 	
 	# Enemy rocket tracking
 	rockets.append(coords)
-	availableLaunchTowers.pop_at(availableLaunchTowers.find(coords))
+	available_launch_towers.pop_at(available_launch_towers.find(coords))
 	add_child(rocket)
 	
 	# Rocket vars
 	rocket.towerCoords = coords
 	rocket.tilemap = tilemap
-	var spawnCoords = tilemap.Foreground.map_to_local(coords)
-	spawnCoords = rocket.to_global(spawnCoords)
-	spawnCoords.x -= 433.5 # Offset because tiles are off by a little bit
-	spawnCoords.y -= 344.0
-	rocket.position = spawnCoords
+	var spawn_coords = tilemap.Foreground.map_to_local(coords)
+	spawn_coords = rocket.to_global(spawn_coords)
+	spawn_coords.x -= 433.5 # Offset because tiles are off by a little bit
+	spawn_coords.y -= 344.0
+	rocket.position = spawn_coords
 
-func RemoveRocket(coords: Vector2i) -> void:
+func remove_rocket(coords: Vector2i) -> void:
 	rockets.pop_at(rockets.find(coords))
 
-func DoLaunchTowerLogic() -> void:
-	launchTowers = tilemap.Foreground.get_used_cells_by_id(TileDefs.LaunchTower)
-	for tile in launchTowers:
+func do_launch_tower_logic() -> void:
+	launch_towers = tilemap.Foreground.get_used_cells_by_id(TileDefs.LaunchTower)
+	for tile in launch_towers:
 		
-		# Don't add tiles to availableLaunchTowers if there is a rocket
+		# Don't add tiles to available_launch_towers if there is a rocket
 		if rockets.has(tile):
 			# Remove towers from available if it has a rocket
-			if(availableLaunchTowers.has(tile)):
-				availableLaunchTowers.pop_at(availableLaunchTowers.find(tile))
+			if(available_launch_towers.has(tile)):
+				available_launch_towers.pop_at(available_launch_towers.find(tile))
 			continue
 		
-		# Add tile to availableLaunchTowers
-		if(!availableLaunchTowers.has(tile)):
-			availableLaunchTowers.append(tile)
+		# Add tile to available_launch_towers
+		if(!available_launch_towers.has(tile)):
+			available_launch_towers.append(tile)
 	
 	# Clear available list to keep up with destroyed towers
-	for tile in availableLaunchTowers:
-		if !launchTowers.has(tile):
-			availableLaunchTowers.pop_at(availableLaunchTowers.find(tile))
+	for tile in available_launch_towers:
+		if !launch_towers.has(tile):
+			available_launch_towers.pop_at(available_launch_towers.find(tile))
 
-func RebuildRandom() -> void:	
+func rebuild_random() -> void:	
 	# Find out what is destroyed
-	var destroyedCells = tilemap.DestroyedTiles.get_used_cells()
-	if (destroyedCells == null || destroyedCells.size() == 0):
+	var destroyed_cells = tilemap.DestroyedTiles.get_used_cells()
+	if (destroyed_cells == null || destroyed_cells.size() == 0):
 		return
 	
 	# Find out what is repairable
 	var repairableCells = []
-	for cell in destroyedCells:
-		if(CanCellBeBuiltOn(cell)):
+	for cell in destroyed_cells:
+		if(can_cell_be_built_on(cell)):
 			repairableCells.append(cell)
 	if(repairableCells.size() == 0):
 		return
@@ -110,24 +111,24 @@ func RebuildRandom() -> void:
 	var cellToRepair = repairableCells.pick_random()	
 	tilemap.move_to_layer(LayerDefs.DestroyedTiles, LayerDefs.Foreground, cellToRepair)
 
-func CanCellBeBuiltOn(cell) -> bool:	
+func can_cell_be_built_on(cell) -> bool:	
 	var result = true
 	
 	# Get all source IDs on foreground and irradiated layer
-	var neighborCoords = tilemap.get_all_neighbors(cell)
-	neighborCoords.append(cell)	
-	var neighborSourceIds = []
-	for coord in neighborCoords:
-		neighborSourceIds.append(tilemap.Foreground.get_cell_source_id(coord))
-		neighborSourceIds.append(tilemap.IrradiatedGround.get_cell_source_id(cell))
+	var neighbor_coords = tilemap.get_all_neighbors(cell)
+	neighbor_coords.append(cell)	
+	var neighbor_source_ids = []
+	for coord in neighbor_coords:
+		neighbor_source_ids.append(tilemap.Foreground.get_cell_source_id(coord))
+		neighbor_source_ids.append(tilemap.IrradiatedGround.get_cell_source_id(cell))
 	
 	# Just get rid of this cell if it is adjacent to irradiated earth
-	if(neighborSourceIds.has(TileDefs.IrradiatedEarth)):
+	if(neighbor_source_ids.has(TileDefs.IrradiatedEarth)):
 		tilemap.DestroyedTiles.erase_cell(cell)
 		result = false
 	
 	# Can't be built on if the cell has fire nearby
-	if(neighborSourceIds.has(TileDefs.Fire)):
+	if(neighbor_source_ids.has(TileDefs.Fire)):
 		result = false
 	
 	# If the cell itself has debris, don't build, but at least clear it out

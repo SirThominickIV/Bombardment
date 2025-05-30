@@ -616,3 +616,4 @@ texture = ExtResource("15_s8ixu")
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/BarHousing" to="UIController" method="UI_Exited"]
 [connection signal="mouse_entered" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Entered"]
 [connection signal="mouse_exited" from="CameraController/CanvasLayer/ActiveGameUiItems/Heathbar/LabelHousing" to="UIController" method="UI_Exited"]
+[connection signal="pressed" from="CameraController/CanvasLayer/FinishedGameUiItems/Panel/Replay" to="." method="start_game" binds= [-1]]

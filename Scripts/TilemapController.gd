@@ -55,17 +55,17 @@ coords: Vector2, tileToLeaveBehind: int, layerToleaveBehind: String) -> void:
 		_layerToLeaveBehind.set_cell(coords, tileToLeaveBehind, Vector2(0,0))
 
 func burnTile(coords: Vector2) -> void:
-	enemyController.KillCivilian(coords)
+	enemyController.kill_civilian(coords)
 	_move_with_leave_behind(LayerDefs.Foreground, \
 	LayerDefs.DestroyedTiles, coords, TileDefs.Fire, LayerDefs.Foreground)
 
 func destroyTile(coords: Vector2) -> void:
-	enemyController.KillCivilian(coords)
+	enemyController.kill_civilian(coords)
 	_move_with_leave_behind(LayerDefs.Foreground, \
 	LayerDefs.DestroyedTiles, coords, TileDefs.Debris, LayerDefs.Foreground)
 
 func nukeTile(coords: Vector2) -> void:
-	enemyController.KillCivilian(coords)
+	enemyController.kill_civilian(coords)
 	_move_with_leave_behind(LayerDefs.Foreground, \
 	LayerDefs.DestroyedTiles, coords,  TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
 
