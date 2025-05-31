@@ -1,7 +1,8 @@
 extends Node
 class_name UIController
 
-var playerController
+var playerController: PlayerController
+var enemyController: EnemyController
 
 # Weapons
 @export var weaponPanel: Control
@@ -71,13 +72,16 @@ func zoom() -> void:
 
 func showFinishedGame(gameWon: bool) -> void:
 	if(gameWon):
-		finishedGameOutputHeader.text = 'VICTORY'
+		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
+		finishedGameOutputBody.text = "100% of population exterminated[/MSGPYLD]"
 	else:
-		finishedGameOutputHeader.text = 'DEFEAT'
-	finishedGameOutputBody.text = "outputBody"
+		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
+		var ammount = int((1-(float(len(enemyController.civilians))/float(enemyController.civilian_count_at_start)))*100)
+		finishedGameOutputBody.text = str(ammount) + "% of population exterminated\n\n[/MSGPYLD]"
 	finishedGameUiItems.visible = true
 	
 func hideFinishedGame() -> void:
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 	finishedGameUiItems.visible = false
 
 func setHealthDisplay(numHealth: int) -> void:

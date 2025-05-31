@@ -83,6 +83,7 @@ func _hand_out_controllers() -> void:
 	
 	# UIController reqs
 	controllers[ControllerDefs.Controllers.UIController].playerController = controllers[ControllerDefs.Controllers.PlayerController]
+	controllers[ControllerDefs.Controllers.UIController].enemyController = controllers[ControllerDefs.Controllers.EnemyController]
 	
 	# PlayerController reqs
 	controllers[ControllerDefs.Controllers.PlayerController].weaponController = controllers[ControllerDefs.Controllers.WeaponController]
