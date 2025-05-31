@@ -6,34 +6,35 @@ var weaponController: WeaponController
 var uiController: UIController
 var cameraController: CameraController
 
-var selectedProjectile = ProjectileDefs.StandardArtillery
-var isMouseOverUI: bool = false
-var _playerHealth: int = PlayerStatsDefs.PlayerHealth
+var selected_projectile = ProjectileDefs.StandardArtillery
+var is_mouse_over_ui: bool = false
+var _player_health: int = PlayerStatsDefs.PlayerHealth
 
 @export var hullDamageSound: AudioStreamPlayer2D
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
 
 func _process(_delta):
-	if(!mainController.IsGameActive):
+	if(!mainController.is_game_active):
 		return
 	
 	if(Input.is_action_just_pressed("k")):
-		setPlayerHealth(-200)
-	if(Input.is_action_pressed("mb_left") && !isMouseOverUI):
-		weaponController.spawnProjectile(selectedProjectile)
+		set_player_health(-200)
+	if(Input.is_action_pressed("mb_left") && !is_mouse_over_ui):
+		weaponController.spawnProjectile(selected_projectile)
 
 func reset() -> void:
-	_playerHealth = PlayerStatsDefs.PlayerHealth
+	_player_health = PlayerStatsDefs.PlayerHealth
+	uiController.setHealthDisplay(_player_health)
 
-func setPlayerHealth(delta: int) -> void:
+func set_player_health(delta: int) -> void:
 	# Apply delta and check limits
-	_playerHealth = _playerHealth + delta
-	if(_playerHealth > PlayerStatsDefs.PlayerHealth):
-		_playerHealth = PlayerStatsDefs.PlayerHealth
-	if(_playerHealth <= 0):
+	_player_health = _player_health + delta
+	if(_player_health > PlayerStatsDefs.PlayerHealth):
+		_player_health = PlayerStatsDefs.PlayerHealth
+	if(_player_health <= 0):
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
-		get_parent().EndGame(false)
+		get_parent().end_game(false)
 	
 	# If health is being removed, do camera shake and player damage noises
 	if(delta < 0):
@@ -41,5 +42,5 @@ func setPlayerHealth(delta: int) -> void:
 		hullDamageSound.play()
 	
 	# Update display if needed
-	uiController.setHealthDisplay(_playerHealth)
+	uiController.setHealthDisplay(_player_health)
 	

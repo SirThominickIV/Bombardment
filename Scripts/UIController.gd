@@ -1,7 +1,8 @@
 extends Node
 class_name UIController
 
-var playerController
+var playerController: PlayerController
+var enemyController: EnemyController
 
 # Weapons
 @export var weaponPanel: Control
@@ -40,16 +41,16 @@ func _process(_delta):
 	if(Input.is_key_pressed(KEY_CTRL) || Input.is_key_pressed(KEY_SHIFT)):
 		return
 	if(Input.is_action_just_pressed("1")):	
-		playerController.selectedProjectile = ProjectileDefs.StandardArtillery
+		playerController.selected_projectile = ProjectileDefs.StandardArtillery
 		basicButtonSound.play()
 	if(Input.is_action_just_pressed("2")):	
-		playerController.selectedProjectile = ProjectileDefs.Incendiary
+		playerController.selected_projectile = ProjectileDefs.Incendiary
 		basicButtonSound.play()
 	if(Input.is_action_just_pressed("3")):	
-		playerController.selectedProjectile = ProjectileDefs.RodsFromTheGods
+		playerController.selected_projectile = ProjectileDefs.RodsFromTheGods
 		basicButtonSound.play()
 	if(Input.is_action_just_pressed("4")):	
-		playerController.selectedProjectile = ProjectileDefs.Nuke
+		playerController.selected_projectile = ProjectileDefs.Nuke
 		basicButtonSound.play()
 		
 	if(Input.is_action_just_pressed("9")):
@@ -69,15 +70,18 @@ func zoom() -> void:
 		await get_tree().create_timer(1.0).timeout
 		ZoomAnimationPlayer.play_backwards('zoom')
 
-func showFinishedGame(gameWon: bool, outputBody: String) -> void:
+func showFinishedGame(gameWon: bool) -> void:
 	if(gameWon):
-		finishedGameOutputHeader.text = 'VICTORY'
+		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
+		finishedGameOutputBody.text = "100% of population exterminated[/MSGPYLD]"
 	else:
-		finishedGameOutputHeader.text = 'DEFEAT'
-	finishedGameOutputBody.text = outputBody
+		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
+		var ammount = int((1-(float(len(enemyController.civilians))/float(enemyController.civilian_count_at_start)))*100)
+		finishedGameOutputBody.text = str(ammount) + "% of population exterminated\n\n[/MSGPYLD]"
 	finishedGameUiItems.visible = true
 	
 func hideFinishedGame() -> void:
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 	finishedGameUiItems.visible = false
 
 func setHealthDisplay(numHealth: int) -> void:
@@ -101,29 +105,29 @@ func set_nuke_label(s: String) -> void:
 
 func UI_Entered() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
-	playerController.isMouseOverUI = true
+	playerController.is_mouse_over_ui = true
 
 func UI_Exited() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
-	playerController.isMouseOverUI = false
+	playerController.is_mouse_over_ui = false
 
 func setWeaponStandardArtillery() -> void:
-	playerController.selectedProjectile = ProjectileDefs.StandardArtillery
+	playerController.selected_projectile = ProjectileDefs.StandardArtillery
 	selectButton(standardArtillery)
 	basicButtonSound.play()
 
 func setWeaponIncendiary() -> void:
-	playerController.selectedProjectile = ProjectileDefs.Incendiary
+	playerController.selected_projectile = ProjectileDefs.Incendiary
 	selectButton(incendiary)
 	basicButtonSound.play()
 
 func setWeaponRodsFromTheGods() -> void:
-	playerController.selectedProjectile = ProjectileDefs.RodsFromTheGods
+	playerController.selected_projectile = ProjectileDefs.RodsFromTheGods
 	selectButton(rodsFromTheGods)
 	basicButtonSound.play()
 
 func setWeaponNuke() -> void:
-	playerController.selectedProjectile = ProjectileDefs.Nuke
+	playerController.selected_projectile = ProjectileDefs.Nuke
 	selectButton(nuke)
 	basicButtonSound.play()
 

@@ -11,7 +11,7 @@ var random = RandomNumberGenerator.new()
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
 
 func _physics_process(delta):
-	if(!mainController.IsGameActive):
+	if(!mainController.is_game_active):
 		return
 	
 	# Track fire points

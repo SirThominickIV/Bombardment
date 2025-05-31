@@ -9,7 +9,7 @@ var tilemap: TilemapController
 
 func _process(_delta):
 	
-	if(!mainController.IsGameActive):
+	if(!mainController.is_game_active):
 		return
 	
 	if(!Input.is_action_pressed("mb_right")):

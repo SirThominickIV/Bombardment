@@ -5,9 +5,9 @@ var level: Node
 
 var controllers : Dictionary
 
-var IsGameActive: bool = false
+var is_game_active: bool = false
 
-var currentLevel: int = 0
+var current_level: int = 0
 
 func _ready():
 
@@ -21,18 +21,17 @@ func _ready():
 	controllers[ControllerDefs.Controllers.EnemyController] = get_node("EnemyController")
 	controllers[ControllerDefs.Controllers.TileMapController] = get_node("TilemapController")
 	
-	_handOutControllers()
+	_hand_out_controllers()
 	
-	StartGame(0)
+	start_game()
 
-func StartGame(levelIndex: int) -> void:
-	if(levelIndex < 0):
-		levelIndex = currentLevel
-	
+func start_game(level_index: int = -1) -> void:
+	if(level_index < 0):
+		level_index = current_level
 	
 	controllers[ControllerDefs.Controllers.UIController].hideFinishedGame()
 	await get_tree().create_timer(0.5).timeout
-	level = SceneDefs.Levels[levelIndex].instantiate()
+	level = SceneDefs.Levels[level_index].instantiate()
 	add_child(level)
 	
 	# Combine tile map layers
@@ -46,16 +45,16 @@ func StartGame(levelIndex: int) -> void:
 	controllers[ControllerDefs.Controllers.UIController].zoom()
 	controllers[ControllerDefs.Controllers.CameraController].SwitchToGameStartPosition()
 	await get_tree().create_timer(5.0).timeout
-	IsGameActive = true
+	is_game_active = true
 	
-	_resetControllers()
+	_reset_controllers()
  
-func EndGame(gameWon: bool) -> void:
+func end_game(game_won: bool) -> void:
 	
 	# State handling
-	if(!IsGameActive):
+	if(!is_game_active):
 		return
-	IsGameActive = false
+	is_game_active = false
 	
 	# Animation
 	controllers[ControllerDefs.Controllers.UIController].zoom()
@@ -65,10 +64,10 @@ func EndGame(gameWon: bool) -> void:
 	await get_tree().create_timer(1.0).timeout
 	
 	# UI handling
-	controllers[ControllerDefs.Controllers.UIController].showFinishedGame(gameWon, "placeholder")
+	controllers[ControllerDefs.Controllers.UIController].showFinishedGame(game_won)
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 
-func _handOutControllers() -> void:
+func _hand_out_controllers() -> void:
 	
 	# Sending out the TilemapController
 	var tilemap = controllers[ControllerDefs.Controllers.TileMapController]
@@ -84,6 +83,7 @@ func _handOutControllers() -> void:
 	
 	# UIController reqs
 	controllers[ControllerDefs.Controllers.UIController].playerController = controllers[ControllerDefs.Controllers.PlayerController]
+	controllers[ControllerDefs.Controllers.UIController].enemyController = controllers[ControllerDefs.Controllers.EnemyController]
 	
 	# PlayerController reqs
 	controllers[ControllerDefs.Controllers.PlayerController].weaponController = controllers[ControllerDefs.Controllers.WeaponController]
@@ -93,10 +93,10 @@ func _handOutControllers() -> void:
 	# TilemapController reqs
 	controllers[ControllerDefs.Controllers.TileMapController].enemyController = controllers[ControllerDefs.Controllers.EnemyController]
 
-func GetController(controller) -> Node:
+func get_controller(controller) -> Node:
 	return controllers[controller]
 
-func _resetControllers() -> void:
+func _reset_controllers() -> void:
 	controllers[ControllerDefs.Controllers.FireController].reset()
 	controllers[ControllerDefs.Controllers.PlayerController].reset()
 	controllers[ControllerDefs.Controllers.EnemyController].reset()

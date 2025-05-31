@@ -19,7 +19,7 @@ var nukeCount: int
 func spawnProjectile(projectileType):
 	
 	# Guard against inactive game & cooldown
-	if(!mainController.IsGameActive || cooldown > 0):
+	if(!mainController.is_game_active || cooldown > 0):
 		return
 	
 	# Spawn the projectile of the correct type

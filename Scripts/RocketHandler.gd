@@ -16,7 +16,7 @@ var random = RandomNumberGenerator.new()
 @onready var tilemap: TilemapController # Assigned from parent EnemyController when instantiated
 
 func _physics_process(_delta):
-	if(!mainController.IsGameActive):
+	if(!mainController.is_game_active):
 		return
 	
 	ticks += 1
@@ -48,11 +48,11 @@ func launch() -> void:
 func Detonate() -> void:
 	# Do damage if the rocket surpased doDamageAtTick
 	if(ticks > doDamageAtTick):
-		get_tree().root.get_node("MainController").GetController(ControllerDefs.Controllers.PlayerController) \
-			.setPlayerHealth(-random.randi_range(EnemyStatsDefs.EnemyRocketMinDamage,EnemyStatsDefs.EnemyRocketMaxDamage))
+		get_tree().root.get_node("MainController").get_controller(ControllerDefs.Controllers.PlayerController) \
+			.set_player_health(-random.randi_range(EnemyStatsDefs.EnemyRocketMinDamage,EnemyStatsDefs.EnemyRocketMaxDamage))
 	
 	# Tell the parent that the launch tower is free
-	get_parent().RemoveRocket(towerCoords)
+	get_parent().remove_rocket(towerCoords)
 	
 	# Self destruct
 	queue_free()

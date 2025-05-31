@@ -53,7 +53,7 @@ func _ready():
 	noise.frequency = 2.0
 
 func _process(_delta):
-	if(!mainController.IsGameActive):
+	if(!mainController.is_game_active):
 		return
 		
 	_GetMoveSpeedForZoomlevel()
@@ -74,7 +74,7 @@ func _physics_process(delta):
 	offset = _get_noise_offset(delta)
 	
 	# Zoooom
-	if(mainController.IsGameActive):
+	if(mainController.is_game_active):
 		zoom = zoom.slerp(zoomTarget, ZoomSpeed) # Responsive, quick zoom for player
 	else:
 		zoom = zoom.slerp(zoomTarget, delta) # Gradual zoom for animation
