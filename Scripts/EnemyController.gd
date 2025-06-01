@@ -41,7 +41,7 @@ func reset() -> void:
 	launch_towers.clear()
 	available_launch_towers.clear()
 	
-	civilians = tilemap.Foreground.get_used_cells_by_id(TileDefs.ResidentialBuilding)
+	civilians = tilemap.Foreground.get_used_cells_by_id(TileDefs.Tile.ResidentialBuilding)
 	civilian_count_at_start = len(civilians)
 
 func kill_civilian(coords: Vector2i) -> void:
@@ -74,7 +74,7 @@ func remove_rocket(coords: Vector2i) -> void:
 	rockets.pop_at(rockets.find(coords))
 
 func do_launch_tower_logic() -> void:
-	launch_towers = tilemap.Foreground.get_used_cells_by_id(TileDefs.LaunchTower)
+	launch_towers = tilemap.Foreground.get_used_cells_by_id(TileDefs.Tile.LaunchTower)
 	for tile in launch_towers:
 		
 		# Don't add tiles to available_launch_towers if there is a rocket
@@ -123,16 +123,16 @@ func can_cell_be_built_on(cell) -> bool:
 		neighbor_source_ids.append(tilemap.IrradiatedGround.get_cell_source_id(cell))
 	
 	# Just get rid of this cell if it is adjacent to irradiated earth
-	if(neighbor_source_ids.has(TileDefs.IrradiatedEarth)):
+	if(neighbor_source_ids.has(TileDefs.Tile.IrradiatedEarth)):
 		tilemap.DestroyedTiles.erase_cell(cell)
 		result = false
 	
 	# Can't be built on if the cell has fire nearby
-	if(neighbor_source_ids.has(TileDefs.Fire)):
+	if(neighbor_source_ids.has(TileDefs.Tile.Fire)):
 		result = false
 	
 	# If the cell itself has debris, don't build, but at least clear it out
-	if(tilemap.Foreground.get_cell_source_id(cell) == TileDefs.Debris):
+	if(tilemap.Foreground.get_cell_source_id(cell) == TileDefs.Tile.Debris):
 		tilemap.Foreground.erase_cell(cell)
 		result = false
 	
