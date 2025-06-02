@@ -108,7 +108,7 @@ func doStandardArtilleryDamage(targetPosition):
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
 	tilemap.destroy(targets[random.randi_range(0, 7)])
 	tilemap.destroy(targets[random.randi_range(0, 7)])
-	tilemap.destroy(localTargetPosition, ProjectileDefs.Destruction_Type.Default, true)
+	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Default, true)
 
 func doNukeDamage(targetPosition):	
 	# Convert to tilemap position
@@ -118,14 +118,14 @@ func doNukeDamage(targetPosition):
 	for i in range(len(targets)):
 		var choice = random.randi_range(0,2)
 		if(choice == 0):
-			tilemap.destroy(targets[i], ProjectileDefs.Destruction_Type.Default)
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Default)
 		elif (choice == 1):
-			tilemap.destroy(targets[i], ProjectileDefs.Destruction_Type.Irradiated)
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Irradiated)
 		elif (choice == 2):
-			tilemap.destroy(targets[i], ProjectileDefs.Destruction_Type.Fire)
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 
 	# Erase the selected one
-	tilemap.destroy(targetPosition, ProjectileDefs.Destruction_Type.Irradiated, true)
+	tilemap.destroy(targetPosition, Destruction.Destruction_Type.Irradiated, true)
 
 func doRodsFromTheGodsDamage(targetPosition):	
 	# Convert to tilemap position
@@ -136,10 +136,10 @@ func doRodsFromTheGodsDamage(targetPosition):
 		if(random.randi_range(0,1) == 0):
 			tilemap.destroy(targets[i])
 		else:
-			tilemap.destroy(targets[i], ProjectileDefs.Destruction_Type.Fire)
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 	
 	# Erase the selected one
-	tilemap.destroy(localTargetPosition, ProjectileDefs.Destruction_Type.Default, true)
+	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Default, true)
 	
 func doIncendiaryDamage(targetPosition):	
 	# Convert to tilemap position
@@ -147,7 +147,7 @@ func doIncendiaryDamage(targetPosition):
 	
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
 	for i in range(len(targets)):
-		tilemap.destroy(targets[i], ProjectileDefs.Destruction_Type.Fire)
+		tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 	
 	# Erase the selected one
-	tilemap.destroy(localTargetPosition, ProjectileDefs.Destruction_Type.Fire, true)
+	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Fire, true)

@@ -7,10 +7,3 @@ const Ground = "Ground"
 const IrradiatedGround = "IrradiatedGround"
 const Foreground = "Foreground"
 const Selection = "Selection"
-
-enum Layer{
-	Water,
-	Ground,
-	Foreground,
-	Selection
-}

@@ -46,7 +46,7 @@ func _physics_process(delta):
 		return
 	
 	# Burn
-	tilemap.destroy(toBurn, ProjectileDefs.Destruction_Type.Fire)
+	tilemap.destroy(toBurn, Destruction.Destruction_Type.Fire)
 
 func reset() -> void:
 	ticks = 0

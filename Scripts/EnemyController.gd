@@ -14,7 +14,9 @@ var available_launch_towers: Array[Vector2i] = []
 var rockets: Array[Vector2i] = []
 
 var build_points = 0
-const build_points_needed = 2
+const build_points_needed = 20
+
+var build_queue: Array[QueuedBuilding] = []
 
 @onready var mainController: MainController = get_node('/root/MainController') as MainController
 
@@ -30,9 +32,12 @@ func _physics_process(delta):
 		build_points = 0
 		spawn_rocket()
 	
-	#if(build_points > build_points_needed):
-		#build_points = 0
-		#rebuild_random()
+	# Queue a building if possible
+	if(build_points > build_points_needed):
+		build_random(TileDefs.Tile.Bunker, 30, 0)
+	
+	check_build_queue(delta)
+
 
 func reset() -> void:
 	for child in get_children():
@@ -44,13 +49,21 @@ func reset() -> void:
 	civilians = tilemap.Foreground.get_used_cells_by_id(TileDefs.Tile.ResidentialBuilding)
 	civilian_count_at_start = len(civilians)
 
-func kill_civilian(coords: Vector2i) -> void:
+func kill_enemy(coords: Vector2i) -> void:
+	
+	# Check for civilians
 	var index_to_pop = civilians.find(coords)
 	if(index_to_pop >= 0):
 		civilians.pop_at(index_to_pop)
 	
 	if(civilians.is_empty()):
 		get_parent().end_game(true)
+	
+	# Check for build queue
+	for i in range(0,len(build_queue)):
+		if build_queue[i].coords == coords:
+			build_queue.pop_at(i)
+			break
 
 func spawn_rocket() -> void:
 	var rocket = SceneDefs.Rocket.instantiate()
@@ -93,23 +106,45 @@ func do_launch_tower_logic() -> void:
 		if !launch_towers.has(tile):
 			available_launch_towers.pop_at(available_launch_towers.find(tile))
 
-func rebuild_random() -> void:	
-	# Find out what is destroyed
-	var destroyed_cells = tilemap.DestroyedTiles.get_used_cells()
-	if (destroyed_cells == null || destroyed_cells.size() == 0):
+func build_random(type: TileDefs.Tile, time: float, size: int) -> void:
+	# Find Space
+	var open_spaces = tilemap.get_empty_foreground()
+	
+	# Guard against no spaces
+	if not len(open_spaces):
 		return
 	
-	# Find out what is repairable
-	var repairableCells = []
-	for cell in destroyed_cells:
-		if(can_cell_be_built_on(cell)):
-			repairableCells.append(cell)
-	if(repairableCells.size() == 0):
+	var coords = open_spaces[random.randi_range(0, len(open_spaces)-1)]
+	
+	if not can_cell_be_built_on(coords):
 		return
 	
-	# Repair something
-	var cellToRepair = repairableCells.pick_random()	
-	tilemap.move_to_layer(LayerDefs.DestroyedTiles, LayerDefs.Foreground, cellToRepair)
+	# Queue it
+	var building = QueuedBuilding.new(coords, type, time, size)
+	build_queue.append(building)
+	
+	# Set temp texture
+	var atlas = Vector2i(random.randi_range(0,7),size)
+	tilemap.Foreground.set_cell(coords, TileDefs.Tile.Construction, atlas)
+	
+	build_points = 0
+
+func check_build_queue(delta: float) -> void:
+	if(!len(build_queue)):
+		return
+	
+	# Sort queue
+	build_queue.sort_custom(func(a,b): return a.time < b.time)
+	
+	# Run through queue
+	for building in build_queue:
+		building.time -= delta
+		
+		if(building.time <= 0):
+			# Finished, set it to it's final, and remove it from the queue
+			tilemap.Foreground.set_cell(building.coords, building.type, Vector2i(0,0))
+			build_queue.pop_front()
+			continue
 
 func can_cell_be_built_on(cell) -> bool:	
 	var result = true
@@ -120,15 +155,13 @@ func can_cell_be_built_on(cell) -> bool:
 	var neighbor_source_ids = []
 	for coord in neighbor_coords:
 		neighbor_source_ids.append(tilemap.Foreground.get_cell_source_id(coord))
-		neighbor_source_ids.append(tilemap.IrradiatedGround.get_cell_source_id(cell))
-	
-	# Just get rid of this cell if it is adjacent to irradiated earth
-	if(neighbor_source_ids.has(TileDefs.Tile.IrradiatedEarth)):
-		tilemap.DestroyedTiles.erase_cell(cell)
-		result = false
 	
 	# Can't be built on if the cell has fire nearby
 	if(neighbor_source_ids.has(TileDefs.Tile.Fire)):
+		result = false
+	
+	# Can't be built on if the cell has irradited earth nearby
+	if(neighbor_source_ids.has(TileDefs.Tile.IrradiatedEarth)):
 		result = false
 	
 	# If the cell itself has debris, don't build, but at least clear it out

@@ -13,9 +13,3 @@ const RodsFromTheGodsLimit = 10
 
 const Nuke = 3
 const NukeLimit = 3
-
-enum Destruction_Type{
-	Default,
-	Fire,
-	Irradiated
-}

@@ -12,15 +12,14 @@ var enemyController: EnemyController
 var random = RandomNumberGenerator.new()
 
 func destroy(coords: Vector2i, 
-	type: ProjectileDefs.Destruction_Type = ProjectileDefs.Destruction_Type.Default, 
-	is_direct: bool = false):
+	type: Destruction.Destruction_Type = Destruction.Destruction_Type.Default, 
+	is_direct: bool = false) -> void:
 	
 	# Find out what it is
-	var sourceId = Foreground.get_cell_source_id(coords)
-	var atlasCoords = Foreground.get_cell_atlas_coords(coords)
+	var source_id = Foreground.get_cell_source_id(coords)
 	
 	# Guard against invulnerable tiles
-	if(TileDefs.Invulnerable.has(sourceId)):
+	if(TileDefs.Invulnerable.has(source_id)):
 		return
 	
 	# Guard against tiles that have no land
@@ -28,20 +27,31 @@ func destroy(coords: Vector2i,
 		return
 	
 	# Guard against resistant tiles
-	if(TileDefs.Resistant.has(sourceId) && !is_direct):
+	if(TileDefs.Resistant.has(source_id) && !is_direct):
 		return
 	
 	# Do the destruction
-	enemyController.kill_civilian(coords)
+	enemyController.kill_enemy(coords)
 	Foreground.erase_cell(coords)
 	
 	match type:
-		ProjectileDefs.Destruction_Type.Default:
+		Destruction.Destruction_Type.Default:
 			Foreground.set_cell(coords, TileDefs.Tile.Debris, Vector2(0,0))
-		ProjectileDefs.Destruction_Type.Fire:
+		Destruction.Destruction_Type.Fire:
 			Foreground.set_cell(coords, TileDefs.Tile.Fire, Vector2(0,0))
-		ProjectileDefs.Destruction_Type.Irradiated:
+		Destruction.Destruction_Type.Irradiated:
 			Foreground.set_cell(coords, TileDefs.Tile.IrradiatedEarth, Vector2(0,0))
+
+func get_empty_foreground() -> PackedVector2Array:
+	var ground = Ground.get_used_cells()
+	var foreground = Foreground.get_used_cells()
+	
+	var empty = []
+	for coord in ground:
+		if coord not in foreground:
+			empty.append(coord)
+	
+	return empty
 
 # The get_surrounding_cells method is nice, but it doesn't get the corners
 # It only gets b, c, g, and h if cell e is picked
