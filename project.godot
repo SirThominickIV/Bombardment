@@ -24,6 +24,7 @@ TileDefs="*res://Scripts/Definitions/TileDefs.gd"
 ControllerDefs="*res://Scripts/Definitions/ControllerDefs.gd"
 PlayerStatsDefs="*res://Scripts/Definitions/PlayerStatsDefs.gd"
 EnemyStatsDefs="*res://Scripts/Definitions/EnemyStatsDefs.gd"
+Destruction="*res://Scripts/Definitions/Destruction.gd"
 
 [editor]
 

@@ -1,33 +1,32 @@
 extends Node
 
-# GDScript doesn't permit const enums, and scripts like this are effectively
-# treated the same way, so this format is as good as it gets
+enum Tile{
+	Air = -1,
+	Selector = 0,
+	AnimatedSelector = 1,
+	Earth = 2,
+	Water = 3,
+	IrradiatedEarth = 4,
+	Debris = 5,
+	ResidentialBuilding = 6,
+	ElectricInfrastructure = 7,
+	Farmland = 8,
+	Bunker = 9,
+	LaunchTower = 10,
+	ShieldGenerator = 11,
+	FireStation = 12,
+	Fire = 13,
+	Nature = 14,
+	Mountain = 15,
+	Construction = 16,
+}
 
-const Air = -1
-const Selector = 0
-const AnimatedSelector = 1
-const Earth = 2
-const Water = 3
-const IrradiatedEarth = 4
-const Debris = 5
-const ResidentialBuilding = 6
-const ElectricInfrastructure = 7
-const Farmland = 8
-const BombShelter = 9
-const LaunchTower = 10
-const ShieldGenerator = 11
-const FireStation = 12
-const Fire = 13
-const Nature = 14
-const Rocks = 15
+const Burnable = [Tile.ResidentialBuilding, Tile.ElectricInfrastructure, 
+Tile.Farmland, Tile.ShieldGenerator, Tile.Nature]
 
-const BurnableTiles = [ResidentialBuilding, ElectricInfrastructure, 
-Farmland, ShieldGenerator, Nature]
+const Rebuildable = [Tile.Bunker, Tile.LaunchTower, Tile.ShieldGenerator, 
+Tile.FireStation]
 
-const MovableTiles = [ResidentialBuilding, ElectricInfrastructure, 
-Farmland, BombShelter, LaunchTower, ShieldGenerator, FireStation,
-Nature]
+const Resistant = [Tile.Bunker, Tile.Mountain]
 
-const DestructibleTiles = [ResidentialBuilding, ElectricInfrastructure, 
-Farmland, BombShelter, LaunchTower, ShieldGenerator, FireStation,
-Nature, Rocks]
+const Invulnerable = [Tile.IrradiatedEarth]

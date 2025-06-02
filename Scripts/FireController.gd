@@ -21,7 +21,7 @@ func _physics_process(delta):
 	ticks = 0
 	
 	# Pick a random fire if possible
-	var fires = tilemap.Foreground.get_used_cells_by_id(TileDefs.Fire)
+	var fires = tilemap.Foreground.get_used_cells_by_id(TileDefs.Tile.Fire)
 	if (fires == null || fires.size() == 0):
 		return
 	
@@ -46,13 +46,13 @@ func _physics_process(delta):
 		return
 	
 	# Burn
-	tilemap.burnTile((toBurn))
+	tilemap.destroy(toBurn, Destruction.Destruction_Type.Fire)
 
 func reset() -> void:
 	ticks = 0
 
 func get_burn_chances(fire: Vector2) -> float:
-	var fireStations = tilemap.Foreground.get_used_cells_by_id(TileDefs.FireStation)
+	var fireStations = tilemap.Foreground.get_used_cells_by_id(TileDefs.Tile.FireStation)
 	var chance = 1.0
 	
 	# Firestation within 1 tile = no fire possible
@@ -73,7 +73,7 @@ func get_burnable_neighbors(fire : Vector2):
 	
 	for neighbor in neighbors:
 		var id = tilemap.Foreground.get_cell_source_id(neighbor)
-		if(TileDefs.BurnableTiles.has(id)):
+		if(TileDefs.Burnable.has(id)):
 			burnableNeighbors.append(neighbor)
 	
 	return burnableNeighbors

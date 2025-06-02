@@ -106,9 +106,9 @@ func doStandardArtilleryDamage(targetPosition):
 	
 	# Erase two random nearby cells
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
-	tilemap.destroyTile(targets[random.randi_range(0, 7)])
-	tilemap.destroyTile(targets[random.randi_range(0, 7)])
-	tilemap.destroyTile(localTargetPosition)
+	tilemap.destroy(targets[random.randi_range(0, 7)])
+	tilemap.destroy(targets[random.randi_range(0, 7)])
+	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Default, true)
 
 func doNukeDamage(targetPosition):	
 	# Convert to tilemap position
@@ -116,13 +116,16 @@ func doNukeDamage(targetPosition):
 	
 	var targets = tilemap.get_neighbors_by_radius(localTargetPosition, 4)
 	for i in range(len(targets)):
-		if(random.randi_range(0,1) == 0):
-			tilemap.destroyTile(targets[i])
-		else:
-			tilemap.burnTile(targets[i])
+		var choice = random.randi_range(0,2)
+		if(choice == 0):
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Default)
+		elif (choice == 1):
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Irradiated)
+		elif (choice == 2):
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 
 	# Erase the selected one
-	tilemap.nukeTile(localTargetPosition)
+	tilemap.destroy(targetPosition, Destruction.Destruction_Type.Irradiated, true)
 
 func doRodsFromTheGodsDamage(targetPosition):	
 	# Convert to tilemap position
@@ -131,12 +134,12 @@ func doRodsFromTheGodsDamage(targetPosition):
 	var targets = tilemap.get_neighbors_by_radius(localTargetPosition, 4)
 	for i in range(len(targets)):
 		if(random.randi_range(0,1) == 0):
-			tilemap.destroyTile(targets[i])
+			tilemap.destroy(targets[i])
 		else:
-			tilemap.burnTile(targets[i])
+			tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 	
 	# Erase the selected one
-	tilemap.nukeTile(localTargetPosition)
+	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Default, true)
 	
 func doIncendiaryDamage(targetPosition):	
 	# Convert to tilemap position
@@ -144,7 +147,7 @@ func doIncendiaryDamage(targetPosition):
 	
 	var targets = tilemap.get_all_neighbors(localTargetPosition)
 	for i in range(len(targets)):
-		tilemap.burnTile(targets[i])
+		tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 	
 	# Erase the selected one
-	tilemap.burnTile(localTargetPosition)
+	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Fire, true)

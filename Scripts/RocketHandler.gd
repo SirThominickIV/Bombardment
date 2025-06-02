@@ -32,7 +32,7 @@ func _physics_process(_delta):
 
 func CheckTowerStatus() -> void:
 	# If the launch tower is intact, do nothing
-	if(tilemap.Foreground.get_cell_source_id(towerCoords) == TileDefs.LaunchTower):
+	if(tilemap.Foreground.get_cell_source_id(towerCoords) == TileDefs.Tile.LaunchTower):
 		return
 	
 	# If the rocket is far away (enough ticks) from the tower, do nothing

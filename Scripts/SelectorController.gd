@@ -24,4 +24,4 @@ func HandleSelector():
 	selectedTile = tilemap.Selection.local_to_map(mousePos)
 	
 	# Set the selector icon to the selected tile
-	tilemap.Selection.set_cell(selectedTile, TileDefs.Selector, Vector2(0, 0))
+	tilemap.Selection.set_cell(selectedTile, TileDefs.Tile.Selector, Vector2(0, 0))

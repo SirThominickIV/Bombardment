@@ -44,7 +44,7 @@ Some potential tileset IDs and functions could include:
 12. Fire_Station					- Puts out nearby fires
 13. Fire							- Mostly aesthetic, can spread after a period of time
 14. Burnable_Nature				 - Trees, plants, shrubs, etc
-15. Rocks						   - Mostly aesthetic
+15. Mountain						   - Mostly aesthetic
 
 Splitting up these tilesets early even if they share the same/similar functions(for instance residential/electric/farmland) will make it easier to give them different effects in the future.
 

@@ -9,80 +9,49 @@ var Selection : TileMapLayer = TileMapLayer.new()
 
 var enemyController: EnemyController
 
-func move_to_layer(fromLayer: String, toLayer: String, coords: Vector2) -> void:
-	
-	var tmlFromLayer = _get_layer_from_string(fromLayer)
-	var tmlToLayer = _get_layer_from_string(toLayer)
-	
-	# Guard against nulls
-	if(tmlFromLayer == null || tmlToLayer == null || coords == null):
-		return
+var random = RandomNumberGenerator.new()
+
+func destroy(coords: Vector2i, 
+	type: Destruction.Destruction_Type = Destruction.Destruction_Type.Default, 
+	is_direct: bool = false) -> void:
 	
 	# Find out what it is
-	var sourceId = tmlFromLayer.get_cell_source_id(coords)		
-	var atlasCoords = tmlFromLayer.get_cell_atlas_coords(coords)
+	var source_id = Foreground.get_cell_source_id(coords)
 	
-	# Guard against tiles that can't be destroyed
-	if(!TileDefs.DestructibleTiles.has(sourceId)):
+	# Guard against invulnerable tiles
+	if(TileDefs.Invulnerable.has(source_id)):
 		return
 	
-	# Guard against movement on irradiated cells
-	if(IrradiatedGround.get_cell_source_id(coords) == TileDefs.IrradiatedEarth):
+	# Guard against tiles that have no land
+	if(Ground.get_cell_source_id(coords) != TileDefs.Tile.Earth):
 		return
 	
-
-	
-	# Set new layer if it can be moved
-	if(TileDefs.MovableTiles.has(sourceId)):
-		tmlToLayer.set_cell(coords, sourceId, atlasCoords)
-	
-	# Erase old layer
-	tmlFromLayer.erase_cell(coords)
-
-func _move_with_leave_behind(fromLayer: String, toLayer: String, \
-coords: Vector2, tileToLeaveBehind: int, layerToleaveBehind: String) -> void:
-	
-	move_to_layer(fromLayer, toLayer, coords)
-	
-	# Guard against movement on water/void
-	var ground = Ground.get_cell_source_id(coords)
-	if(ground != TileDefs.Earth):
+	# Guard against resistant tiles
+	if(TileDefs.Resistant.has(source_id) && !is_direct):
 		return
 	
-	# Leave behind a tile on move if applicable
-	var _layerToLeaveBehind = _get_layer_from_string(layerToleaveBehind)
-	if(tileToLeaveBehind != null && _layerToLeaveBehind != null):
-		_layerToLeaveBehind.set_cell(coords, tileToLeaveBehind, Vector2(0,0))
+	# Do the destruction
+	enemyController.kill_enemy(coords)
+	Foreground.erase_cell(coords)
+	
+	match type:
+		Destruction.Destruction_Type.Default:
+			Foreground.set_cell(coords, TileDefs.Tile.Debris, Vector2(0,0))
+		Destruction.Destruction_Type.Fire:
+			Foreground.set_cell(coords, TileDefs.Tile.Fire, Vector2(0,0))
+		Destruction.Destruction_Type.Irradiated:
+			Foreground.set_cell(coords, TileDefs.Tile.IrradiatedEarth, Vector2(0,0))
 
-func burnTile(coords: Vector2) -> void:
-	enemyController.kill_civilian(coords)
-	_move_with_leave_behind(LayerDefs.Foreground, \
-	LayerDefs.DestroyedTiles, coords, TileDefs.Fire, LayerDefs.Foreground)
-
-func destroyTile(coords: Vector2) -> void:
-	enemyController.kill_civilian(coords)
-	_move_with_leave_behind(LayerDefs.Foreground, \
-	LayerDefs.DestroyedTiles, coords, TileDefs.Debris, LayerDefs.Foreground)
-
-func nukeTile(coords: Vector2) -> void:
-	enemyController.kill_civilian(coords)
-	_move_with_leave_behind(LayerDefs.Foreground, \
-	LayerDefs.DestroyedTiles, coords,  TileDefs.IrradiatedEarth, LayerDefs.IrradiatedGround)
-
-func _get_layer_from_string(layer: String) -> TileMapLayer:
-	match layer:
-		LayerDefs.DestroyedTiles:
-			return DestroyedTiles
-		LayerDefs.Ground:
-			return Ground
-		LayerDefs.IrradiatedGround:
-			return IrradiatedGround
-		LayerDefs.Foreground:
-			return Foreground
-		LayerDefs.Selection:
-			return Selection
-		_:
-			return null
+func get_empty_foreground() -> PackedVector2Array:
+	var ground = Ground.get_used_cells()
+	var foreground = Foreground.get_used_cells()
+	
+	var empty = []
+	for coord in ground:
+		if coord not in foreground:
+			empty.append(coord)
+	
+	return empty
 
 # The get_surrounding_cells method is nice, but it doesn't get the corners
 # It only gets b, c, g, and h if cell e is picked
