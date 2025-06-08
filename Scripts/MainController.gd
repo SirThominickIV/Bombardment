@@ -29,7 +29,7 @@ func start_game(level_index: int = -1) -> void:
 	if(level_index < 0):
 		level_index = current_level
 	
-	controllers[ControllerDefs.Controllers.UIController].hideFinishedGame()
+	controllers[ControllerDefs.Controllers.UIController].hide_finished_game()
 	await get_tree().create_timer(0.5).timeout
 	level = SceneDefs.Levels[level_index].instantiate()
 	add_child(level)
@@ -64,7 +64,7 @@ func end_game(game_won: bool) -> void:
 	await get_tree().create_timer(1.0).timeout
 	
 	# UI handling
-	controllers[ControllerDefs.Controllers.UIController].showFinishedGame(game_won)
+	controllers[ControllerDefs.Controllers.UIController].show_finished_game(game_won)
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 
 func _hand_out_controllers() -> void:

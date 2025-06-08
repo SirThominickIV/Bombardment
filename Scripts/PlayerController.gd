@@ -25,7 +25,7 @@ func _process(_delta):
 
 func reset() -> void:
 	_player_health = PlayerStatsDefs.PlayerHealth
-	uiController.setHealthDisplay(_player_health)
+	uiController.set_health_display(_player_health)
 
 func set_player_health(delta: int) -> void:
 	# Apply delta and check limits
@@ -42,5 +42,5 @@ func set_player_health(delta: int) -> void:
 		hullDamageSound.play()
 	
 	# Update display if needed
-	uiController.setHealthDisplay(_player_health)
+	uiController.set_health_display(_player_health)
 	
