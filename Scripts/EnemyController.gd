@@ -34,7 +34,13 @@ func _physics_process(delta):
 	
 	# Queue a building if possible
 	if(build_points > build_points_needed):
-		build_random(TileDefs.Tile.Bunker, 30, 0)
+		var choices = [0,1]
+		var choice = choices.pick_random()
+		match choice:
+			0:
+				build_random(TileDefs.Tile.Bunker, 30, 0)
+			1:
+				build_random(TileDefs.Tile.LaunchTower, 40, 3)
 	
 	check_build_queue(delta)
 
@@ -75,7 +81,7 @@ func spawn_rocket() -> void:
 	add_child(rocket)
 	
 	# Rocket vars
-	rocket.towerCoords = coords
+	rocket.tower_coords = coords
 	rocket.tilemap = tilemap
 	var spawn_coords = tilemap.Foreground.map_to_local(coords)
 	spawn_coords = rocket.to_global(spawn_coords)
