@@ -96,8 +96,8 @@ func spawn_projectile(projectileType):
 	var spawnLocation = selectorController.selectedTile
 	spawnLocation.y = selectorController.selectedTile.y - 100
 	projectile.position = tilemap.Selection.map_to_local(spawnLocation)
-	projectile.TargetCoord = tilemap.Selection.map_to_local(selectorController.selectedTile)
-	projectile.ProjectileType = projectileType
+	projectile.target_coord = tilemap.Selection.map_to_local(selectorController.selectedTile)
+	projectile.projectile_type = projectileType
 
 func do_standardartillery_damage(coords : Vector2i) -> void:
 	# Convert to tilemap position
