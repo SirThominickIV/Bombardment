@@ -13,9 +13,9 @@ func _process(_delta):
 		return
 	
 	if(!Input.is_action_pressed("mb_right")):
-		HandleSelector()
+		handle_selector()
 
-func HandleSelector():
+func handle_selector():
 	# Unselect the previous frames selection
 	tilemap.Selection.erase_cell(selectedTile)
 	

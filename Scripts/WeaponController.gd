@@ -1,6 +1,7 @@
 extends Node
 class_name  WeaponController
 
+@onready var mainController: MainController = get_node('/root/MainController') as MainController
 var tilemap: TilemapController
 var selectorController: SelectorController
 var enemyController: EnemyController
@@ -9,14 +10,32 @@ var random = RandomNumberGenerator.new()
 
 var cooldown: float
 
-var standardArtilleryCount: int
-var incendiaryCount: int
-var rodsFromTheGodsCount: int
-var nukeCount: int
+var standard_artillery_count: int
+var incendiary_count: int
+var rods_from_the_gods_count: int
+var nuke_count: int
 
-@onready var mainController: MainController = get_node('/root/MainController') as MainController
+func _process(_delta):
+	if(cooldown > 0):
+		cooldown -= _delta
 
-func spawnProjectile(projectileType):
+func reset() -> void:
+	
+	cooldown = 0
+	
+	# Reset weapon counts
+	standard_artillery_count = ProjectileDefs.StandardArtilleryLimit
+	incendiary_count = ProjectileDefs.IncendiaryLimit
+	rods_from_the_gods_count = ProjectileDefs.RodsFromTheGodsLimit
+	nuke_count = ProjectileDefs.NukeLimit
+	
+	# Reset UI for counts
+	uiController.set_artillery_label(str(standard_artillery_count))
+	uiController.set_incendiary_label(str(incendiary_count))
+	uiController.set_rodsfromthegods_label(str(rods_from_the_gods_count))
+	uiController.set_nuke_label(str(nuke_count))
+
+func spawn_projectile(projectileType):
 	
 	# Guard against inactive game & cooldown
 	if(!mainController.is_game_active || cooldown > 0):
@@ -28,41 +47,41 @@ func spawnProjectile(projectileType):
 		ProjectileDefs.StandardArtillery:
 			
 			# Guard against none available
-			if(standardArtilleryCount <= 0):
+			if(standard_artillery_count <= 0):
 				return
 			
-			standardArtilleryCount -= 1
-			uiController.set_artillery_label(str(standardArtilleryCount))
+			standard_artillery_count -= 1
+			uiController.set_artillery_label(str(standard_artillery_count))
 			projectile = SceneDefs.StandardArtillery.instantiate()
 			
 		ProjectileDefs.Incendiary:
 			
 			# Guard against none available
-			if(incendiaryCount <= 0):
+			if(incendiary_count <= 0):
 				return
 			
-			incendiaryCount -= 1
-			uiController.set_incendiary_label(str(incendiaryCount))
+			incendiary_count -= 1
+			uiController.set_incendiary_label(str(incendiary_count))
 			projectile = SceneDefs.StandardArtillery.instantiate()
 			
 		ProjectileDefs.RodsFromTheGods:
 			
 			# Guard against none available
-			if(rodsFromTheGodsCount <= 0):
+			if(rods_from_the_gods_count <= 0):
 				return
 			
-			rodsFromTheGodsCount -= 1
-			uiController.set_rodsfromthegods_label(str(rodsFromTheGodsCount))
+			rods_from_the_gods_count -= 1
+			uiController.set_rodsfromthegods_label(str(rods_from_the_gods_count))
 			projectile = SceneDefs.RodsFromTheGods.instantiate()
 			
 		ProjectileDefs.Nuke:
 			
 			# Guard against none available
-			if(nukeCount <= 0):
+			if(nuke_count <= 0):
 				return
 			
-			nukeCount -= 1
-			uiController.set_nuke_label(str(nukeCount))
+			nuke_count -= 1
+			uiController.set_nuke_label(str(nuke_count))
 			projectile = SceneDefs.Nuke.instantiate()
 		_:
 			push_error("Cannot instantiate unknown projectile type")
@@ -77,44 +96,24 @@ func spawnProjectile(projectileType):
 	var spawnLocation = selectorController.selectedTile
 	spawnLocation.y = selectorController.selectedTile.y - 100
 	projectile.position = tilemap.Selection.map_to_local(spawnLocation)
-	projectile.TargetCoord = tilemap.Selection.map_to_local(selectorController.selectedTile)
-	projectile.ProjectileType = projectileType
+	projectile.target_coord = tilemap.Selection.map_to_local(selectorController.selectedTile)
+	projectile.projectile_type = projectileType
 
-func _process(_delta):
-	if(cooldown > 0):
-		cooldown -= _delta
-
-func reset() -> void:
-	
-	cooldown = 0
-	
-	# Reset weapon counts
-	standardArtilleryCount = ProjectileDefs.StandardArtilleryLimit
-	incendiaryCount = ProjectileDefs.IncendiaryLimit
-	rodsFromTheGodsCount = ProjectileDefs.RodsFromTheGodsLimit
-	nukeCount = ProjectileDefs.NukeLimit
-	
-	# Reset UI for counts
-	uiController.set_artillery_label(str(standardArtilleryCount))
-	uiController.set_incendiary_label(str(incendiaryCount))
-	uiController.set_rodsfromthegods_label(str(rodsFromTheGodsCount))
-	uiController.set_nuke_label(str(nukeCount))
-
-func doStandardArtilleryDamage(targetPosition):	
+func do_standard_artillery_damage(coords : Vector2i) -> void:
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
+	var local_coords = tilemap.Selection.local_to_map(coords)
 	
 	# Erase two random nearby cells
-	var targets = tilemap.get_all_neighbors(localTargetPosition)
+	var targets = tilemap.get_all_neighbors(local_coords)
 	tilemap.destroy(targets[random.randi_range(0, 7)])
 	tilemap.destroy(targets[random.randi_range(0, 7)])
-	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Default, true)
+	tilemap.destroy(local_coords, Destruction.Destruction_Type.Default, true)
 
-func doNukeDamage(targetPosition):	
+func do_nuke_damage(coords: Vector2i) -> void:
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
+	var local_coords = tilemap.Selection.local_to_map(coords)
 	
-	var targets = tilemap.get_neighbors_by_radius(localTargetPosition, 4)
+	var targets = tilemap.get_neighbors_by_radius(local_coords, 4)
 	for i in range(len(targets)):
 		var choice = random.randi_range(0,2)
 		if(choice == 0):
@@ -125,13 +124,13 @@ func doNukeDamage(targetPosition):
 			tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 
 	# Erase the selected one
-	tilemap.destroy(targetPosition, Destruction.Destruction_Type.Irradiated, true)
+	tilemap.destroy(coords, Destruction.Destruction_Type.Irradiated, true)
 
-func doRodsFromTheGodsDamage(targetPosition):	
+func do_rods_from_the_gods_damage(coords: Vector2i) -> void:
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
+	var local_coords = tilemap.Selection.local_to_map(coords)
 		
-	var targets = tilemap.get_neighbors_by_radius(localTargetPosition, 4)
+	var targets = tilemap.get_neighbors_by_radius(local_coords, 4)
 	for i in range(len(targets)):
 		if(random.randi_range(0,1) == 0):
 			tilemap.destroy(targets[i])
@@ -139,15 +138,15 @@ func doRodsFromTheGodsDamage(targetPosition):
 			tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 	
 	# Erase the selected one
-	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Default, true)
+	tilemap.destroy(local_coords, Destruction.Destruction_Type.Default, true)
 	
-func doIncendiaryDamage(targetPosition):	
+func do_incendiary_damage(coords: Vector2i) -> void:
 	# Convert to tilemap position
-	var localTargetPosition = tilemap.Selection.local_to_map(targetPosition)
+	var local_coords = tilemap.Selection.local_to_map(coords)
 	
-	var targets = tilemap.get_all_neighbors(localTargetPosition)
+	var targets = tilemap.get_all_neighbors(local_coords)
 	for i in range(len(targets)):
 		tilemap.destroy(targets[i], Destruction.Destruction_Type.Fire)
 	
 	# Erase the selected one
-	tilemap.destroy(localTargetPosition, Destruction.Destruction_Type.Fire, true)
+	tilemap.destroy(local_coords, Destruction.Destruction_Type.Fire, true)

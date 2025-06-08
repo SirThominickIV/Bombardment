@@ -13,7 +13,7 @@ sprite_frames = ExtResource("1_pqdof")
 autoplay = "default"
 speed_scale = 3.0
 script = ExtResource("2_7xwu1")
-TicksUntilCull = 2000.0
+ticks_until_cull = 2000.0
 metadata/TimeUntilCull = 100.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

@@ -33,7 +33,7 @@ const deselected = Color("787878")
 func _ready():
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 	DisplayServer.window_set_min_size(Vector2(1000, 500))
-	selectButton(standardArtillery)
+	select_button(standardArtillery)
 
 func _process(_delta):	
 	# Double checking shortcut keys
@@ -54,10 +54,10 @@ func _process(_delta):
 		basicButtonSound.play()
 		
 	if(Input.is_action_just_pressed("9")):
-		setHealthDisplay(1)
+		set_health_display(1)
 
 func reset() -> void:
-	setHealthDisplay(20)
+	set_health_display(20)
 
 func zoom() -> void:
 	zoomIn = !zoomIn
@@ -70,21 +70,21 @@ func zoom() -> void:
 		await get_tree().create_timer(1.0).timeout
 		ZoomAnimationPlayer.play_backwards('zoom')
 
-func showFinishedGame(gameWon: bool) -> void:
+func show_finished_game(gameWon: bool) -> void:
 	if(gameWon):
 		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
-		finishedGameOutputBody.text = "100% of population exterminated[/MSGPYLD]"
+		finishedGameOutputBody.text = "100% of population exterminated\n\n[/MSGPYLD]"
 	else:
 		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
 		var ammount = int((1-(float(len(enemyController.civilians))/float(enemyController.civilian_count_at_start)))*100)
 		finishedGameOutputBody.text = str(ammount) + "% of population exterminated\n\n[/MSGPYLD]"
 	finishedGameUiItems.visible = true
 	
-func hideFinishedGame() -> void:
+func hide_finished_game() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 	finishedGameUiItems.visible = false
 
-func setHealthDisplay(numHealth: int) -> void:
+func set_health_display(numHealth: int) -> void:
 	if(numHealth < 0):
 		numHealth = 0
 	if(numHealth > PlayerStatsDefs.PlayerHealth):
@@ -103,41 +103,41 @@ func set_rodsfromthegods_label(s: String) -> void:
 func set_nuke_label(s: String) -> void:
 	nukeLabel.text = s
 
-func UI_Entered() -> void:
+func ui_entered() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 	playerController.is_mouse_over_ui = true
 
-func UI_Exited() -> void:
+func ui_exited() -> void:
 	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 	playerController.is_mouse_over_ui = false
 
-func setWeaponStandardArtillery() -> void:
+func set_count_standard_artillery() -> void:
 	playerController.selected_projectile = ProjectileDefs.StandardArtillery
-	selectButton(standardArtillery)
+	select_button(standardArtillery)
 	basicButtonSound.play()
 
-func setWeaponIncendiary() -> void:
+func set_count_incendiary() -> void:
 	playerController.selected_projectile = ProjectileDefs.Incendiary
-	selectButton(incendiary)
+	select_button(incendiary)
 	basicButtonSound.play()
 
-func setWeaponRodsFromTheGods() -> void:
+func set_count_rods_from_the_gods() -> void:
 	playerController.selected_projectile = ProjectileDefs.RodsFromTheGods
-	selectButton(rodsFromTheGods)
+	select_button(rodsFromTheGods)
 	basicButtonSound.play()
 
-func setWeaponNuke() -> void:
+func set_count_nuke() -> void:
 	playerController.selected_projectile = ProjectileDefs.Nuke
-	selectButton(nuke)
+	select_button(nuke)
 	basicButtonSound.play()
 
-func selectButton(buttonElements: Control) -> void:
+func select_button(buttonElements: Control) -> void:
 	standardArtillery.modulate = deselected
 	incendiary.modulate = deselected
 	rodsFromTheGods.modulate = deselected
 	nuke.modulate = deselected
 	buttonElements.modulate = selected
 
-func toggleWeaponsPanel() -> void:
+func toggle_weapons_panel() -> void:
 	weaponPanel.visible = !weaponPanel.visible
 	basicButtonSound.play()

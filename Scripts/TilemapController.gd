@@ -94,40 +94,40 @@ func get_neighbors_by_radius(coords: Vector2, radius: int) -> PackedVector2Array
 	var topCell = coords
 	topCell.y -= radius * 2
 	
-	var rowWidth = 1
-	var xStart = topCell.x
-	var updateXStartForRow = false
+	var row_width = 1
+	var x_start = topCell.x
+	var update_x_start_for_row = false
 	
-	var middleRowReached = false
+	var middle_row_reached = false
 	
 	var row = topCell.y
-	while rowWidth > 0:
+	while row_width > 0:
 		
 		# Check for middle row reached if it hasn't yet
-		if(!middleRowReached && row == coords.y):
-			middleRowReached = true
-			updateXStartForRow = true
+		if(!middle_row_reached && row == coords.y):
+			middle_row_reached = true
+			update_x_start_for_row = true
 		
-		updateXStartForRow = !updateXStartForRow
+		update_x_start_for_row = !update_x_start_for_row
 		
 		# Add all for this row
-		var i = rowWidth - 1
+		var i = row_width - 1
 		while i >= 0:
-			neighbors.append(Vector2(xStart + i, row))
+			neighbors.append(Vector2(x_start + i, row))
 			i -= 1
 		
 		# Figure out where the start is for the next row
-		if(updateXStartForRow):
-			if(middleRowReached):
-				xStart += 1
+		if(update_x_start_for_row):
+			if(middle_row_reached):
+				x_start += 1
 			else:
-				xStart -= 1
+				x_start -= 1
 		
 		# Figure out the next row's width
-		if(middleRowReached):
-			rowWidth -= 1
+		if(middle_row_reached):
+			row_width -= 1
 		else:
-			rowWidth += 1
+			row_width += 1
 		
 		row += 1
 	

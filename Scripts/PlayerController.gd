@@ -21,11 +21,11 @@ func _process(_delta):
 	if(Input.is_action_just_pressed("k")):
 		set_player_health(-200)
 	if(Input.is_action_pressed("mb_left") && !is_mouse_over_ui):
-		weaponController.spawnProjectile(selected_projectile)
+		weaponController.spawn_projectile(selected_projectile)
 
 func reset() -> void:
 	_player_health = PlayerStatsDefs.PlayerHealth
-	uiController.setHealthDisplay(_player_health)
+	uiController.set_health_display(_player_health)
 
 func set_player_health(delta: int) -> void:
 	# Apply delta and check limits
@@ -42,5 +42,5 @@ func set_player_health(delta: int) -> void:
 		hullDamageSound.play()
 	
 	# Update display if needed
-	uiController.setHealthDisplay(_player_health)
+	uiController.set_health_display(_player_health)
 	
