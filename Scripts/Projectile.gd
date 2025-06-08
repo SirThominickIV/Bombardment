@@ -16,7 +16,7 @@ func handle_collision():
 	# Do the associated damage type & explosion
 	match projectile_type:
 		ProjectileDefs.StandardArtillery:
-			get_parent().do_standardartillery_damage(target_coord)
+			get_parent().do_standard_artillery_damage(target_coord)
 			explosion = SceneDefs.Explosion.instantiate()	
 		ProjectileDefs.Nuke:
 			get_parent().do_nuke_damage(target_coord)
@@ -28,7 +28,7 @@ func handle_collision():
 			get_parent().do_incendiary_damage(target_coord)
 			explosion = SceneDefs.Explosion.instantiate()	
 		_:
-			get_parent().do_standardartillery_damage(target_coord)
+			get_parent().do_standard_artillery_damage(target_coord)
 			explosion = SceneDefs.Explosion.instantiate()	
 
 	# Pass off the explosion object to the parent

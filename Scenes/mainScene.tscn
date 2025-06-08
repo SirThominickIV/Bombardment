@@ -163,7 +163,7 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(200, 200)
 zoom = Vector2(0.01, 0.01)
 script = ExtResource("2_qjatv")
-SHAKE_DECAY_RATE = 60.0
+shake_decay_rate = 60.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CameraController"]
 

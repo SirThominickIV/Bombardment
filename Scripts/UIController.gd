@@ -73,7 +73,7 @@ func zoom() -> void:
 func show_finished_game(gameWon: bool) -> void:
 	if(gameWon):
 		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
-		finishedGameOutputBody.text = "100% of population exterminated[/MSGPYLD]"
+		finishedGameOutputBody.text = "100% of population exterminated\n\n[/MSGPYLD]"
 	else:
 		finishedGameOutputHeader.text = '[MSGPYLD: VICTORY]'
 		var ammount = int((1-(float(len(enemyController.civilians))/float(enemyController.civilian_count_at_start)))*100)
