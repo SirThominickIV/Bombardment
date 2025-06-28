@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/NodeFade.gd" id="3_1grf0"]
 
 [node name="RigidBody2D" type="RigidBody2D"]
+gravity_scale = 0.25
 can_sleep = false
 lock_rotation = true
 script = ExtResource("1_khord")
