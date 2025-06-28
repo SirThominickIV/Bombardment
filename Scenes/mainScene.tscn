@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://drqi2hy81bgie"]
+[gd_scene load_steps=41 format=3 uid="uid://drqi2hy81bgie"]
 
 [ext_resource type="Script" path="res://Scripts/MainController.gd" id="1_0urec"]
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_qjatv"]
@@ -16,7 +16,9 @@
 [ext_resource type="AudioStream" uid="uid://cdqv7dlq6t3v3" path="res://Art/Audio/NightflameMenu/397604__nightflame__menu-fx-01.wav" id="11_5d8fc"]
 [ext_resource type="Script" path="res://Scripts/EnemyController.gd" id="11_ccjtb"]
 [ext_resource type="Script" path="res://Scripts/TilemapController.gd" id="14_t7h87"]
+[ext_resource type="AudioStream" uid="uid://csb8gy78ocpbh" path="res://Art/Audio/WeaponSounds/click_1metal.wav" id="15_ex44h"]
 [ext_resource type="Texture2D" uid="uid://dcoh3do27ln8w" path="res://Art/Textures/Planets/Terran.png" id="15_s8ixu"]
+[ext_resource type="AudioStream" uid="uid://b77tc7ci4moqn" path="res://Art/Audio/WeaponSounds/swoosh-and-hit-1.wav" id="16_qjpor"]
 [ext_resource type="Texture2D" uid="uid://c1q6haxwlf085" path="res://Art/Textures/ThomasTextures/Stars.png" id="16_wy818"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_67pqs"]
@@ -563,8 +565,17 @@ finishedGameOutputBody = NodePath("../CameraController/CanvasLayer/FinishedGameU
 [node name="BasicButtonSound" type="AudioStreamPlayer2D" parent="UIController"]
 stream = ExtResource("11_5d8fc")
 
-[node name="WeaponController" type="Node" parent="."]
+[node name="WeaponController" type="Node" parent="." node_paths=PackedStringArray("emptyWeaponSound", "weaponLaunchSound")]
 script = ExtResource("10_w6dm4")
+emptyWeaponSound = NodePath("EmptyWeaponSound")
+weaponLaunchSound = NodePath("WeaponLaunchSound")
+
+[node name="EmptyWeaponSound" type="AudioStreamPlayer2D" parent="WeaponController"]
+stream = ExtResource("15_ex44h")
+
+[node name="WeaponLaunchSound" type="AudioStreamPlayer2D" parent="WeaponController"]
+stream = ExtResource("16_qjpor")
+volume_db = -3.336
 
 [node name="TilemapController" type="Node" parent="."]
 script = ExtResource("14_t7h87")

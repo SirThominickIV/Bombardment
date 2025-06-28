@@ -17,6 +17,11 @@
 texture = ExtResource("1_lwp72")
 texture_region_size = Vector2i(32, 16)
 0:0/0 = 0
+0:1/next_alternative_id = 2
+0:1/animation_frame_0/duration = 0.5
+0:1/animation_frame_1/duration = 0.5
+0:1/0 = 0
+0:1/1 = 1
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwln7"]
 texture = ExtResource("2_nvtor")
