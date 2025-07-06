@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=25 format=3 uid="uid://c8q0o84qc6r2o"]
+[gd_resource type="TileSet" load_steps=27 format=3 uid="uid://c8q0o84qc6r2o"]
 
 [ext_resource type="Texture2D" uid="uid://cyibsk6qr73dp" path="res://Art/Textures/TileSetTextures/0_Selector.png" id="1_lwp72"]
 [ext_resource type="Texture2D" uid="uid://53hfn8chqhnn" path="res://Art/Textures/TileSetTextures/9_Bunker.png" id="2_hft71"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dmer4xlab3d5q" path="res://Art/Textures/TileSetTextures/5_Debris.png" id="6_rb21i"]
 [ext_resource type="Texture2D" uid="uid://hw6ik5top7wo" path="res://Art/Textures/TileSetTextures/16_Construction.png" id="6_v1odo"]
 [ext_resource type="Texture2D" uid="uid://byouqjew0cmdt" path="res://Art/Textures/TileSetTextures/6_Residential_Buildings.png" id="7_aok7y"]
+[ext_resource type="Texture2D" uid="uid://b4bwgamvf2ha8" path="res://Art/Textures/TileSetTextures/17_DestroyedEarth.png" id="7_bfq7v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0niot"]
 texture = ExtResource("1_lwp72")
@@ -157,6 +158,18 @@ texture_region_size = Vector2i(32, 64)
 7:3/0 = 0
 7:3/0/texture_origin = Vector2i(0, 24)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a0nca"]
+texture = ExtResource("7_bfq7v")
+texture_region_size = Vector2i(32, 16)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c0bpt"]
 texture = ExtResource("4_pb421")
 texture_region_size = Vector2i(32, 16)
@@ -256,3 +269,4 @@ sources/12 = SubResource("TileSetAtlasSource_ay0wh")
 sources/14 = SubResource("TileSetAtlasSource_lo8mw")
 sources/9 = SubResource("TileSetAtlasSource_dpj4q")
 sources/16 = SubResource("TileSetAtlasSource_xngvt")
+sources/17 = SubResource("TileSetAtlasSource_a0nca")

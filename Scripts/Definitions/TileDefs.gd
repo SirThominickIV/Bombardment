@@ -19,6 +19,7 @@ enum Tile{
 	Nature = 14,
 	Mountain = 15,
 	Construction = 16,
+	Destroyed_Earth = 17,
 }
 
 const Burnable = [Tile.ResidentialBuilding, Tile.ElectricInfrastructure, 
