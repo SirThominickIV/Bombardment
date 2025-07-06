@@ -15,16 +15,23 @@ func destroy(coords: Vector2i,
 	type: Destruction.Destruction_Type = Destruction.Destruction_Type.Default, 
 	is_direct: bool = false) -> void:
 	
+	print("Destroying tile at " + str(coords) + " with destruction type " + str(type))
+	
 	# Find out what it is
 	var source_id = Foreground.get_cell_source_id(coords)
+	
+	print("found source id " + str(source_id))
 	
 	# Guard against invulnerable tiles
 	if(TileDefs.Invulnerable.has(source_id)):
 		return
 	
 	# Guard against tiles that have no land
-	if(Ground.get_cell_source_id(coords) != TileDefs.Tile.Earth):
+	if(Ground.get_cell_source_id(coords) == -1):
 		return
+	
+	# Make the ground layer look destroyed
+	Ground.set_cell(coords, TileDefs.Tile.Destroyed_Earth, Vector2i(random.randi_range(0,7), 0))
 	
 	# Guard against resistant tiles
 	if(TileDefs.Resistant.has(source_id) && !is_direct):
