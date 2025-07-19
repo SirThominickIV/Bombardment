@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://cwtluixtw6if2"]
+
+[ext_resource type="Script" path="res://Scripts/Cutscene.gd" id="1_wbc7o"]
+[ext_resource type="Script" path="res://Scripts/NodeFade.gd" id="2_eiwdr"]
+[ext_resource type="Theme" uid="uid://dtmdu442rr8nn" path="res://Resources/BoxyButtonTheme.tres" id="2_s5sbx"]
+[ext_resource type="FontFile" uid="uid://drqdvol3hbnrm" path="res://Art/FFFFORWA.TTF" id="2_vq6qa"]
+[ext_resource type="StyleBox" uid="uid://bb6atwoer02aq" path="res://Resources/DarkModeStyleBox.tres" id="2_wj3pv"]
+[ext_resource type="Texture2D" uid="uid://c1q6haxwlf085" path="res://Art/Textures/ThomasTextures/Stars.png" id="5_pva2b"]
+
+[node name="Disclaimer" type="Node2D"]
+script = ExtResource("1_wbc7o")
+scene_to_load = "res://Scenes/mainScene.tscn"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Stars" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(611, 320)
+rotation = 1.5708
+scale = Vector2(2.64, 4.1295)
+texture = ExtResource("5_pva2b")
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -116.0
+offset_right = 276.0
+offset_bottom = 91.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_wj3pv")
+script = ExtResource("2_eiwdr")
+FadeIn = true
+
+[node name="OutputBody" type="RichTextLabel" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.004
+anchor_top = 0.077
+anchor_right = 0.996
+anchor_bottom = 0.99
+offset_left = -0.204
+offset_top = 0.0609989
+offset_right = 0.203979
+offset_bottom = 0.0699921
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_vq6qa")
+theme_override_fonts/mono_font = ExtResource("2_vq6qa")
+theme_override_fonts/italics_font = ExtResource("2_vq6qa")
+theme_override_fonts/bold_italics_font = ExtResource("2_vq6qa")
+theme_override_fonts/bold_font = ExtResource("2_vq6qa")
+bbcode_enabled = true
+text = "[center]Godzilla was limited to a single island, 
+on a single planet. You however, are not. 
+You span thousands of light-years to slaughter billions of innocents on countless planets. 
+You kill those who have never harmed you, have never met you. Your empire demands their death. You invent justification where there is none. Your evil is far greater, and far more insidious."
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -307.0
+offset_top = -32.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("2_s5sbx")
+text = "Press any button to continue"
+script = ExtResource("2_eiwdr")
+FadeIn = true
