@@ -1,7 +1,7 @@
 extends CanvasItem
 
 @export var FadeIn: bool = false
-@export var SpeedMultiplier: float = 1.0
+@export var SpeedMultiplier: float = 0.01
 
 func _ready() -> void:
 	if(FadeIn):
@@ -9,8 +9,8 @@ func _ready() -> void:
 	else:
 		set_modulate(Color(1, 1, 1, 1))
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if(FadeIn):
-		set_modulate(lerp(get_modulate(), Color(1,1,1,1), delta*SpeedMultiplier))
+		set_modulate(lerp(get_modulate(), Color(1,1,1,1), SpeedMultiplier))
 	else:
-		set_modulate(lerp(get_modulate(), Color(1,1,1,0), delta*SpeedMultiplier))
+		set_modulate(lerp(get_modulate(), Color(1,1,1,0), SpeedMultiplier))

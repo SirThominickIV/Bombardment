@@ -447,7 +447,6 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="FinishedGameUiItems" type="Panel" parent="CameraController/CanvasLayer"]
-visible = false
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
